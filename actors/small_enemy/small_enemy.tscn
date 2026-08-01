@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://cm3xsw4pawfk6"]
+
+[ext_resource type="Script" uid="uid://63rqmgwv7ltq" path="res://common/enemy.gd" id="1_x77rf"]
+[ext_resource type="Script" uid="uid://dqwtfo8bvm7rb" path="res://common/hurt_box.gd" id="2_kr6n6"]
+[ext_resource type="Script" uid="uid://bb7mqdux6xdrk" path="res://common/hit_box.gd" id="3_7edh7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fds3k"]
+albedo_color = Color(0.03137255, 0.38431373, 0.77254903, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iynve"]
+material = SubResource("StandardMaterial3D_fds3k")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fds3k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iynve"]
+size = Vector3(2.2, 2, 2.2)
+
+[node name="SmallEnemy" type="CharacterBody3D" unique_id=1807322689 groups=["enemies"]]
+collision_layer = 8
+collision_mask = 9
+script = ExtResource("1_x77rf")
+speed = 20.0
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=283102294]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_iynve")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=723521642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_fds3k")
+
+[node name="HurtBox" type="Area3D" parent="." unique_id=1026468172]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("2_kr6n6")
+armor = 0.5
+metadata/_custom_type_script = "uid://dqwtfo8bvm7rb"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox" unique_id=911874032]
+shape = SubResource("BoxShape3D_iynve")
+debug_color = Color(0.9430334, 0.22393367, 0.22387949, 0.41960785)
+
+[node name="HealthLabel" type="Label3D" parent="HurtBox" unique_id=1874895765]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+pixel_size = 0.02
+offset = Vector2(0, 30)
+billboard = 1
+text = "hp:"
+font_size = 48
+
+[node name="HitBox" type="Area3D" parent="." unique_id=1808756807]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_7edh7")
+damage = 10.0
+metadata/_custom_type_script = "uid://bb7mqdux6xdrk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" unique_id=285443484]
+shape = SubResource("BoxShape3D_iynve")
+debug_color = Color(0.9430334, 0.22393367, 0.22387949, 0.41960785)

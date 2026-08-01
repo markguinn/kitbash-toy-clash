@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://s1dekdh64ngw"]
+
+[ext_resource type="Script" uid="uid://b5ch0jw5otune" path="res://common/enemy_spawner.gd" id="1_7sxga"]
+[ext_resource type="PackedScene" uid="uid://de5scjc8mfwq1" path="res://actors/big_enemy/big_enemy.tscn" id="2_l7w4n"]
+[ext_resource type="Script" uid="uid://dqwtfo8bvm7rb" path="res://common/hurt_box.gd" id="2_oqd8s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqd8s"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_l7w4n"]
+material = SubResource("StandardMaterial3D_oqd8s")
+radius = 4.0
+height = 8.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fds3k"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7sxga"]
+radius = 4.0
+
+[node name="BigEnemySpawner" type="StaticBody3D" unique_id=1330096657 groups=["spawners"]]
+collision_layer = 8
+script = ExtResource("1_7sxga")
+enemy_type = ExtResource("2_l7w4n")
+spawn_seconds = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=283102294]
+mesh = SubResource("SphereMesh_l7w4n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=723521642]
+shape = SubResource("BoxShape3D_fds3k")
+
+[node name="HurtBox" type="Area3D" parent="." unique_id=647721749]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("2_oqd8s")
+starting_hp = 10.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox" unique_id=911874032]
+shape = SubResource("SphereShape3D_7sxga")
+debug_color = Color(0.9430334, 0.22393367, 0.22387949, 0.41960785)
+
+[node name="HealthLabel" type="Label3D" parent="HurtBox" unique_id=1874895765]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+pixel_size = 0.02
+offset = Vector2(0, 30)
+billboard = 1
+text = "hp:
+"
+font_size = 48

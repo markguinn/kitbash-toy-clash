@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://bobgrurpfdnwv"]
+
+[ext_resource type="Script" uid="uid://dw0sh3di51t1p" path="res://actors/player/player.gd" id="1_nvxhs"]
+[ext_resource type="PackedScene" uid="uid://0iap8bwrf2kj" path="res://actors/player/projectile.tscn" id="2_ilk7j"]
+[ext_resource type="Script" uid="uid://dqwtfo8bvm7rb" path="res://common/hurt_box.gd" id="3_ax26v"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1fxm"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_l7t1d"]
+material = SubResource("StandardMaterial3D_b1fxm")
+size = Vector3(1, 1, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6p1w3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_sxqe5"]
+material = SubResource("StandardMaterial3D_6p1w3")
+size = Vector3(0.4, 0.4, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ax26v"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ojre7"]
+material = SubResource("StandardMaterial3D_ax26v")
+size = Vector3(0.6, 0.3, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lsqbn"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hchdm"]
+material = SubResource("StandardMaterial3D_lsqbn")
+size = Vector3(0.4, 1, 0.4)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l7t1d"]
+radius = 0.8
+
+[node name="Player" type="CharacterBody3D" unique_id=1653260376 groups=["player"]]
+collision_layer = 2
+collision_mask = 9
+script = ExtResource("1_nvxhs")
+projectile_tpl = ExtResource("2_ilk7j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=497236600]
+shape = SubResource("CapsuleShape3D_iynve")
+debug_color = Color(0, 0.6, 0.69803923, 1)
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=2028936697]
+mesh = SubResource("BoxMesh_l7t1d")
+
+[node name="Head" type="MeshInstance3D" parent="Body" unique_id=1222886714]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("BoxMesh_sxqe5")
+
+[node name="Arm_L" type="MeshInstance3D" parent="Body" unique_id=654957152]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.1, 0)
+mesh = SubResource("BoxMesh_ojre7")
+
+[node name="Arm_R" type="MeshInstance3D" parent="Body" unique_id=2081054412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.1, 0)
+mesh = SubResource("BoxMesh_ojre7")
+
+[node name="Leg_L" type="MeshInstance3D" parent="Body" unique_id=1237195401]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -0.5, 0)
+mesh = SubResource("BoxMesh_hchdm")
+
+[node name="Leg_R" type="MeshInstance3D" parent="Body" unique_id=2098568978]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.5, 0)
+mesh = SubResource("BoxMesh_hchdm")
+
+[node name="HurtBox" type="Area3D" parent="." unique_id=629513592]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("3_ax26v")
+starting_hp = 100.0
+metadata/_custom_type_script = "uid://dqwtfo8bvm7rb"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox" unique_id=543511750]
+shape = SubResource("CapsuleShape3D_l7t1d")
+debug_color = Color(0.35837752, 0.61519843, 0.17483082, 0.41960785)
+
+[node name="HealthLabel" type="Label3D" parent="HurtBox" unique_id=1337854970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+pixel_size = 0.02
+offset = Vector2(0, 50)
+billboard = 1
+text = "health: 5"
+font_size = 48
+
+[node name="HealthDripTimer" type="Timer" parent="." unique_id=883919305]
+autostart = true
+
+[connection signal="dead" from="HurtBox" to="." method="_on_dead"]
+[connection signal="timeout" from="HealthDripTimer" to="." method="_on_health_drip"]

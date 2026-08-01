@@ -1,0 +1,15 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+export.cfg
+*.ossl
+*.pck
+*.zip
+*.tmp
+/export/*
+!/export/.gitkeep
+.DS_Store
+_ignored_assets
+.vscode
+.idea/
+config.local.ini

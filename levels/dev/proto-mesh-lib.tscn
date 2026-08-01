@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bcwkfv2m2lfkx"]
+
+[ext_resource type="PackedScene" uid="uid://0qfjjdmtravd" path="res://levels/dev/proto-mesh-lib.gltf" id="1_vnua6"]
+
+[node name="blockbench_export" unique_id=2137282930 instance=ExtResource("1_vnua6")]
+
+[node name="line" parent="." index="1" unique_id=944957191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="tee" parent="." index="2" unique_id=619237140]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="corner" parent="." index="3" unique_id=134723394]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
