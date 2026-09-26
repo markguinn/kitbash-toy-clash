@@ -17,7 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*uid://da7hb1pn7jw5g"
+Now="*uid://cy8pdsmegqpdm"
+Game="*uid://cg2331u7xsk1o"
+Log="*uid://cr8swx1gxs3fw"
+VFX="*uid://cct4o6ava8dgn"
 
 [display]
 

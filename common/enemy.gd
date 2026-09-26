@@ -24,13 +24,13 @@ func _physics_process(_delta: float) -> void:
 	var dir := global_position.direction_to(player.global_position)
 	velocity = dir * speed
 	move_and_slide()
-	
+
 	if Time.get_ticks_msec() > last_projectile + roundi(projectile_seconds * 1000.0):
 		last_projectile = Time.get_ticks_msec()
 
 
 func _on_dead(from_hit_box: HitBox) -> void:
-	GameManager.enemy_died.emit(self, from_hit_box)
+	Game.enemy_died.emit(self, from_hit_box)
 	queue_free()
 
 

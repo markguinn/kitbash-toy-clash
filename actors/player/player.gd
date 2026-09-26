@@ -66,6 +66,6 @@ func _on_health_drip() -> void:
 func _on_dead(from_hit_box: HitBox) -> void:
 	# TODO: remember last hit in case the timer finishes you off?
 	if from_hit_box:
-		GameManager.player_died.emit(from_hit_box.host, from_hit_box)
+		Game.player_died.emit(from_hit_box.host, from_hit_box)
 	else:
-		GameManager.player_died.emit(null, null)
+		Game.player_died.emit(null, null)
