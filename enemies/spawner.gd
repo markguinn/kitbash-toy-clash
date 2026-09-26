@@ -8,6 +8,7 @@ extends StaticBody3D
 var timer: Timer
 
 @onready var hurt_box: HurtBox = $HurtBox
+@onready var life: Life = $Life
 
 
 func _ready() -> void:
@@ -17,7 +18,7 @@ func _ready() -> void:
 	timer.timeout.connect(_on_spawn_timer)
 	timer.start()
 
-	hurt_box.dead.connect(_on_dead)
+	life.dead.connect(_on_dead)
 
 
 func _on_spawn_timer() -> void:
@@ -27,6 +28,7 @@ func _on_spawn_timer() -> void:
 	obj.global_position = global_position + start_offset
 
 
+# TODO: do something fun
 func _on_dead(_hit_box) -> void:
 	timer.stop()
 	queue_free()

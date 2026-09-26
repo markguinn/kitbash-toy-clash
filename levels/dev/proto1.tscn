@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="1_sxqe5"]
 [ext_resource type="MeshLibrary" uid="uid://b27p3wokfin6l" path="res://levels/dev/proto-mesh-lib.tres" id="2_sxqe5"]
-[ext_resource type="PackedScene" uid="uid://s1dekdh64ngw" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="4_mculg"]
-[ext_resource type="PackedScene" uid="uid://c5igbgv1nfbiy" path="res://enemies/small_enemy/small_enemy_spawner.tscn" id="4_pomcm"]
+[ext_resource type="PackedScene" uid="uid://bmepk0rhitnsc" path="res://enemies/small_enemy/small_enemy_spawner.tscn" id="4_pomcm"]
+[ext_resource type="PackedScene" uid="uid://b64kv0p1jxrdi" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="5_pomcm"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_iynve"]
 
@@ -90,12 +90,6 @@ transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70
 size = 0.1
 metadata/_edit_lock_ = true
 
-[node name="BigEnemySpawner" parent="." unique_id=1330096657 instance=ExtResource("4_mculg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.482006, 0, -7.7785788)
-
-[node name="SmallEnemySpawner" parent="." unique_id=2016694786 instance=ExtResource("4_pomcm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.9569054, 0, 20.083363)
-
 [node name="ConfirmContinue" type="ConfirmationDialog" parent="." unique_id=20908460 groups=["confirm_dlg"]]
 unique_name_in_owner = true
 process_mode = 3
@@ -107,3 +101,9 @@ ok_button_text = "Continue"
 dialog_text = "You can end your run here or use a magic crystal to continue. Your character may absorb some traits of your attacker if you do."
 dialog_autowrap = true
 cancel_button_text = "End Run"
+
+[node name="BigEnemySpawner" parent="." unique_id=803562640 instance=ExtResource("5_pomcm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.65137, 0, -8.604748)
+
+[node name="Spawner" parent="." unique_id=1330096657 instance=ExtResource("4_pomcm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.435489, 0, 22)

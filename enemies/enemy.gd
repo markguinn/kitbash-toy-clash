@@ -10,10 +10,11 @@ var last_projectile := 0
 
 @onready var hit_box: HitBox = $HitBox
 @onready var hurt_box: HurtBox = $HurtBox
+@onready var life: Life = $Life
 
 
 func _ready() -> void:
-	hurt_box.dead.connect(_on_dead)
+	life.dead.connect(_on_dead)
 	hit_box.caused_damage.connect(_on_caused_damage)
 
 
@@ -29,12 +30,13 @@ func _physics_process(_delta: float) -> void:
 		last_projectile = Time.get_ticks_msec()
 
 
+# TODO: do something fun - animation, sounds, etc
 func _on_dead(from_hit_box: HitBox) -> void:
 	Game.enemy_died.emit(self, from_hit_box)
 	queue_free()
 
 
-func _on_caused_damage(amount: float, _to_hurt_box: HurtBox) -> void:
+func _on_caused_damage(amount: float, _to: Life) -> void:
 	var returned_damage := amount * take_damage_from_causing_it
 	if returned_damage > 0.0:
-		hurt_box.add_damage.call_deferred(returned_damage)
+		life.add_damage.call_deferred(returned_damage)

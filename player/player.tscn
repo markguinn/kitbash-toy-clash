@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dw0sh3di51t1p" path="res://player/player.gd" id="1_nvxhs"]
 [ext_resource type="PackedScene" uid="uid://0iap8bwrf2kj" path="res://player/projectile.tscn" id="2_ilk7j"]
 [ext_resource type="Script" uid="uid://dqwtfo8bvm7rb" path="res://common/hurt_box.gd" id="3_ax26v"]
+[ext_resource type="Script" uid="uid://cy8ptutfeorc6" path="res://common/life.gd" id="4_yw30f"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
 
@@ -70,14 +71,13 @@ mesh = SubResource("BoxMesh_hchdm")
 collision_layer = 0
 collision_mask = 8
 script = ExtResource("3_ax26v")
-starting_hp = 100.0
 metadata/_custom_type_script = "uid://dqwtfo8bvm7rb"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox" unique_id=543511750]
 shape = SubResource("CapsuleShape3D_l7t1d")
 debug_color = Color(0.35837752, 0.61519843, 0.17483082, 0.41960785)
 
-[node name="HealthLabel" type="Label3D" parent="HurtBox" unique_id=1337854970]
+[node name="HealthLabel" type="Label3D" parent="." unique_id=932064038]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 pixel_size = 0.02
 offset = Vector2(0, 50)
@@ -85,8 +85,13 @@ billboard = 1
 text = "health: 5"
 font_size = 48
 
+[node name="Life" type="Node" parent="." unique_id=1673273175]
+script = ExtResource("4_yw30f")
+starting_hp = 100.0
+metadata/_custom_type_script = "uid://cy8ptutfeorc6"
+
 [node name="HealthDripTimer" type="Timer" parent="." unique_id=883919305]
 autostart = true
 
-[connection signal="dead" from="HurtBox" to="." method="_on_dead"]
+[connection signal="dead" from="Life" to="." method="_on_dead"]
 [connection signal="timeout" from="HealthDripTimer" to="." method="_on_health_drip"]

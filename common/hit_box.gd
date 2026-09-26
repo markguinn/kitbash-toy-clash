@@ -1,7 +1,8 @@
 class_name HitBox
 extends Area3D
 
-signal caused_damage(amount: float, to_hurt_box: HurtBox)
+@warning_ignore("unused_signal")
+signal caused_damage(amount: float, to: Life)
 
 @export var damage := 1.0
 @export var host: Node3D

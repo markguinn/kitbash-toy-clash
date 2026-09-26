@@ -8,6 +8,8 @@ extends CharacterBody3D
 var cur_dir := Vector3(1.0, 0.0, 0.0)
 var cur_cam := 0
 
+@onready var hurt_box: HurtBox = $HurtBox
+@onready var life: Life = $Life
 @onready var cams: Array[Camera3D] = [
 	$CamOrthoStraight,
 	$CamOrtho45,
@@ -60,7 +62,7 @@ func _attack() -> void:
 
 
 func _on_health_drip() -> void:
-	$HurtBox.add_damage(1.0)
+	life.add_damage(1.0)
 
 
 func _on_dead(from_hit_box: HitBox) -> void:

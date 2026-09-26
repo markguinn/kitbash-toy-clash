@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://0iap8bwrf2kj"]
 
-[ext_resource type="Script" uid="uid://dvkvfof2mg0ah" path="res://player/projectile.gd" id="1_2ju2n"]
-[ext_resource type="Script" uid="uid://bb7mqdux6xdrk" path="res://common/hit_box.gd" id="2_lf8d8"]
+[ext_resource type="Script" uid="uid://dvkvfof2mg0ah" path="res://player/projectile.gd" id="1_islhu"]
+[ext_resource type="Script" uid="uid://bb7mqdux6xdrk" path="res://common/hit_box.gd" id="2_q5b1o"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ilk7j"]
 friction = 0.0
@@ -28,7 +28,7 @@ collision_layer = 4
 physics_material_override = SubResource("PhysicsMaterial_ilk7j")
 gravity_scale = 0.0
 continuous_cd = true
-script = ExtResource("1_2ju2n")
+script = ExtResource("1_islhu")
 metadata/_custom_type_script = "uid://dvkvfof2mg0ah"
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=570308075]
@@ -41,7 +41,7 @@ debug_color = Color(0.8991218, 0.21658882, 0.5740158, 0.41960785)
 [node name="HitBox" type="Area3D" parent="." unique_id=1313874618]
 collision_layer = 4
 collision_mask = 0
-script = ExtResource("2_lf8d8")
+script = ExtResource("2_q5b1o")
 metadata/_custom_type_script = "uid://bb7mqdux6xdrk"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" unique_id=1394909299]
