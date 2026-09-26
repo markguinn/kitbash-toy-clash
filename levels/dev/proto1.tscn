@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://ctjamigafagl3"]
 
-[ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://actors/player/player.tscn" id="1_sxqe5"]
+[ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="1_sxqe5"]
 [ext_resource type="MeshLibrary" uid="uid://b27p3wokfin6l" path="res://levels/dev/proto-mesh-lib.tres" id="2_sxqe5"]
-[ext_resource type="PackedScene" uid="uid://s1dekdh64ngw" path="res://actors/big_enemy/big_enemy_spawner.tscn" id="4_mculg"]
-[ext_resource type="PackedScene" uid="uid://c5igbgv1nfbiy" path="res://actors/small_enemy/small_enemy_spawner.tscn" id="4_pomcm"]
+[ext_resource type="PackedScene" uid="uid://s1dekdh64ngw" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="4_mculg"]
+[ext_resource type="PackedScene" uid="uid://c5igbgv1nfbiy" path="res://enemies/small_enemy/small_enemy_spawner.tscn" id="4_pomcm"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_iynve"]
 

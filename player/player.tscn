@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bobgrurpfdnwv"]
 
-[ext_resource type="Script" uid="uid://dw0sh3di51t1p" path="res://actors/player/player.gd" id="1_nvxhs"]
-[ext_resource type="PackedScene" uid="uid://0iap8bwrf2kj" path="res://actors/player/projectile.tscn" id="2_ilk7j"]
+[ext_resource type="Script" uid="uid://dw0sh3di51t1p" path="res://player/player.gd" id="1_nvxhs"]
+[ext_resource type="PackedScene" uid="uid://0iap8bwrf2kj" path="res://player/projectile.tscn" id="2_ilk7j"]
 [ext_resource type="Script" uid="uid://dqwtfo8bvm7rb" path="res://common/hurt_box.gd" id="3_ax26v"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
