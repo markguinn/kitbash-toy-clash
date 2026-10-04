@@ -44,7 +44,6 @@ func _on_continue() -> void:
 	prints("continuing")
 	get_tree().paused = false
 	var player = get_tree().get_first_node_in_group("player")
-	var phb = player.get_node("HurtBox")
 	if last_enemy:
 		var pb = player.get_node("Body")
 		var hurtbox = last_enemy.get_node("HurtBox")
@@ -55,13 +54,13 @@ func _on_continue() -> void:
 			player.get_node("Body/Leg_L").scale *= 2.0
 			player.get_node("Body/Leg_R").scale *= 2.0
 			#player.get_node("Body/Leg_R").mesh.material.albedo_color = body.mesh.material.albedo_color
-		elif hurtbox.armor < phb.armor:
-			phb.armor = hurtbox.armor
+		elif hurtbox.armor < player.life.armor:
+			player.life.armor = player.life.armor
 			pb.mesh.material.albedo_color = body.mesh.material.albedo_color
 	for n in get_tree().get_nodes_in_group("enemies"):
 		# TODO: probably by distance?
 		n.queue_free()
-	phb.hp = phb.starting_hp
+	player.life.hp = player.life.starting_hp
 	get_tree().get_first_node_in_group("confirm_dlg").hide()
 
 

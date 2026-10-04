@@ -7,6 +7,7 @@ extends CharacterBody3D
 
 var cur_dir := Vector3(1.0, 0.0, 0.0)
 var cur_cam := 0
+var target_rot: float
 
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var life: Life = $Life
@@ -16,6 +17,8 @@ var cur_cam := 0
 	$CamPerspective,
 	$CamFrustrum,
 ]
+@onready var body_mesh: Node3D = $BodyMesh
+@onready var animation_player: AnimationPlayer = $BodyMesh/AnimationPlayer
 
 func _ready() -> void:
 	_set_cam(0)
@@ -35,14 +38,20 @@ func _get_input_dir() -> Vector2:
 	return dir.rotated(-compensation)
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var dir := _get_input_dir()
 	if dir.length() > 0.0:
 		cur_dir = Vector3(dir.x, 0.0, dir.y)
 		velocity = cur_dir * speed
-		$Body.rotation.y = -dir.angle() - PI / 2.0
+		target_rot = -dir.angle() + PI / 2.0
+		if animation_player.current_animation == "idle":
+			animation_player.play("walk", 0.2)
 	else:
 		velocity = Vector3.ZERO
+		if animation_player.current_animation == "walk":
+			animation_player.play("idle", 0.2)
+	if !is_equal_approx(body_mesh.rotation.y, target_rot):
+		body_mesh.rotation.y = rotate_toward(body_mesh.rotation.y, target_rot, delta * PI * 2.0 / 0.4)
 	move_and_slide()
 
 

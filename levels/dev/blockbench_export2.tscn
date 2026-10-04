@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cyqiygoannuhw"]
+
+[ext_resource type="PackedScene" uid="uid://de7on2urvyvaj" path="res://_source_assets/test3.gltf" id="1_533do"]
+
+[node name="blockbench_export" unique_id=712910680 instance=ExtResource("1_533do")]
+
+[node name="Skeleton3D" parent="armature" parent_id_path=PackedInt32Array(842524657) index="0" unique_id=1846630260]
+bones/3/rotation = Quaternion(-0.024038933, -0.029707666, -0.9225271, 0.3840356)
+bones/4/rotation = Quaternion(-0.1420531, 0, 0, 0.9898591)
+bones/5/rotation = Quaternion(-0.01756831, 0.03992461, 0.91443956, 0.40236515)
+bones/6/rotation = Quaternion(-0.2812251, 0, 0, 0.95964193)

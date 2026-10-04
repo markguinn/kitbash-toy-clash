@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cfcdkutfundtu"]
+
+[ext_resource type="PackedScene" uid="uid://p076x5fcyfky" path="res://_source_assets/generic-player/generic_player.gltf" id="1_hslv5"]
+
+[node name="TempPlayer" type="Node3D" unique_id=1195337186]
+
+[node name="blockbench_export" parent="." unique_id=710161177 instance=ExtResource("1_hslv5")]
+
+[node name="left_arm" parent="blockbench_export/root/torso" parent_id_path=PackedInt32Array(710161177, 2078308785) index="2" unique_id=220194549]
+transform = Transform3D(0.043619335, 0.99904823, 0, -0.99904823, 0.043619335, 0, 0, 0, 1, 0.9375, 0.0625, 0)
+
+[node name="right_arm" parent="blockbench_export/root/torso" parent_id_path=PackedInt32Array(710161177, 2078308785) index="3" unique_id=1792509428]
+transform = Transform3D(0.043619335, -0.99904823, 0, 0.99904823, 0.043619335, 0, 0, 0, 1, -0.9375, 0.0625, 0)
+
+[node name="AnimationPlayer" parent="blockbench_export" index="1" unique_id=2060651026]
+autoplay = &"idle"
+
+[editable path="blockbench_export"]

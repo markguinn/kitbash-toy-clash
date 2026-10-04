@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://cuaqrnhkiwjwm"]
+
+[ext_resource type="PackedScene" uid="uid://ctjamigafagl3" path="res://levels/dev/proto1.tscn" id="1_ukvbq"]
+[ext_resource type="Shader" uid="uid://wcccssdphxi1" path="res://levels/dev/pixel_test.gdshader" id="2_e0l8i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ukvbq"]
+shader = ExtResource("2_e0l8i")
+shader_parameter/pixel_count = Vector2(320, 240)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_iynve"]
+viewport_path = NodePath("SubViewport")
+
+[node name="PixelTest" type="CanvasLayer" unique_id=1456893750]
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1054631763]
+size = Vector2i(960, 540)
+
+[node name="PrototypeLevel" parent="SubViewport" unique_id=525915082 instance=ExtResource("1_ukvbq")]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2116150727]
+material = SubResource("ShaderMaterial_ukvbq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_iynve")
+expand_mode = 3
+stretch_mode = 4
