@@ -16,6 +16,7 @@ func _ready() -> void:
 
 	enemy_died.connect(_on_enemy_died)
 	player_died.connect(_on_player_died)
+	Log.debug.call_deferred(self, "ready")
 
 func _on_enemy_died(enemy, _hit_box) -> void:
 	var dc = enemy.get("loot_parts_dc")

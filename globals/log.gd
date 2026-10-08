@@ -23,14 +23,13 @@ func _ready() -> void:
 	level_icons[LogLevel.WARNING] = Game.config.get_value("log_icon", "WARNING", "")
 	level_icons[LogLevel.ERROR] = Game.config.get_value("log_icon", "ERROR", "")
 
-	if !Game.is_dev_mode() and FileAccess.file_exists(VENDOR_LICENSE_PATH):
-		var file = FileAccess.open(VENDOR_LICENSE_PATH, FileAccess.READ)
-		prints(file.get_as_text())
+	if !Game.is_dev_mode():
+		print(Engine.get_license_text())
 
-	Log.error(self, "test err")
-	Log.warn(self, "test warn")
-	Log.info(self, "test info")
-	Log.debug(self, "test debug")
+	#Log.error(self, "test err")
+	#Log.warn(self, "test warn")
+	#Log.info(self, "test info")
+	#Log.debug(self, "test debug")
 
 
 func _get_source_name(source: Variant) -> String:
@@ -59,7 +58,7 @@ func _format(source: Variant, level: LogLevel, args: Array[Variant]) -> String:
 	if source_format:
 		output = source_format % [output]
 	output = base_format % [icon, Time.get_ticks_msec(), source_name, output]
-	output = level_formats[level] % [output]
+	output = level_formats.get(level, "%s") % [output]
 	return output
 
 
