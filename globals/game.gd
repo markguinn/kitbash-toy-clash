@@ -36,12 +36,12 @@ func _on_player_died(enemy, _hit_box) -> void:
 
 
 func _on_reset() -> void:
-	prints("reseting")
+	Log.debug(self, "reseting")
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	
 func _on_continue() -> void:
-	prints("continuing")
+	Log.debug(self, "continuing")
 	get_tree().paused = false
 	var player = get_tree().get_first_node_in_group("player")
 	if last_enemy:
