@@ -5,7 +5,7 @@ extends CharacterBody3D
 @export var projectile_speed := 30.0
 @export var projectile_tpl: PackedScene
 
-var cur_dir := Vector3(1.0, 0.0, 0.0)
+var cur_dir := Vector3(0.0, 0.0, 1.0)
 var cur_cam := 0
 var target_rot: float
 
@@ -46,8 +46,7 @@ func _get_input_dir() -> Vector2:
 func _physics_process(delta: float) -> void:
 	var dir := _get_input_dir()
 	if dir.length() > 0.0:
-		cur_dir = Vector3(dir.x, 0.0, dir.y)
-		velocity = cur_dir * speed
+		velocity = Vector3(dir.x, 0.0, dir.y) * speed
 		target_rot = -dir.angle() + PI / 2.0
 		if animation_player.current_animation == "idle":
 			animation_player.play("walk", 0.2)
@@ -58,6 +57,9 @@ func _physics_process(delta: float) -> void:
 			animation_player.play("idle", 0.2)
 	if !is_equal_approx(body_mesh.rotation.y, target_rot):
 		body_mesh.rotation.y = rotate_toward(body_mesh.rotation.y, target_rot, delta * PI * 2.0 / 0.4)
+		var dir2: Vector2 = Vector2.RIGHT.rotated(-body_mesh.rotation.y + PI / 2.0)
+		# TODO: this should probably be a utility method in our codebase if it's not already one somewhere in godot's built-ins
+		cur_dir = Vector3(dir2.x, 0.0, dir2.y)
 	move_and_slide()
 
 
