@@ -11,12 +11,17 @@ var target_rot: float
 
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var life: Life = $Life
+
+# We won't leave this in the final game. I suspect we'll use
+# the ortho straight or ortho 45 view, but I'm not ready to
+# commit yet. Press tab to swap between them.
 @onready var cams: Array[Camera3D] = [
 	$CamOrthoStraight,
 	$CamOrtho45,
 	$CamPerspective,
 	$CamFrustrum,
 ]
+
 @onready var body_mesh: Node3D = $BodyMesh
 @onready var animation_player: AnimationPlayer = $BodyMesh/AnimationPlayer
 
@@ -48,6 +53,7 @@ func _physics_process(delta: float) -> void:
 			animation_player.play("walk", 0.2)
 	else:
 		velocity = Vector3.ZERO
+		target_rot = body_mesh.rotation.y
 		if animation_player.current_animation == "walk":
 			animation_player.play("idle", 0.2)
 	if !is_equal_approx(body_mesh.rotation.y, target_rot):
