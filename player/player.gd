@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
-
 @export var speed := 10.0
+@export var rotation_speed := 0.4
 @export var projectile_speed := 30.0
 @export var projectile_tpl: PackedScene
 
@@ -22,11 +22,31 @@ var target_rot: float
 	$CamFrustrum,
 ]
 
+# this is very temporary - just feeling out the body swapping
+@onready var body_mesh2: Node3D = $TempSwapBody
+@onready var animation_player2: AnimationPlayer = $TempSwapBody/AnimationPlayer
+
 @onready var body_mesh: Node3D = $BodyMesh
 @onready var animation_player: AnimationPlayer = $BodyMesh/AnimationPlayer
 
 func _ready() -> void:
 	_set_cam(0)
+
+
+func _vec2_to_vec3(dir: Vector2) -> Vector3:
+	return Vector3(dir.x, 0.0, dir.y)
+
+
+func _fix_angle(angle: float) -> float:
+	return -angle + PI / 2.0
+
+
+func _angle_to_vec2(angle: float) -> Vector2:
+	return Vector2.RIGHT.rotated(_fix_angle(angle))
+
+
+func _angle_to_vec3(angle: float) -> Vector3:
+	return _vec2_to_vec3(_angle_to_vec2(angle))
 
 
 func _set_cam(num: int) -> void:
@@ -46,8 +66,8 @@ func _get_input_dir() -> Vector2:
 func _physics_process(delta: float) -> void:
 	var dir := _get_input_dir()
 	if dir.length() > 0.0:
-		velocity = Vector3(dir.x, 0.0, dir.y) * speed
-		target_rot = -dir.angle() + PI / 2.0
+		velocity = _vec2_to_vec3(dir) * speed
+		target_rot = _fix_angle(dir.angle())
 		if animation_player.current_animation == "idle":
 			animation_player.play("walk", 0.2)
 	else:
@@ -56,10 +76,10 @@ func _physics_process(delta: float) -> void:
 		if animation_player.current_animation == "walk":
 			animation_player.play("idle", 0.2)
 	if !is_equal_approx(body_mesh.rotation.y, target_rot):
-		body_mesh.rotation.y = rotate_toward(body_mesh.rotation.y, target_rot, delta * PI * 2.0 / 0.4)
-		var dir2: Vector2 = Vector2.RIGHT.rotated(-body_mesh.rotation.y + PI / 2.0)
-		# TODO: this should probably be a utility method in our codebase if it's not already one somewhere in godot's built-ins
-		cur_dir = Vector3(dir2.x, 0.0, dir2.y)
+		body_mesh.rotation.y = rotate_toward(body_mesh.rotation.y, target_rot, delta * PI * 2.0 / rotation_speed)
+		cur_dir = _angle_to_vec3(body_mesh.rotation.y)
+	if not is_on_floor():
+		velocity.y = -10.0
 	move_and_slide()
 
 
