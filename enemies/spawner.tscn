@@ -11,6 +11,25 @@ radius = 3.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_7sxga"]
 radius = 3.5
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_en1mp"]
+viewport_path = NodePath("HealthBar/the/health")
+
+[sub_resource type="Gradient" id="Gradient_xgimp"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t8evb"]
+gradient = SubResource("Gradient_xgimp")
+width = 82
+height = 10
+
+[sub_resource type="Gradient" id="Gradient_f4crx"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h2hsm"]
+gradient = SubResource("Gradient_f4crx")
+width = 80
+height = 8
+
 [node name="Spawner" type="StaticBody3D" unique_id=1330096657 groups=["spawners"]]
 collision_layer = 8
 script = ExtResource("1_gmyup")
@@ -38,6 +57,25 @@ text = "hp:
 "
 font = ExtResource("3_en1mp")
 font_size = 48
+
+[node name="HealthBar" type="Node3D" parent="." unique_id=505668356]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 5, 0)
+
+[node name="the" type="Sprite3D" parent="HealthBar" unique_id=1032024360]
+billboard = 1
+texture = SubResource("ViewportTexture_en1mp")
+
+[node name="health" type="SubViewport" parent="HealthBar/the" unique_id=321778681]
+transparent_bg = true
+size = Vector2i(82, 10)
+
+[node name="bar" type="TextureProgressBar" parent="HealthBar/the/health" unique_id=530466794]
+offset_right = 82.0
+offset_bottom = 40.0
+value = 75.0
+texture_under = SubResource("GradientTexture2D_t8evb")
+texture_progress = SubResource("GradientTexture2D_h2hsm")
+texture_progress_offset = Vector2(1, 1)
 
 [node name="Life" type="Node" parent="." unique_id=2033270747]
 script = ExtResource("4_en1mp")

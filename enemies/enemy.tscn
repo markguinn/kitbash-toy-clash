@@ -12,6 +12,25 @@ size = Vector3(2, 2, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_iynve"]
 size = Vector3(2.2, 2, 2.2)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_kdu0b"]
+viewport_path = NodePath("HealthBar/the/health")
+
+[sub_resource type="Gradient" id="Gradient_en1mp"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_07tka"]
+gradient = SubResource("Gradient_en1mp")
+width = 82
+height = 10
+
+[sub_resource type="Gradient" id="Gradient_xgimp"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3t1x0"]
+gradient = SubResource("Gradient_xgimp")
+width = 80
+height = 8
+
 [node name="Enemy" type="CharacterBody3D" unique_id=1807322689 groups=["enemies"]]
 collision_layer = 8
 collision_mask = 9
@@ -56,3 +75,22 @@ billboard = 1
 text = "health: 2"
 font = ExtResource("5_07tka")
 font_size = 48
+
+[node name="HealthBar" type="Node3D" parent="." unique_id=1040571404]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 5, 0)
+
+[node name="the" type="Sprite3D" parent="HealthBar" unique_id=811309685]
+billboard = 1
+texture = SubResource("ViewportTexture_kdu0b")
+
+[node name="health" type="SubViewport" parent="HealthBar/the" unique_id=1652163268]
+transparent_bg = true
+size = Vector2i(82, 10)
+
+[node name="bar" type="TextureProgressBar" parent="HealthBar/the/health" unique_id=1726116059]
+offset_right = 82.0
+offset_bottom = 40.0
+value = 75.0
+texture_under = SubResource("GradientTexture2D_07tka")
+texture_progress = SubResource("GradientTexture2D_3t1x0")
+texture_progress_offset = Vector2(1, 1)

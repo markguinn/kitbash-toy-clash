@@ -16,15 +16,20 @@ signal dead(from_hit_box: HitBox)
 
 var label: Label3D
 var hp: float
+var healthBar: TextureProgressBar
 
 
 func _ready() -> void:
 	hp = starting_hp
+	if starting_hp > max_hp: max_hp = starting_hp
 	if not host:
 		host = get_parent()
 	label = get_node_or_null("HealthLabel")
 	if not label:
 		label = host.get_node_or_null("HealthLabel")
+	healthBar = get_node_or_null("HealthBar/the/health/bar")
+	if not healthBar:
+		healthBar = host.get_node_or_null("HealthBar/the/health/bar")
 	_update_label()
 
 
@@ -62,3 +67,6 @@ func add_damage(incoming_damage: float, from_hit_box: HitBox = null, bypass_armo
 func _update_label() -> void:
 	if label:
 		label.text = "hp: %d" % [int(hp)]
+	if healthBar:
+		healthBar.value = (hp / max_hp) * 100
+		# print("new health bar value:"+str(healthBar.value))
