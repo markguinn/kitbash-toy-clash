@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b5ch0jw5otune" path="res://enemies/spawner.gd" id="1_gmyup"]
 [ext_resource type="Script" uid="uid://dqwtfo8bvm7rb" path="res://common/hurt_box.gd" id="3_6qnf4"]
+[ext_resource type="FontFile" uid="uid://2g03ikvmbjhk" path="res://common/Handjet-Medium.ttf" id="3_en1mp"]
 [ext_resource type="Script" uid="uid://cy8ptutfeorc6" path="res://common/life.gd" id="4_en1mp"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_en1mp"]
@@ -35,6 +36,7 @@ offset = Vector2(0, 30)
 billboard = 1
 text = "hp:
 "
+font = ExtResource("3_en1mp")
 font_size = 48
 
 [node name="Life" type="Node" parent="." unique_id=2033270747]

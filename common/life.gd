@@ -61,4 +61,4 @@ func add_damage(incoming_damage: float, from_hit_box: HitBox = null, bypass_armo
 
 func _update_label() -> void:
 	if label:
-		label.text = "hp: %0.1f" % [hp]
+		label.text = "hp: %d" % [int(hp)]
