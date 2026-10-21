@@ -137,10 +137,12 @@ func _swap_legs() -> void:
 
 func _attack() -> void:
 	var p: Projectile = projectile_tpl.instantiate()
-	get_parent().add_child(p)
 	p.global_position = global_position
-	await get_tree().physics_frame
-	p.apply_impulse(cur_dir * projectile_speed)
+	p.tree_entered.connect( ## Shoot the projectile once it's valid
+		p.apply_impulse.bind(cur_dir * projectile_speed),
+		CONNECT_ONE_SHOT
+	)
+	Level.add_to_scene(p)
 
 
 func _on_health_drip() -> void:
