@@ -96,16 +96,17 @@ environment = SubResource("Environment_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=771552401]
-transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 0, 10, 6)
+transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 10, 20, 10)
 projection = 1
 size = 30.389
-near = 0.005
+near = 0.001
 metadata/_edit_lock_ = true
 
 [node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=1087218669]
-transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 15, 10)
+transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 20, 15)
 projection = 1
-size = 30.382
+size = 30.0
+near = 0.001
 metadata/_edit_lock_ = true
 
 [node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=449395750]
