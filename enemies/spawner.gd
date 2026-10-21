@@ -23,9 +23,9 @@ func _ready() -> void:
 
 func _on_spawn_timer() -> void:
 	var obj = enemy_type.instantiate()
-	get_parent().add_child(obj)
 	var start_offset = Vector3(spawn_radius, 0.0, 0.0).rotated(Vector3.UP, randf_range(0, PI * 2.0))
-	obj.global_position = global_position + start_offset
+	obj.position = position + start_offset
+	get_parent().add_child(obj)
 
 
 # TODO: do something fun
