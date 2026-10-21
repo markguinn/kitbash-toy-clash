@@ -1,4 +1,4 @@
-extends CharacterBody3D
+class_name Player extends CharacterBody3D
 
 @export var speed := 10.0
 @export var rotation_speed := 0.4
