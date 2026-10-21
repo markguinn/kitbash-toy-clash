@@ -38,7 +38,6 @@ fog_density = 1.0
 [node name="PrototypeLevel" type="Node3D" unique_id=525915082]
 
 [node name="[pixelate!]" type="CanvasLayer" parent="." unique_id=1411301213]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="[pixelate!]" unique_id=397246020]
 material = ExtResource("1_pomcm")
@@ -49,7 +48,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="[crt effect]" type="CanvasLayer" parent="." unique_id=2027285743]
-visible = false
 
 [node name="TextureRect" type="TextureRect" parent="[crt effect]" unique_id=1583350516]
 texture_filter = 5
