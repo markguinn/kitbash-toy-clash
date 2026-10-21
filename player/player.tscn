@@ -43,9 +43,6 @@ collision_layer = 2
 collision_mask = 9
 motion_mode = 1
 script = ExtResource("1_nvxhs")
-speed = null
-rotation_speed = null
-projectile_speed = null
 projectile_tpl = ExtResource("2_ilk7j")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=497236600]

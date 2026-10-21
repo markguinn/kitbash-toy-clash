@@ -37,7 +37,6 @@ var target_rot: float
 
 func _ready() -> void:
 	_set_cam(0)
-	Log.debug(self, animation_player.get_animation_library())
 
 
 func _vec2_to_vec3(dir: Vector2) -> Vector3:
@@ -101,8 +100,36 @@ func _input(event: InputEvent) -> void:
 
 func _swap_legs() -> void:
 	body_mesh2.transform = body_mesh.transform
-	legs.reparent(body_root2)
-	legs2.reparent(body_root)
+	body_root.remove_child(legs)
+	body_root2.remove_child(legs2)
+	body_root2.add_child(legs)
+	body_root.add_child(legs2)
+	
+	for anim_name in animation_player.get_animation_list():
+		var a1:Animation = animation_player.get_animation(anim_name)
+		var a2:Animation = animation_player2.get_animation(anim_name)
+
+		var a1_leg_tracks: Array[int] = []
+		var a2_leg_tracks: Array[int] = []
+		for i in range(a1.get_track_count()):
+			var np: NodePath = a1.track_get_path(i)
+			if np.get_name(1) == "legs":
+				a1_leg_tracks.append(i)
+		for i in range(a2.get_track_count()):
+			var np: NodePath = a2.track_get_path(i)
+			if np.get_name(1) == "legs":
+				a2_leg_tracks.append(i)
+		a1_leg_tracks.reverse()
+		a2_leg_tracks.reverse()
+		for idx in a1_leg_tracks:
+			a1.copy_track(idx, a2)
+			a1.remove_track(idx)
+		for idx in a2_leg_tracks:
+			a2.copy_track(idx, a1)
+			a2.remove_track(idx)
+
+	animation_player.clear_caches()
+	
 	var t = legs2
 	legs2 = legs
 	legs = t
