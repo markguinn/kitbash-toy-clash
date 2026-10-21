@@ -42,21 +42,21 @@ height = 3.0
 [sub_resource type="ViewportTexture" id="ViewportTexture_boad6"]
 viewport_path = NodePath("HealthBar/the/health")
 
-[sub_resource type="Gradient" id="Gradient_en1mp"]
+[sub_resource type="Gradient" id="Gradient_boad6"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_rgyib"]
-gradient = SubResource("Gradient_en1mp")
-width = 82
-height = 10
+gradient = SubResource("Gradient_boad6")
+width = 80
+height = 8
 
-[sub_resource type="Gradient" id="Gradient_xgimp"]
+[sub_resource type="Gradient" id="Gradient_rgyib"]
 colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hg6s5"]
-gradient = SubResource("Gradient_xgimp")
-width = 80
-height = 8
+gradient = SubResource("Gradient_rgyib")
+width = 78
+height = 6
 
 [node name="Player" type="CharacterBody3D" unique_id=1653260376 groups=["player"]]
 collision_layer = 2
@@ -134,18 +134,17 @@ shape = SubResource("CapsuleShape3D_l7t1d")
 debug_color = Color(0.35837752, 0.61519843, 0.17483082, 0.41960785)
 
 [node name="HealthLabel" type="Label3D" parent="." unique_id=932064038]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
 pixel_size = 0.02
-offset = Vector2(0, 50)
 billboard = 1
 texture_filter = 0
 text = "hp: 5"
 font = ExtResource("6_boad6")
-font_size = 48
+font_size = 100
 width = 512.0
 
 [node name="HealthBar" type="Node3D" parent="." unique_id=2009962165]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 5, 0)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 5.75, 0)
 
 [node name="the" type="Sprite3D" parent="HealthBar" unique_id=596231710]
 billboard = 1
@@ -153,7 +152,7 @@ texture = SubResource("ViewportTexture_boad6")
 
 [node name="health" type="SubViewport" parent="HealthBar/the" unique_id=992856522]
 transparent_bg = true
-size = Vector2i(82, 10)
+size = Vector2i(80, 8)
 
 [node name="bar" type="TextureProgressBar" parent="HealthBar/the/health" unique_id=550234112]
 offset_right = 82.0

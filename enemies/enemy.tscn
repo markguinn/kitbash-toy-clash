@@ -12,24 +12,24 @@ size = Vector3(2, 2, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_iynve"]
 size = Vector3(2.2, 2, 2.2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_kdu0b"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_07tka"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="Gradient" id="Gradient_en1mp"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_07tka"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3t1x0"]
 gradient = SubResource("Gradient_en1mp")
-width = 82
-height = 10
+width = 80
+height = 8
 
 [sub_resource type="Gradient" id="Gradient_xgimp"]
 colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3t1x0"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_epsnb"]
 gradient = SubResource("Gradient_xgimp")
-width = 80
-height = 8
+width = 78
+height = 6
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1807322689 groups=["enemies"]]
 collision_layer = 8
@@ -67,30 +67,31 @@ debug_color = Color(0.9430334, 0.22393367, 0.22387949, 0.41960785)
 script = ExtResource("4_a6vjd")
 metadata/_custom_type_script = "uid://cy8ptutfeorc6"
 
-[node name="HealthLabel" type="Label3D" parent="." unique_id=1874895765]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-pixel_size = 0.02
-offset = Vector2(0, 30)
-billboard = 1
-text = "health: 2"
-font = ExtResource("5_07tka")
-font_size = 48
-
-[node name="HealthBar" type="Node3D" parent="." unique_id=1040571404]
+[node name="HealthBar" type="Node3D" parent="." unique_id=38360166]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 5, 0)
 
-[node name="the" type="Sprite3D" parent="HealthBar" unique_id=811309685]
+[node name="the" type="Sprite3D" parent="HealthBar" unique_id=216841935]
 billboard = 1
-texture = SubResource("ViewportTexture_kdu0b")
+texture = SubResource("ViewportTexture_07tka")
 
-[node name="health" type="SubViewport" parent="HealthBar/the" unique_id=1652163268]
+[node name="health" type="SubViewport" parent="HealthBar/the" unique_id=953765333]
 transparent_bg = true
-size = Vector2i(82, 10)
+size = Vector2i(80, 8)
 
-[node name="bar" type="TextureProgressBar" parent="HealthBar/the/health" unique_id=1726116059]
+[node name="bar" type="TextureProgressBar" parent="HealthBar/the/health" unique_id=1858304708]
 offset_right = 82.0
 offset_bottom = 40.0
 value = 75.0
-texture_under = SubResource("GradientTexture2D_07tka")
-texture_progress = SubResource("GradientTexture2D_3t1x0")
+texture_under = SubResource("GradientTexture2D_3t1x0")
+texture_progress = SubResource("GradientTexture2D_epsnb")
 texture_progress_offset = Vector2(1, 1)
+
+[node name="HealthLabel" type="Label3D" parent="." unique_id=37585518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5, 0)
+pixel_size = 0.02
+billboard = 1
+texture_filter = 0
+text = "hp: 5"
+font = ExtResource("5_07tka")
+font_size = 100
+width = 512.0
