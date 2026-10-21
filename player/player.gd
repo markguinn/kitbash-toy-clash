@@ -24,13 +24,20 @@ var target_rot: float
 
 # this is very temporary - just feeling out the body swapping
 @onready var body_mesh2: Node3D = $TempSwapBody
+@onready var body_root2: Node3D = $TempSwapBody/root
+@onready var legs2: Node3D = $TempSwapBody/root/legs
 @onready var animation_player2: AnimationPlayer = $TempSwapBody/AnimationPlayer
 
 @onready var body_mesh: Node3D = $BodyMesh
+@onready var body_root: Node3D = $BodyMesh/root
+@onready var legs: Node3D = $BodyMesh/root/legs
 @onready var animation_player: AnimationPlayer = $BodyMesh/AnimationPlayer
+
+@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
 func _ready() -> void:
 	_set_cam(0)
+	Log.debug(self, animation_player.get_animation_library())
 
 
 func _vec2_to_vec3(dir: Vector2) -> Vector3:
@@ -88,7 +95,18 @@ func _input(event: InputEvent) -> void:
 		_attack.call_deferred()
 	if event.is_action_pressed("switch_cam"):
 		_set_cam(cur_cam + 1)
+	if event.is_action_pressed("ui_cancel"):
+		_swap_legs()
 
+
+func _swap_legs() -> void:
+	body_mesh2.transform = body_mesh.transform
+	legs.reparent(body_root2)
+	legs2.reparent(body_root)
+	var t = legs2
+	legs2 = legs
+	legs = t
+	collision_shape_3d.shape.height = 4.0 if collision_shape_3d.shape.height == 2.0 else 2.0
 
 func _attack() -> void:
 	var p: Projectile = projectile_tpl.instantiate()

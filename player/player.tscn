@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://0iap8bwrf2kj" path="res://player/projectile.tscn" id="2_ilk7j"]
 [ext_resource type="Script" uid="uid://dqwtfo8bvm7rb" path="res://common/hurt_box.gd" id="3_ax26v"]
 [ext_resource type="PackedScene" uid="uid://p076x5fcyfky" path="res://_source_assets/generic-player/generic_player.gltf" id="3_qjkh3"]
+[ext_resource type="PackedScene" uid="uid://bng6sl0sm81dy" path="res://_source_assets/generic-player/generic_player_mods.gltf" id="4_g6k8r"]
 [ext_resource type="Script" uid="uid://cy8ptutfeorc6" path="res://common/life.gd" id="4_yw30f"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
 radius = 1.0
-height = 3.7
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1fxm"]
 
@@ -36,12 +36,16 @@ size = Vector3(0.4, 1, 0.4)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l7t1d"]
 radius = 1.2
-height = 4.0
+height = 3.0
 
 [node name="Player" type="CharacterBody3D" unique_id=1653260376 groups=["player"]]
 collision_layer = 2
 collision_mask = 9
+motion_mode = 1
 script = ExtResource("1_nvxhs")
+speed = null
+rotation_speed = null
+projectile_speed = null
 projectile_tpl = ExtResource("2_ilk7j")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=497236600]
@@ -50,7 +54,7 @@ shape = SubResource("CapsuleShape3D_iynve")
 debug_color = Color(0, 0.6, 0.69803923, 1)
 
 [node name="BodyMesh" parent="." unique_id=710161177 instance=ExtResource("3_qjkh3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
 
 [node name="left_arm" parent="BodyMesh/root/torso" parent_id_path=PackedInt32Array(710161177, 1633050325) index="2" unique_id=1727721815]
 transform = Transform3D(0.043619335, 0.99904823, 0, -0.99904823, 0.043619335, 0, 0, 0, 1, 0.9375, 0.0625, 0)
@@ -66,6 +70,16 @@ transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, -0.9375,
 
 [node name="AnimationPlayer" parent="BodyMesh" index="1" unique_id=1611232282]
 autoplay = &"idle"
+
+[node name="TempSwapBody" parent="." unique_id=1267736368 instance=ExtResource("4_g6k8r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
+visible = false
+
+[node name="left_arm" parent="TempSwapBody/root/torso" parent_id_path=PackedInt32Array(1267736368, 363459269) index="2" unique_id=520393088]
+transform = Transform3D(0.043619335, 0.99904823, 0, -0.99904823, 0.043619335, 0, 0, 0, 1, 0.9375, 0.0625, 0)
+
+[node name="right_arm" parent="TempSwapBody/root/torso" parent_id_path=PackedInt32Array(1267736368, 363459269) index="3" unique_id=1609070284]
+transform = Transform3D(0.043619335, -0.99904823, 0, 0.99904823, 0.043619335, 0, 0, 0, 1, -0.9375, 0.0625, 0)
 
 [node name="Body" type="MeshInstance3D" parent="." unique_id=2028936697]
 visible = false
@@ -112,7 +126,7 @@ font_size = 48
 
 [node name="Life" type="Node" parent="." unique_id=1673273175]
 script = ExtResource("4_yw30f")
-starting_hp = 100.0
+starting_hp = 1000.0
 metadata/_custom_type_script = "uid://cy8ptutfeorc6"
 
 [node name="HealthDripTimer" type="Timer" parent="." unique_id=883919305]
@@ -122,3 +136,4 @@ autostart = true
 [connection signal="timeout" from="HealthDripTimer" to="." method="_on_health_drip"]
 
 [editable path="BodyMesh"]
+[editable path="TempSwapBody"]
