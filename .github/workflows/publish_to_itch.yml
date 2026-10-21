@@ -27,7 +27,7 @@ env:
   EXPORT_FOLDER_WEB: ./export
   EXPORT_RELEASE_NAME: Web
   ITCH_USER: markguinn
-  ITCH_GAME: toylet
+  ITCH_GAME: kitbash-toy-clash
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 # permissions:
