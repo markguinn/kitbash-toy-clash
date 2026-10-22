@@ -3,37 +3,14 @@
 [ext_resource type="Script" uid="uid://dw0sh3di51t1p" path="res://player/player.gd" id="1_nvxhs"]
 [ext_resource type="PackedScene" uid="uid://0iap8bwrf2kj" path="res://player/projectile.tscn" id="2_ilk7j"]
 [ext_resource type="Script" uid="uid://dqwtfo8bvm7rb" path="res://common/hurt_box.gd" id="3_ax26v"]
+[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://player/body_part_container.gd" id="3_boad6"]
 [ext_resource type="PackedScene" uid="uid://p076x5fcyfky" path="res://_source_assets/generic-player/generic_player.gltf" id="3_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://bng6sl0sm81dy" path="res://_source_assets/generic-player/generic_player_mods.gltf" id="4_g6k8r"]
+[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://player/body_part.gd" id="4_rgyib"]
 [ext_resource type="Script" uid="uid://cy8ptutfeorc6" path="res://common/life.gd" id="4_yw30f"]
-[ext_resource type="FontFile" uid="uid://2g03ikvmbjhk" path="res://common/Handjet-Medium.ttf" id="6_boad6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
 radius = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1fxm"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_l7t1d"]
-material = SubResource("StandardMaterial3D_b1fxm")
-size = Vector3(1, 1, 0.6)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6p1w3"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_sxqe5"]
-material = SubResource("StandardMaterial3D_6p1w3")
-size = Vector3(0.4, 0.4, 0.8)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ax26v"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_ojre7"]
-material = SubResource("StandardMaterial3D_ax26v")
-size = Vector3(0.6, 0.3, 0.3)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lsqbn"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_hchdm"]
-material = SubResource("StandardMaterial3D_lsqbn")
-size = Vector3(0.4, 1, 0.4)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l7t1d"]
 radius = 1.2
@@ -70,57 +47,50 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_iynve")
 debug_color = Color(0, 0.6, 0.69803923, 1)
 
-[node name="BodyMesh" parent="." unique_id=710161177 instance=ExtResource("3_qjkh3")]
+[node name="Body" parent="." unique_id=710161177 instance=ExtResource("3_qjkh3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
 
-[node name="left_arm" parent="BodyMesh/root/torso" parent_id_path=PackedInt32Array(710161177, 1961268035) index="2" unique_id=1386319994]
-transform = Transform3D(0.043619335, 0.99904823, 0, -0.99904823, 0.043619335, 0, 0, 0, 1, 0.9375, 0.0625, 0)
+[node name="root" parent="Body" index="0" unique_id=87451923]
+script = ExtResource("3_boad6")
 
-[node name="left_arm2" parent="BodyMesh/root/torso/left_arm" index="1" unique_id=259084533]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0.875, 0, 0)
+[node name="torso" parent="Body/root" index="0" unique_id=1338838475]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1695675, 0)
 
-[node name="right_arm" parent="BodyMesh/root/torso" parent_id_path=PackedInt32Array(710161177, 1961268035) index="3" unique_id=517382892]
-transform = Transform3D(0.04361933, -0.99904823, 0, 0.9990482, 0.043619335, 0, 0, 0, 0.99999994, -0.9375, 0.0625, 0)
+[node name="left_arm" parent="Body/root/torso" index="2" unique_id=1362719382]
+transform = Transform3D(0.1275137, 0.9918368, 0, -0.9918368, 0.1275137, 0, 0, 0, 1, 0.9375, 0.0625, 0)
 
-[node name="left_foot" parent="BodyMesh/root/legs/left_leg/left_shin" parent_id_path=PackedInt32Array(710161177, 381022136) index="1" unique_id=761127913]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, -0.9375, 0)
+[node name="left_arm2" parent="Body/root/torso/left_arm" index="1" unique_id=549379571]
+transform = Transform3D(0.99370044, 0.112069026, 0, -0.11206903, 0.9937004, 0, 0, 0, 1, 0.875, 0, 0)
 
-[node name="AnimationPlayer" parent="BodyMesh" index="1" unique_id=1254345470]
+[node name="right_arm" parent="Body/root/torso" index="3" unique_id=988303042]
+transform = Transform3D(0.12751369, -0.9918368, 0, 0.9918367, 0.1275137, 0, 0, 0, 0.99999994, -0.9375, 0.0625, 0)
+
+[node name="right_arm2" parent="Body/root/torso/right_arm" index="1" unique_id=180597336]
+transform = Transform3D(0.99370044, -0.11206903, 0, 0.11206903, 0.99370044, 0, 0, 0, 1, -0.875, 0, 0)
+
+[node name="legs" parent="Body/root" index="1" unique_id=978340201]
+script = ExtResource("4_rgyib")
+
+[node name="left_leg" parent="Body/root/legs" index="0" unique_id=941127269]
+transform = Transform3D(1, 0, 0, 0, 0.99070007, -0.13606395, 0, 0.13606395, 0.99070007, 0.3125, 0, 0)
+
+[node name="left_shin" parent="Body/root/legs/left_leg" index="1" unique_id=1622870167]
+transform = Transform3D(1, 0, 0, 0, 0.9701407, -0.24254279, 0, 0.24254279, 0.9701407, 0, -0.8125, 0)
+
+[node name="left_foot" parent="Body/root/legs/left_leg/left_shin" index="1" unique_id=257457650]
+transform = Transform3D(1, 0, 0, 0, 0.92873985, -0.37073198, 0, 0.37073198, 0.92873985, 0, -0.9375, 0)
+
+[node name="right_leg" parent="Body/root/legs" index="1" unique_id=1665859904]
+transform = Transform3D(1, 0, 0, 0, 0.98584455, 0.1676618, 0, -0.1676618, 0.98584455, -0.3125, 0, 0)
+
+[node name="right_shin" parent="Body/root/legs/right_leg" index="1" unique_id=568009977]
+transform = Transform3D(1, 0, 0, 0, 0.94377905, -0.33057693, 0, 0.33057693, 0.94377905, 0, -0.8125, 0)
+
+[node name="right_foot" parent="Body/root/legs/right_leg/right_shin" index="1" unique_id=733828292]
+transform = Transform3D(1, 0, 0, 0, 0.98584455, 0.1676618, 0, -0.1676618, 0.98584455, 0, -0.9375, 0)
+
+[node name="AnimationPlayer" parent="Body" index="1" unique_id=1380751669]
 autoplay = &"idle"
-
-[node name="TempSwapBody" parent="." unique_id=1267736368 instance=ExtResource("4_g6k8r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
-visible = false
-
-[node name="left_arm" parent="TempSwapBody/root/torso" parent_id_path=PackedInt32Array(1267736368, 402225962) index="2" unique_id=1332722564]
-transform = Transform3D(0.043619335, 0.99904823, 0, -0.99904823, 0.043619335, 0, 0, 0, 1, 0.9375, 0.0625, 0)
-
-[node name="right_arm" parent="TempSwapBody/root/torso" parent_id_path=PackedInt32Array(1267736368, 402225962) index="3" unique_id=1665071945]
-transform = Transform3D(0.043619335, -0.99904823, 0, 0.99904823, 0.043619335, 0, 0, 0, 1, -0.9375, 0.0625, 0)
-
-[node name="Body" type="MeshInstance3D" parent="." unique_id=2028936697]
-visible = false
-mesh = SubResource("BoxMesh_l7t1d")
-
-[node name="Head" type="MeshInstance3D" parent="Body" unique_id=1222886714]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
-mesh = SubResource("BoxMesh_sxqe5")
-
-[node name="Arm_L" type="MeshInstance3D" parent="Body" unique_id=654957152]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.1, 0)
-mesh = SubResource("BoxMesh_ojre7")
-
-[node name="Arm_R" type="MeshInstance3D" parent="Body" unique_id=2081054412]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.1, 0)
-mesh = SubResource("BoxMesh_ojre7")
-
-[node name="Leg_L" type="MeshInstance3D" parent="Body" unique_id=1237195401]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -0.5, 0)
-mesh = SubResource("BoxMesh_hchdm")
-
-[node name="Leg_R" type="MeshInstance3D" parent="Body" unique_id=2098568978]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.5, 0)
-mesh = SubResource("BoxMesh_hchdm")
 
 [node name="HurtBox" type="Area3D" parent="." unique_id=629513592]
 collision_layer = 0
@@ -133,18 +103,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_l7t1d")
 debug_color = Color(0.35837752, 0.61519843, 0.17483082, 0.41960785)
 
-[node name="HealthLabel" type="Label3D" parent="." unique_id=932064038]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
-pixel_size = 0.02
-billboard = 1
-texture_filter = 0
-text = "hp: 5"
-font = ExtResource("6_boad6")
-font_size = 100
-width = 512.0
-
 [node name="HealthBar" type="Node3D" parent="." unique_id=2009962165]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 5.75, 0)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 6.75, 0)
 
 [node name="the" type="Sprite3D" parent="HealthBar" unique_id=596231710]
 billboard = 1
@@ -170,8 +130,10 @@ metadata/_custom_type_script = "uid://cy8ptutfeorc6"
 [node name="HealthDripTimer" type="Timer" parent="." unique_id=883919305]
 autostart = true
 
+[node name="TempSwapBody" parent="." unique_id=1267736368 instance=ExtResource("4_g6k8r")]
+visible = false
+
 [connection signal="dead" from="Life" to="." method="_on_dead"]
 [connection signal="timeout" from="HealthDripTimer" to="." method="_on_health_drip"]
 
-[editable path="BodyMesh"]
-[editable path="TempSwapBody"]
+[editable path="Body"]

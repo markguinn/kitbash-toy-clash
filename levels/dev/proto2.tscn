@@ -1,0 +1,166 @@
+[gd_scene format=3 uid="uid://dprhdayetcchx"]
+
+[ext_resource type="Script" uid="uid://xfplf03kdq1b" path="res://levels/dev/proto_2.gd" id="1_unxl6"]
+[ext_resource type="Material" uid="uid://o3vkef848hpm" path="res://common/vfx/pixelated/pixelated-material.tres" id="2_u5iaq"]
+[ext_resource type="Texture2D" uid="uid://mg6lqudn1f05" path="res://common/vfx/pixelated/crt-effect.png" id="3_ckf24"]
+[ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="5_eaxg1"]
+[ext_resource type="PackedScene" uid="uid://bng6sl0sm81dy" path="res://_source_assets/generic-player/generic_player_mods.gltf" id="5_g1bde"]
+[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://player/body_part.gd" id="6_tm3by"]
+[ext_resource type="PackedScene" uid="uid://p076x5fcyfky" path="res://_source_assets/generic-player/generic_player.gltf" id="6_unxl6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
+
+[sub_resource type="Sky" id="Sky_hchdm"]
+sky_material = SubResource("ProceduralSkyMaterial_hchdm")
+
+[sub_resource type="Environment" id="Environment_iynve"]
+background_mode = 2
+sky = SubResource("Sky_hchdm")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.5
+fog_mode = 1
+fog_density = 1.0
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_iynve"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hchdm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hchdm"]
+albedo_color = Color(0.23392558, 0.23392543, 0.2339254, 1)
+albedo_texture = SubResource("PlaceholderTexture2D_hchdm")
+uv1_scale = Vector3(10, 10, 10)
+texture_filter = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_iynve"]
+material = SubResource("StandardMaterial3D_hchdm")
+size = Vector2(100, 100)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_unxl6"]
+viewport_path = NodePath("HealthBar/the/health")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_iynve"]
+radius = 3.649
+
+[node name="PrototypeLevel" type="Node3D" unique_id=987540971]
+script = ExtResource("1_unxl6")
+metadata/_custom_type_script = "uid://d0o1anlkqfg33"
+
+[node name="ConfirmContinue" type="ConfirmationDialog" parent="." unique_id=20908460 groups=["confirm_dlg"]]
+unique_name_in_owner = true
+process_mode = 3
+oversampling_override = 1.0
+title = "Continue?"
+initial_position = 2
+size = Vector2i(300, 168)
+ok_button_text = "Continue"
+dialog_text = "You can end your run here or use a magic crystal to continue. Your character may absorb some traits of your attacker if you do."
+dialog_autowrap = true
+cancel_button_text = "End Run"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=347613716]
+environment = SubResource("Environment_iynve")
+
+[node name="[pixelate!]" type="CanvasLayer" parent="." unique_id=1411301213]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="[pixelate!]" unique_id=397246020]
+material = ExtResource("2_u5iaq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="[crt effect]" type="CanvasLayer" parent="." unique_id=2027285743]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="[crt effect]" unique_id=1583350516]
+texture_filter = 5
+texture_repeat = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_position = Vector2(4, 4)
+texture = ExtResource("3_ckf24")
+stretch_mode = 2
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1360731257]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=332006049]
+shape = SubResource("WorldBoundaryShape3D_iynve")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=692776542]
+mesh = SubResource("PlaneMesh_iynve")
+
+[node name="Player" parent="." unique_id=1653260376 instance=ExtResource("5_eaxg1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
+texture = SubResource("ViewportTexture_unxl6")
+
+[node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=771552401]
+transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 10, 20, 10)
+projection = 1
+current = true
+size = 30.389
+near = 0.001
+metadata/_edit_lock_ = true
+
+[node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=1087218669]
+transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 20, 15)
+projection = 1
+size = 30.0
+near = 0.001
+metadata/_edit_lock_ = true
+
+[node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=449395750]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20, 6)
+projection = 2
+size = 0.1
+metadata/_edit_lock_ = true
+
+[node name="CamPerspective" type="Camera3D" parent="Player" unique_id=1341667469]
+transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 10, 15, 10)
+size = 0.1
+metadata/_edit_lock_ = true
+
+[node name="Horse" parent="." unique_id=1267736368 instance=ExtResource("5_g1bde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1023836, -19.575022)
+
+[node name="legs" parent="Horse/root" parent_id_path=PackedInt32Array(1267736368, 1705658689) index="1" unique_id=1982989074]
+script = ExtResource("6_tm3by")
+min_collider_height = 4.0
+
+[node name="Area3D" type="Area3D" parent="Horse" unique_id=1232224238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.46588898, -0.5059757)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Horse/Area3D" unique_id=1267549792]
+shape = SubResource("SphereShape3D_iynve")
+
+[node name="Human" parent="." unique_id=947443402 instance=ExtResource("6_unxl6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7044325, 18.588978)
+
+[node name="legs" parent="Human/root" parent_id_path=PackedInt32Array(947443402, 87451923) index="1" unique_id=978340201]
+script = ExtResource("6_tm3by")
+min_collider_height = 2.0
+
+[node name="Area3D2" type="Area3D" parent="Human" unique_id=1558935058]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06793785, -0.23789215)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Human/Area3D2" unique_id=1904053770]
+shape = SubResource("SphereShape3D_iynve")
+
+[connection signal="body_entered" from="Horse/Area3D" to="." method="_on_horse_body_entered"]
+[connection signal="body_entered" from="Human/Area3D2" to="." method="_on_human_body_entered"]
+
+[editable path="Player"]
+[editable path="Player/Body"]
+[editable path="Horse"]
+[editable path="Human"]

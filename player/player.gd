@@ -28,10 +28,10 @@ var target_rot: float
 @onready var legs2: Node3D = $TempSwapBody/root/legs
 @onready var animation_player2: AnimationPlayer = $TempSwapBody/AnimationPlayer
 
-@onready var body_mesh: Node3D = $BodyMesh
-@onready var body_root: Node3D = $BodyMesh/root
-@onready var legs: Node3D = $BodyMesh/root/legs
-@onready var animation_player: AnimationPlayer = $BodyMesh/AnimationPlayer
+@onready var body_mesh: Node3D = $Body
+@onready var body_root: Node3D = $Body/root
+@onready var legs: Node3D = $Body/root/legs
+@onready var animation_player: AnimationPlayer = $Body/AnimationPlayer
 
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
@@ -137,7 +137,7 @@ func _swap_legs() -> void:
 
 func _attack() -> void:
 	var p: Projectile = projectile_tpl.instantiate()
-	p.global_position = global_position
+	p.position = position
 	p.tree_entered.connect( ## Shoot the projectile once it's valid
 		p.apply_impulse.bind(cur_dir * projectile_speed),
 		CONNECT_ONE_SHOT
