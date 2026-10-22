@@ -15,9 +15,9 @@ signal dead(from_hit_box: HitBox)
 @export var host: Node
 
 var label: Label3D
-var hp: float
 var healthBar: TextureProgressBar
 
+var hp: float
 
 func _ready() -> void:
 	hp = starting_hp

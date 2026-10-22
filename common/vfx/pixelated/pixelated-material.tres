@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://o3vkef848hpm"]
 
-[ext_resource type="Shader" uid="uid://1bvpn32qyahx" path="res://common/pixelated-shader.gdshader" id="1_c6071"]
+[ext_resource type="Shader" uid="uid://1bvpn32qyahx" path="res://common/vfx/pixelated/pixelated-shader.gdshader" id="1_c6071"]
 
 [resource]
 shader = ExtResource("1_c6071")

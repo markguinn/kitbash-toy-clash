@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dqwtfo8bvm7rb" path="res://common/hurt_box.gd" id="2_a6vjd"]
 [ext_resource type="Script" uid="uid://bb7mqdux6xdrk" path="res://common/hit_box.gd" id="3_07tka"]
 [ext_resource type="Script" uid="uid://cy8ptutfeorc6" path="res://common/life.gd" id="4_a6vjd"]
-[ext_resource type="FontFile" uid="uid://2g03ikvmbjhk" path="res://common/Handjet-Medium.ttf" id="5_07tka"]
+[ext_resource type="FontFile" uid="uid://2g03ikvmbjhk" path="res://common/fonts/Handjet-Medium.ttf" id="5_07tka"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fds3k"]
 size = Vector3(2, 2, 2)

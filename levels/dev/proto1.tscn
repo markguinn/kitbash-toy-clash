@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://ctjamigafagl3"]
 
-[ext_resource type="Texture2D" uid="uid://mg6lqudn1f05" path="res://common/crt-effect.png" id="1_2u2g5"]
+[ext_resource type="Texture2D" uid="uid://mg6lqudn1f05" path="res://common/vfx/pixelated/crt-effect.png" id="1_2u2g5"]
 [ext_resource type="Script" uid="uid://d0o1anlkqfg33" path="res://levels/level.gd" id="1_d47gn"]
-[ext_resource type="Material" uid="uid://o3vkef848hpm" path="res://common/pixelated-material.tres" id="1_pomcm"]
+[ext_resource type="Material" uid="uid://o3vkef848hpm" path="res://common/vfx/pixelated/pixelated-material.tres" id="1_pomcm"]
 [ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="1_sxqe5"]
 [ext_resource type="MeshLibrary" uid="uid://b27p3wokfin6l" path="res://levels/dev/proto-mesh-lib.tres" id="2_sxqe5"]
 [ext_resource type="PackedScene" uid="uid://bmepk0rhitnsc" path="res://enemies/small_enemy/small_enemy_spawner.tscn" id="4_pomcm"]

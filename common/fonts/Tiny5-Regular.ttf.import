@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://2g03ikvmbjhk"
-path="res://.godot/imported/Handjet-Medium.ttf-b7ccd5bf759616e0925c0b7f7b70676a.fontdata"
+uid="uid://dk02jqbwkcdf6"
+path="res://.godot/imported/Tiny5-Regular.ttf-3f0f6a8b0bd76cd24c0a3072f149a9ab.fontdata"
 
 [deps]
 
-source_file="res://common/Handjet-Medium.ttf"
-dest_files=["res://.godot/imported/Handjet-Medium.ttf-b7ccd5bf759616e0925c0b7f7b70676a.fontdata"]
+source_file="res://common/fonts/Tiny5-Regular.ttf"
+dest_files=["res://.godot/imported/Tiny5-Regular.ttf-3f0f6a8b0bd76cd24c0a3072f149a9ab.fontdata"]
 
 [params]
 
