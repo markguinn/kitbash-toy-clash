@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://c8axh4bjdt04f"]
+
+[ext_resource type="PackedScene" uid="uid://dvvqbxgujr65l" path="res://_source_assets/generic-player/ik/generic_player_ik.gltf" id="1_1o1n7"]
+[ext_resource type="JointLimitationCone3D" uid="uid://bjbr0uimig4i4" path="res://_source_assets/generic-player/ik/joint-cone_shoulder.tres" id="2_4xf4f"]
+[ext_resource type="JointLimitationCone3D" uid="uid://k4k4iqd42p7f" path="res://_source_assets/generic-player/ik/joint-cone_hip.tres" id="3_akblt"]
+[ext_resource type="JointLimitationCone3D" uid="uid://di45rnxea6bm7" path="res://_source_assets/generic-player/ik/joint-cone_knee.tres" id="4_30csp"]
+
+[node name="PlayerIK" type="Node3D" unique_id=355716596]
+
+[node name="Target_L1" type="Marker3D" parent="." unique_id=354508881]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4153214, -0.1463387, 0.3151641)
+
+[node name="Target_L2" type="Marker3D" parent="." unique_id=963961392]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5961546, -1.0099767, 0.8879449)
+
+[node name="Target_R1" type="Marker3D" parent="." unique_id=1114453701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2337708, 0.27377295, 2.07236)
+
+[node name="Target_R2" type="Marker3D" parent="." unique_id=111127367]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16015375, -0.98150563, 1.1411153)
+
+[node name="blockbench_export" parent="." unique_id=2098039850 instance=ExtResource("1_1o1n7")]
+
+[node name="Skeleton3D" parent="blockbench_export/root" parent_id_path=PackedInt32Array(2098039850, 2020569509) index="0" unique_id=1914778450]
+bones/2/rotation = Quaternion(0.685581, 0.13654985, -0.6775196, 0.22869188)
+bones/3/rotation = Quaternion(0.10030192, -0.11437242, 0.651672, 0.74308956)
+bones/4/rotation = Quaternion(0.38066483, 0.5553767, 0.29444823, 0.678197)
+bones/5/rotation = Quaternion(0, 0, -0.40274668, 0.91531146)
+bones/8/rotation = Quaternion(0.27982903, 0, 0, 0.96004987)
+bones/10/rotation = Quaternion(0.21643962, 0, 0, 0.976296)
+bones/11/rotation = Quaternion(-0.51877326, 0, 0, 0.85491186)
+bones/12/rotation = Quaternion(0.48098877, 0, 0, 0.87672675)
+
+[node name="CCDIK3D_Arms" type="CCDIK3D" parent="blockbench_export/root/Skeleton3D" index="0" unique_id=2106945179]
+setting_count = 2
+settings/0/target_node = NodePath("../../../../Target_L1")
+settings/1/target_node = NodePath("../../../../Target_R1")
+settings/0/root_bone_name = "left_arm"
+settings/0/root_bone = 2
+settings/0/end_bone_name = "left_arm2"
+settings/0/end_bone = 3
+settings/0/extend_end_bone = false
+settings/0/joint_count = 2
+settings/1/root_bone_name = "right_arm"
+settings/1/root_bone = 4
+settings/1/end_bone_name = "right_arm2"
+settings/1/end_bone = 5
+settings/1/extend_end_bone = false
+settings/1/joint_count = 2
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = null
+settings/0/joints/1/rotation_axis = 3
+settings/0/joints/1/limitation = ExtResource("2_4xf4f")
+settings/0/joints/1/limitation/right_axis = 0
+settings/0/joints/1/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/1/joints/0/rotation_axis = 3
+settings/1/joints/0/limitation = null
+settings/1/joints/1/rotation_axis = 3
+settings/1/joints/1/limitation = null
+
+[node name="CCDIK3D_Legs" type="CCDIK3D" parent="blockbench_export/root/Skeleton3D" index="1" unique_id=1259335116]
+setting_count = 2
+settings/0/target_node = NodePath("../../../../Target_L2")
+settings/1/target_node = NodePath("../../../../Target_R2")
+settings/0/root_bone_name = "left_leg"
+settings/0/root_bone = 8
+settings/0/end_bone_name = "left_foot"
+settings/0/end_bone = 10
+settings/0/extend_end_bone = false
+settings/0/joint_count = 3
+settings/1/root_bone_name = "right_leg"
+settings/1/root_bone = 11
+settings/1/end_bone_name = "right_foot"
+settings/1/end_bone = 13
+settings/1/extend_end_bone = false
+settings/1/joint_count = 3
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/limitation = ExtResource("3_akblt")
+settings/0/joints/0/limitation/right_axis = 0
+settings/0/joints/0/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/0/joints/1/rotation_axis = 0
+settings/0/joints/1/limitation = ExtResource("4_30csp")
+settings/0/joints/1/limitation/right_axis = 2
+settings/0/joints/1/limitation/rotation_offset = Quaternion(-1, 0, 0, 1)
+settings/0/joints/2/rotation_axis = 3
+settings/0/joints/2/limitation = null
+settings/1/joints/0/rotation_axis = 3
+settings/1/joints/0/limitation = ExtResource("3_akblt")
+settings/1/joints/0/limitation/right_axis = 0
+settings/1/joints/0/limitation/rotation_offset = Quaternion(0, 0, 0, 1)
+settings/1/joints/1/rotation_axis = 0
+settings/1/joints/1/limitation = ExtResource("4_30csp")
+settings/1/joints/1/limitation/right_axis = 2
+settings/1/joints/1/limitation/rotation_offset = Quaternion(-1, 0, 0, 1)
+settings/1/joints/2/rotation_axis = 3
+settings/1/joints/2/limitation = null
+
+[editable path="blockbench_export"]
