@@ -30,6 +30,13 @@ window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/stretch/scale_mode="integer"
 
+[file_customization]
+
+folder_colors={
+"res://_references/": "red",
+"res://_source_assets/": "orange"
+}
+
 [global_group]
 
 player=""

@@ -13,7 +13,7 @@ func get_container() -> Node3D:
 var players: Array[Player] = []
 func get_player(idx: int = 0) -> Player:
 	var player: Player = players[idx]
-	if OS.is_debug_build() and (not player):
+	if Game.is_dev_mode() and (not player):
 		if players.is_empty(): push_error("No Players stored in the array.")
 		elif idx >= players.size(): push_error("Out of bounds Player index %d." % idx)
 		else: push_error("Invalid (null) Player at index %d." % idx)
