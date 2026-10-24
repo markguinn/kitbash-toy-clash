@@ -1,9 +1,15 @@
 [gd_scene format=3 uid="uid://dqvrj27ervih7"]
 
 [ext_resource type="PackedScene" uid="uid://p076x5fcyfky" path="res://_source_assets/generic-player/generic_player.gltf" id="1_fug3q"]
-[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://player/body_part_container.gd" id="2_33150"]
-[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://player/body_part.gd" id="3_rlt0s"]
+[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://common/body_part_container.gd" id="2_33150"]
+[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://common/body_part.gd" id="3_rlt0s"]
 [ext_resource type="Script" uid="uid://cduhh7u3r7tsb" path="res://player/sword_arm.gd" id="4_nflsb"]
+[ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="5_7qy1q"]
+
+[sub_resource type="Resource" id="Resource_xnjbx"]
+script = ExtResource("5_7qy1q")
+attack_cooldown = 0.6
+metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [node name="blockbench_export" unique_id=1797291781 instance=ExtResource("1_fug3q")]
 
@@ -23,6 +29,7 @@ transform = Transform3D(0.043619365, -4.1804725e-08, -0.99904823, -0.99904823, -
 script = ExtResource("4_nflsb")
 slot = 3
 extra_tracks = Array[String](["root/torso"])
+stats = SubResource("Resource_xnjbx")
 
 [node name="right_arm" parent="root/torso" index="3" unique_id=1196472177]
 transform = Transform3D(0.043619365, 4.1804725e-08, -0.99904823, 0.99904823, -4.3669786e-08, 0.043619365, -4.1804725e-08, -1, -4.3669786e-08, -0.9375, 0.0625, 0)

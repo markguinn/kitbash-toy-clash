@@ -18,22 +18,13 @@ enum Slot {
 	legs,
 }
 
+## this does nothing for now. we'll need to think about it more and evolve it
 @export var slot: Slot = Slot.any
+## additional animation tracks that should be copied
+## (beyond the ones that touch the actual part and its children)
 @export var extra_tracks: Array[String] = []
 
-# how do these stack?
-# should they be 0-based and a percentage of the base stat?
-# should they be absolute and we take the max of all parts?
-# should each multiply by whatever was before?
-@export var move_speed: float = 1.0
-@export var attack_power: float = 1.0
-@export var armor: float = 1.0
-# what else? luck?
-
-# this should be absolute seconds i think
-@export var attack_cooldown: float = 0.5
-@export var special_attack_cooldown: float = 5.0
-@export var min_collider_height: float = 3.0
+@export var stats: StatBlock
 
 var container: BodyPartContainer
 
@@ -42,6 +33,8 @@ func _ready() -> void:
 	container = _get_body_part_container()
 	if not container:
 		Log.error(self, "No body part container found!")
+	if not stats:
+		stats = StatBlock.new()
 	for signal_name in AUTO_CONNECT_SIGNALS:
 		var method_name: String = "_on_" + signal_name
 		if has_method(method_name):
@@ -72,16 +65,6 @@ func _get_animation_player() -> AnimationPlayer:
 	return null
 
 
-func _get_primary_collider() -> CollisionShape3D:
-	var p: Node3D = get_parent()
-	while p:
-		var ap = p.get_node_or_null("CollisionShape3D")
-		if ap:
-			return ap
-		p = p.get_parent()
-	return null
-
-
 func replace_with_body_part(src_part: BodyPart) -> void:
 	var host: Node3D = get_parent()
 	var src_player: AnimationPlayer = src_part._get_animation_player()
@@ -97,13 +80,6 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 	var dest_al: AnimationLibrary = dest_player.get_animation_library("").duplicate_deep()
 	dest_player.remove_animation_library("")
 	dest_player.add_animation_library("", dest_al)
-
-	# resize the collision shape if needed
-	# TODO: this should be the min of all the parts - this is a temporary hack
-	if src_part.min_collider_height > 0.0:
-		# FIXME: this is the hackiest thing ever. we probably can't assume a capsule?
-		var c: CapsuleShape3D = _get_primary_collider().shape
-		c.height = src_part.min_collider_height
 
 	# replace the mesh nodes
 	host.remove_child(self)
