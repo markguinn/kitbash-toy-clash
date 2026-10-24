@@ -22,6 +22,10 @@ Game="*uid://cg2331u7xsk1o"
 Log="*uid://cr8swx1gxs3fw"
 VFX="*uid://cct4o6ava8dgn"
 
+[debug]
+
+gdscript/warnings/integer_division=0
+
 [display]
 
 window/size/viewport_width=1920

@@ -70,7 +70,7 @@ func _physics_process(delta: float) -> void:
 	if dir.length() > 0.0 and body_root.can_move:
 		var walk_dir := _vec2_to_vec3(dir)
 		var next_rot := _fix_angle(dir.angle())
-		velocity = walk_dir * speed
+		velocity = walk_dir * body_root.stats.move_speed
 		if not is_equal_approx(target_rot, next_rot):
 			body_root.change_direction.emit(walk_dir)
 		target_rot = next_rot
