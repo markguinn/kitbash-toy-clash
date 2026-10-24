@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://dqvrj27ervih7"]
+
+[ext_resource type="PackedScene" uid="uid://p076x5fcyfky" path="res://_source_assets/generic-player/generic_player.gltf" id="1_fug3q"]
+[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://player/body_part_container.gd" id="2_33150"]
+[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://player/body_part.gd" id="3_rlt0s"]
+[ext_resource type="Script" uid="uid://cduhh7u3r7tsb" path="res://player/sword_arm.gd" id="4_nflsb"]
+
+[node name="blockbench_export" unique_id=1797291781 instance=ExtResource("1_fug3q")]
+
+[node name="root" parent="." index="0" unique_id=1682393043]
+script = ExtResource("2_33150")
+
+[node name="torso" parent="root" index="0" unique_id=698833126]
+script = ExtResource("3_rlt0s")
+slot = 2
+
+[node name="head" parent="root/torso" index="1" unique_id=1052155131]
+script = ExtResource("3_rlt0s")
+slot = 1
+
+[node name="left_arm" parent="root/torso" index="2" unique_id=2040636637]
+transform = Transform3D(0.043619365, -4.1804725e-08, -0.99904823, -0.99904823, -4.3669786e-08, -0.043619365, -4.1804725e-08, 1, -4.3669786e-08, 0.9375, 0.0625, 0)
+script = ExtResource("4_nflsb")
+slot = 3
+extra_tracks = Array[String](["root/torso"])
+
+[node name="right_arm" parent="root/torso" index="3" unique_id=1196472177]
+transform = Transform3D(0.043619365, 4.1804725e-08, -0.99904823, 0.99904823, -4.3669786e-08, 0.043619365, -4.1804725e-08, -1, -4.3669786e-08, -0.9375, 0.0625, 0)
+script = ExtResource("3_rlt0s")
+slot = 4
+extra_tracks = Array[String](["root/torso"])
+
+[node name="legs" parent="root" index="1" unique_id=1059167167]
+script = ExtResource("3_rlt0s")
+slot = 5

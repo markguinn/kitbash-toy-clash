@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Kitbash Toy Clash"
-run/main_scene="uid://ctjamigafagl3"
+run/main_scene="uid://dprhdayetcchx"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://dsvwud0ydk0rd"
 

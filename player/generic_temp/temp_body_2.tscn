@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://v13awrp2jboj"]
+
+[ext_resource type="PackedScene" uid="uid://bng6sl0sm81dy" path="res://_source_assets/generic-player/generic_player_mods.gltf" id="1_y3yu8"]
+[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://player/body_part_container.gd" id="2_hnx4p"]
+[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://player/body_part.gd" id="3_rrwlk"]
+[ext_resource type="Script" uid="uid://c5gdsahklbswm" path="res://player/gun_arm.gd" id="4_ank5h"]
+[ext_resource type="PackedScene" uid="uid://0iap8bwrf2kj" path="res://player/projectile.tscn" id="5_dmfhu"]
+
+[node name="blockbench_export" unique_id=868036242 instance=ExtResource("1_y3yu8")]
+
+[node name="root" parent="." index="0" unique_id=1147200466]
+script = ExtResource("2_hnx4p")
+
+[node name="torso" parent="root" index="0" unique_id=1528103011]
+script = ExtResource("3_rrwlk")
+
+[node name="head" parent="root/torso" index="1" unique_id=61259082]
+script = ExtResource("3_rrwlk")
+
+[node name="left_arm" parent="root/torso" index="2" unique_id=1121984430]
+transform = Transform3D(0.043619335, 0.99904823, 0, -0.99904823, 0.043619335, 0, 0, 0, 1, 0.9375, 0.0625, 0)
+script = ExtResource("3_rrwlk")
+extra_tracks = Array[String](["root/torso"])
+
+[node name="right_arm" parent="root/torso" index="3" unique_id=641736169]
+transform = Transform3D(-0.0019804582, 0.047380697, 0.99887496, -0.04341034, 0.99793124, -0.047422, -0.9990554, -0.04345542, 8.045115e-05, -0.9375, 0.0625, 0)
+script = ExtResource("4_ank5h")
+projectile_tpl = ExtResource("5_dmfhu")
+slot = 4
+extra_tracks = Array[String](["root/torso"])
+
+[node name="legs" parent="root" index="1" unique_id=2025559013]
+script = ExtResource("3_rrwlk")

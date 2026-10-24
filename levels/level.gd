@@ -40,8 +40,9 @@ func _exit_tree() -> void:
 #region Class methods
 
 ## Adds [param node] as a child to the current level's [member container].
-static func add_to_scene(node: Node) -> void:
+static func add_to_scene(node: Node, gpos: Vector3) -> void:
 	get_instance().container.add_child(node)
+	node.global_position = gpos
 
 
 #endregion

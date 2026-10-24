@@ -1,6 +1,25 @@
 class_name BodyPart
 extends Node3D
 
+const AUTO_CONNECT_SIGNALS = [
+	"attack_start", 
+	"attack_peak",
+	"attack_end",
+	"walk_start",
+	"walk_end",
+	"change_direction",
+]
+
+enum Slot {
+	any,
+	head,
+	torso,
+	arm_l,
+	arm_r,
+	legs,
+}
+
+@export var slot: Slot = Slot.any
 @export var extra_tracks: Array[String] = []
 
 # how do these stack?
@@ -17,20 +36,32 @@ extends Node3D
 @export var special_attack_cooldown: float = 5.0
 @export var min_collider_height: float = 3.0
 
-# optional?
-# should it respond to input directly?
-# i think we want it to come down from a parent node
-func attack() -> void:
-	pass
+var container: BodyPartContainer
 
-# called from animation? or just a timer? do we even need this?
-# this would be the point where a projectile would fire
-# e.g. the arrow is released in the animation etc
-func attack_peak() -> void:
-	pass
 
-func special_attack() -> void:
-	pass
+func _ready() -> void:
+	Log.debug(self, "enter tree", name)
+	container = _get_body_part_container()
+	if not container:
+		Log.error(self, "No body part container found!")
+	for signal_name in AUTO_CONNECT_SIGNALS:
+		var method_name: String = "_on_" + signal_name
+		if has_method(method_name):
+			Log.debug(self, "connecting", signal_name, "to", method_name)
+			container.connect(signal_name, _handle_container_signal.bind(method_name))
+
+
+func _handle_container_signal(dir: Vector3, method_name: String):
+	call_deferred(method_name, dir)
+
+
+func _get_body_part_container() -> BodyPartContainer:
+	var p = get_parent()
+	while p and p is Node:
+		if p is BodyPartContainer:
+			return p
+		p = p.get_parent()
+	return null
 
 
 func _get_animation_player() -> AnimationPlayer:
@@ -81,7 +112,7 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 	var cloned_part: Node3D = src_part.duplicate()
 	cloned_part.transform = self.transform
 	host.add_child(cloned_part)
-	
+
 	# replace the animations
 	for anim_name in dest_player.get_animation_list():
 		var dest_anim: Animation = dest_player.get_animation(anim_name)
@@ -89,12 +120,20 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 
 		for i in range(dest_anim.get_track_count(), 0, -1):
 			var np: NodePath = dest_anim.track_get_path(i - 1)
+			#for t in dest_part.extra_tracks:
+				#if np.get_concatenated_names().begins_with(t):
+					#Log.debug(self, "Animation", anim_name, "removing track", i - 1, "for dest", np.get_concatenated_names())
+					#dest_anim.remove_track(i - 1)
 			if np.slice(0, dest_part_path.get_name_count()) == dest_part_path:
 				Log.debug(self, "Animation", anim_name, "removing track", i - 1, "for dest", np.get_concatenated_names())
 				dest_anim.remove_track(i - 1)
 
 		for i in range(src_anim.get_track_count()):
 			var np: NodePath = src_anim.track_get_path(i)
+			#for t in src_part.extra_tracks:
+				#if np.get_concatenated_names().begins_with(t):
+					#Log.debug(self, "Animation", anim_name, "adding track", i, "for src", np.get_concatenated_names())
+					#src_anim.copy_track(i, dest_anim)
 			if np.slice(0, dest_part_path.get_name_count()) == src_part_path:
 				Log.debug(self, "Animation", anim_name, "adding track", i, "for src", np.get_concatenated_names())
 				src_anim.copy_track(i, dest_anim)
@@ -104,4 +143,5 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 				#	# what? probably convert to string and then replace src prefix with dest?
 
 	dest_player.clear_caches()
+	container.parts_changed.emit(dest_part, cloned_part)
 	queue_free()
