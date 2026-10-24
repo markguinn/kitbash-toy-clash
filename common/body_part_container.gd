@@ -17,6 +17,7 @@ signal change_direction(dir: Vector3)
 @export var host: Node3D
 @export var primary_collider: CollisionShape3D
 @export var animation_player: AnimationPlayer
+@export var base_stats: StatBlock
 
 # TODO: think about this more - do these belong at the root?
 @export var slots: Array[BodyPart.Slot] = [
@@ -27,6 +28,7 @@ signal change_direction(dir: Vector3)
 	BodyPart.Slot.legs,
 ]
 
+var stats: StatBlock
 var parts: Array[BodyPart] = []
 var can_move := true
 var can_attack := true
@@ -41,6 +43,8 @@ func _ready() -> void:
 			n = n.get_parent()
 	if not animation_player:
 		animation_player = host.get_node("AnimationPlayer")
+	if not base_stats:
+		base_stats = StatBlock.new()
 	_find_body_parts(self)
 	parts_changed.connect(_on_parts_changed)
 	attack_start.connect(_on_attack_start)
@@ -67,19 +71,20 @@ func _on_attack_end(_dir: Vector3) -> void:
 	can_attack = true
 
 
+func _calc_stats() -> void:
+	stats = base_stats.duplicate(true)
+	stats.merge(parts)
+
 func _on_parts_changed(old_part: BodyPart, new_part: BodyPart) -> void:
 	Log.debug(self, host.name, "Parts changed. old", old_part.name, "new", new_part.name)
 	parts = []
 	_find_body_parts(self)
+	_calc_stats()
 	Log.debug(self, host.name, "Body parts", parts.map(func(n): return n.name))
 
 	# resize the collision shape if needed
 	if primary_collider and primary_collider.shape and primary_collider.shape is CapsuleShape3D:
-		var min_height := 1.0
 		var shape: CapsuleShape3D = primary_collider.shape
-		# TODO: move this to the stat block or a helper
-		for p in parts:
-			min_height = max(min_height, p.stats.min_collider_height)
-		if not is_equal_approx(shape.height, min_height):
-			shape.height = min_height
-			Log.debug(self, host.name, "updating collider height", min_height)
+		if not is_equal_approx(shape.height, stats.min_collider_height):
+			shape.height = stats.min_collider_height
+			Log.debug(self, host.name, "updating collider height", shape.height)
