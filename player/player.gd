@@ -102,6 +102,8 @@ func _input(event: InputEvent) -> void:
 
 func _attack() -> void:
 	is_attacking = true
+	if animation_player.current_animation == &"attack":
+		animation_player.stop()
 	animation_player.play(&"attack")
 	body_root.attack_start.emit(cur_dir)
 	await animation_player.animation_finished

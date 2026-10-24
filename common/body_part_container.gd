@@ -31,7 +31,18 @@ signal change_direction(dir: Vector3)
 var stats: StatBlock
 var parts: Array[BodyPart] = []
 var can_move := true
-var can_attack := true
+var last_attack_at: int
+
+
+var can_attack: bool:
+	get():
+		return (
+			stats.attack_cooldown > 0
+			and last_attack_at + stats.attack_cooldown < Now.msec
+		)
+	set(v):
+		last_attack_at = 0 if v else Now.msec + 1000
+
 
 func _ready() -> void:
 	if not host:
@@ -46,6 +57,7 @@ func _ready() -> void:
 	if not base_stats:
 		base_stats = StatBlock.new()
 	_find_body_parts(self)
+	_calc_stats()
 	parts_changed.connect(_on_parts_changed)
 	attack_start.connect(_on_attack_start)
 	attack_end.connect(_on_attack_end)
@@ -63,12 +75,11 @@ func _find_body_parts(node: Node) -> void:
 # TODO: don't do this if no body parts have an attack
 func _on_attack_start(_dir: Vector3) -> void:
 	can_move = false
-	can_attack = false
+	last_attack_at = Now.msec
 
 
 func _on_attack_end(_dir: Vector3) -> void:
 	can_move = true
-	can_attack = true
 
 
 func _calc_stats() -> void:

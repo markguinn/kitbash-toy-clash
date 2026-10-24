@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_xnjbx"]
 script = ExtResource("5_7qy1q")
-attack_cooldown = 0.6
+attack_cooldown = 700
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [node name="blockbench_export" unique_id=1797291781 instance=ExtResource("1_fug3q")]
@@ -29,6 +29,7 @@ transform = Transform3D(0.043619365, -4.1804725e-08, -0.99904823, -0.99904823, -
 script = ExtResource("4_nflsb")
 slot = 3
 extra_tracks = Array[String](["root/torso"])
+has_attack = true
 stats = SubResource("Resource_xnjbx")
 
 [node name="right_arm" parent="root/torso" index="3" unique_id=1196472177]

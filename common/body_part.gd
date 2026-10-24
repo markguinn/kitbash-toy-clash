@@ -23,7 +23,6 @@ enum Slot {
 ## additional animation tracks that should be copied
 ## (beyond the ones that touch the actual part and its children)
 @export var extra_tracks: Array[String] = []
-
 @export var stats: StatBlock
 
 var container: BodyPartContainer
