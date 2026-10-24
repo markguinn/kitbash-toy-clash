@@ -5,11 +5,16 @@
 [ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://common/body_part.gd" id="3_rlt0s"]
 [ext_resource type="Script" uid="uid://cduhh7u3r7tsb" path="res://player/sword_arm.gd" id="4_nflsb"]
 [ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="5_7qy1q"]
+[ext_resource type="Script" uid="uid://bb7mqdux6xdrk" path="res://common/hit_box.gd" id="6_gjhtx"]
 
 [sub_resource type="Resource" id="Resource_xnjbx"]
 script = ExtResource("5_7qy1q")
 attack_cooldown = 700
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
+radius = 1.0
+height = 3.0
 
 [sub_resource type="Resource" id="Resource_wd0vf"]
 script = ExtResource("5_7qy1q")
@@ -35,6 +40,18 @@ script = ExtResource("4_nflsb")
 slot = 3
 extra_tracks = Array[String](["root/torso"])
 stats = SubResource("Resource_xnjbx")
+
+[node name="HitBox" type="Area3D" parent="root/torso/left_arm/left_arm2/mesh" parent_id_path=PackedInt32Array(1047245733) index="0" unique_id=1651195800]
+transform = Transform3D(1, 0, 1.8256035e-15, 3.5527137e-15, 1, 3.5527137e-15, 1.8256033e-15, 0, 1, 0, 0.94545555, 0)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("6_gjhtx")
+damage = 3.0
+metadata/_custom_type_script = "uid://bb7mqdux6xdrk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="root/torso/left_arm/left_arm2/mesh/HitBox" index="0" unique_id=1574372639]
+shape = SubResource("CapsuleShape3D_iynve")
+debug_color = Color(0.99215686, 0.039215688, 0.23137255, 1)
 
 [node name="right_arm" parent="root/torso" index="3" unique_id=1196472177]
 transform = Transform3D(0.043619365, 4.1804725e-08, -0.99904823, 0.99904823, -4.3669786e-08, 0.043619365, -4.1804725e-08, -1, -4.3669786e-08, -0.9375, 0.0625, 0)

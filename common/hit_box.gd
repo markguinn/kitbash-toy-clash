@@ -10,3 +10,15 @@ signal caused_damage(amount: float, to: Life)
 func _ready() -> void:
 	if not host:
 		host = get_parent_node_3d()
+
+
+func enable() -> void:
+	monitorable = true
+
+
+func disable() -> void:
+	monitorable = false
+
+
+func is_enabled() -> bool:
+	return monitorable

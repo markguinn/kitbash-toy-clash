@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="5_eaxg1"]
 [ext_resource type="PackedScene" uid="uid://dqvrj27ervih7" path="res://player/generic_temp/temp_body_1.tscn" id="5_g1bde"]
 [ext_resource type="PackedScene" uid="uid://v13awrp2jboj" path="res://player/generic_temp/temp_body_2.tscn" id="6_unxl6"]
+[ext_resource type="PackedScene" uid="uid://b64kv0p1jxrdi" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="7_tm3by"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
 
@@ -35,7 +36,7 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_unxl6"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_u5iaq"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iynve"]
@@ -98,7 +99,7 @@ mesh = SubResource("PlaneMesh_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_unxl6")
+texture = SubResource("ViewportTexture_u5iaq")
 
 [node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=853497229]
 transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 10, 20, 10)
@@ -188,6 +189,9 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GunArm/Area3D" unique_id=1494990663]
 shape = SubResource("SphereShape3D_iynve")
 debug_color = Color(0, 0.6, 0.69803923, 1)
+
+[node name="BigEnemySpawner" parent="." unique_id=1330096657 instance=ExtResource("7_tm3by")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.31403, 0, 39.95581)
 
 [connection signal="body_entered" from="Human/Area3D2" to="." method="_on_human_body_entered"]
 [connection signal="body_entered" from="SwordArm/Area3D2" to="." method="_on_sword_arm_body_entered"]

@@ -9,12 +9,26 @@ albedo_color = Color(1, 1, 0.14117648, 1)
 material = SubResource("StandardMaterial3D_fds3k")
 size = Vector3(2, 3, 2)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_2wib7"]
+size = Vector3(3, 4, 3)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2wib7"]
+viewport_path = NodePath("HealthBar/the/health")
+
 [node name="BigEnemy" unique_id=1807322689 instance=ExtResource("1_2wib7")]
+take_damage_from_causing_it = 0.0
 
 [node name="Body" type="MeshInstance3D" parent="." index="0" unique_id=560195625]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 mesh = SubResource("BoxMesh_2wib7")
 
+[node name="CollisionShape3D" parent="HurtBox" parent_id_path=PackedInt32Array(813712142) index="0" unique_id=911874032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_2wib7")
+
 [node name="Life" parent="." index="4" unique_id=1100470729]
 starting_hp = 2.0
 armor = 1.1
+
+[node name="the" parent="HealthBar" parent_id_path=PackedInt32Array(38360166) index="0" unique_id=216841935]
+texture = SubResource("ViewportTexture_2wib7")

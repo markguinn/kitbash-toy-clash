@@ -23,4 +23,5 @@ func _on_area_entered(area: Area3D) -> void:
 		var damage = area.damage
 		if not is_zero_approx(armor):
 			damage /= armor
+		Log.debug(self, host.name, "hurtbox was hit for", area.damage, "reduced to", damage)
 		life.add_damage(damage, area)
