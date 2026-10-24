@@ -6,7 +6,9 @@ class_name Player extends CharacterBody3D
 var cur_dir := Vector3(0.0, 0.0, 1.0)
 var cur_cam := 0
 var target_rot: float
-var attacking := false
+
+var is_attacking := false
+var is_walking := false
 
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var life: Life = $Life
@@ -65,16 +67,24 @@ func _get_input_dir() -> Vector2:
 
 func _physics_process(delta: float) -> void:
 	var dir := _get_input_dir()
-	if dir.length() > 0.0:
-		velocity = _vec2_to_vec3(dir) * speed
-		target_rot = _fix_angle(dir.angle())
+	if dir.length() > 0.0 and body_root.can_move:
+		var walk_dir := _vec2_to_vec3(dir)
+		var next_rot := _fix_angle(dir.angle())
+		velocity = walk_dir * speed
+		if not is_equal_approx(target_rot, next_rot):
+			body_root.change_direction.emit(walk_dir)
+		target_rot = next_rot
 		if animation_player.current_animation == "idle":
 			animation_player.play("walk", 0.2)
+			body_root.walk_start.emit(walk_dir)
+			is_walking = true
 	else:
 		velocity = Vector3.ZERO
 		target_rot = body_mesh.rotation.y
+		is_walking = false
 		if animation_player.current_animation == "walk":
 			animation_player.play("idle", 0.2)
+			body_root.walk_end.emit(cur_dir)
 	if !is_equal_approx(body_mesh.rotation.y, target_rot):
 		body_mesh.rotation.y = rotate_toward(body_mesh.rotation.y, target_rot, delta * PI * 2.0 / rotation_speed)
 		cur_dir = _angle_to_vec3(body_mesh.rotation.y)
@@ -84,20 +94,19 @@ func _physics_process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("attack1"):
-		if not attacking:
-			_attack.call_deferred()
+	if event.is_action_pressed("attack1") and body_root.can_attack:
+		_attack.call_deferred()
 	if event.is_action_pressed("switch_cam"):
 		_set_cam(cur_cam + 1)
 
 
 func _attack() -> void:
-	attacking = true
+	is_attacking = true
 	animation_player.play(&"attack")
 	body_root.attack_start.emit(cur_dir)
 	await animation_player.animation_finished
 	body_root.attack_end.emit(cur_dir)
-	attacking = false
+	is_attacking = false
 	animation_player.play(&"idle", 0.2)
 
 

@@ -4,9 +4,8 @@
 [ext_resource type="Material" uid="uid://o3vkef848hpm" path="res://common/vfx/pixelated/pixelated-material.tres" id="2_u5iaq"]
 [ext_resource type="Texture2D" uid="uid://mg6lqudn1f05" path="res://common/vfx/pixelated/crt-effect.png" id="3_ckf24"]
 [ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="5_eaxg1"]
-[ext_resource type="PackedScene" uid="uid://bng6sl0sm81dy" path="res://_source_assets/generic-player/generic_player_mods.gltf" id="5_g1bde"]
-[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://player/body_part.gd" id="6_tm3by"]
-[ext_resource type="PackedScene" uid="uid://p076x5fcyfky" path="res://_source_assets/generic-player/generic_player.gltf" id="6_unxl6"]
+[ext_resource type="PackedScene" uid="uid://dqvrj27ervih7" path="res://player/generic_temp/temp_body_1.tscn" id="5_g1bde"]
+[ext_resource type="PackedScene" uid="uid://v13awrp2jboj" path="res://player/generic_temp/temp_body_2.tscn" id="6_unxl6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
 
@@ -101,7 +100,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
 texture = SubResource("ViewportTexture_unxl6")
 
-[node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=771552401]
+[node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=853497229]
 transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 10, 20, 10)
 projection = 1
 current = true
@@ -109,58 +108,95 @@ size = 30.389
 near = 0.001
 metadata/_edit_lock_ = true
 
-[node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=1087218669]
+[node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=865568906]
 transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 20, 15)
 projection = 1
 size = 30.0
 near = 0.001
 metadata/_edit_lock_ = true
 
-[node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=449395750]
+[node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=1374804059]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20, 6)
 projection = 2
 size = 0.1
 metadata/_edit_lock_ = true
 
-[node name="CamPerspective" type="Camera3D" parent="Player" unique_id=1341667469]
+[node name="CamPerspective" type="Camera3D" parent="Player" unique_id=655540465]
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 10, 15, 10)
 size = 0.1
 metadata/_edit_lock_ = true
 
-[node name="Horse" parent="." unique_id=1267736368 instance=ExtResource("5_g1bde")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1023836, -19.575022)
+[node name="Human" parent="." unique_id=1797291781 instance=ExtResource("5_g1bde")]
+transform = Transform3D(-0.999397, 0, 0.034723062, 0, 1, 0, -0.034723062, 0, -0.999397, 0, 2.1892014, 17.874622)
 
-[node name="legs" parent="Horse/root" parent_id_path=PackedInt32Array(1267736368, 1705658689) index="1" unique_id=1982989074]
-script = ExtResource("6_tm3by")
-min_collider_height = 4.0
+[node name="torso" parent="Human/root" parent_id_path=PackedInt32Array(1797291781, 1682393043) index="0" unique_id=698833126]
+visible = false
 
-[node name="Area3D" type="Area3D" parent="Horse" unique_id=1232224238]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.46588898, -0.5059757)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Horse/Area3D" unique_id=1267549792]
-shape = SubResource("SphereShape3D_iynve")
-
-[node name="Human" parent="." unique_id=947443402 instance=ExtResource("6_unxl6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7044325, 18.588978)
-
-[node name="legs" parent="Human/root" parent_id_path=PackedInt32Array(947443402, 87451923) index="1" unique_id=978340201]
-script = ExtResource("6_tm3by")
-min_collider_height = 2.0
+[node name="mesh" parent="Human/root/torso/left_arm/left_arm2" parent_id_path=PackedInt32Array(1797291781, 1538851636) index="2" unique_id=1047245733]
+visible = false
 
 [node name="Area3D2" type="Area3D" parent="Human" unique_id=1558935058]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06793785, -0.23789215)
+transform = Transform3D(-0.999397, 0, -0.034723062, 0, 1, 0, 0.034723062, 0, -0.999397, -0.016544282, 0.44729328, -0.4761753)
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Human/Area3D2" unique_id=1904053770]
 shape = SubResource("SphereShape3D_iynve")
+debug_color = Color(0, 0.6, 0.69803923, 1)
 
-[connection signal="body_entered" from="Horse/Area3D" to="." method="_on_horse_body_entered"]
+[node name="SwordArm" parent="." unique_id=1788171193 instance=ExtResource("5_g1bde")]
+transform = Transform3D(0.053483307, 0, -0.9985687, 0, 1, 0, 0.9985687, 0, 0.053483307, 20.07767, 2.1892014, 0.46799088)
+
+[node name="legs" parent="SwordArm/root" parent_id_path=PackedInt32Array(1788171193, 1682393043) index="1" unique_id=1059167167]
+visible = false
+
+[node name="Area3D2" type="Area3D" parent="SwordArm" unique_id=208993331]
+transform = Transform3D(-0.999397, 0, -0.034723062, 0, 1, 0, 0.034723062, 0, -0.999397, -0.016544282, 0.44729328, -0.4761753)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwordArm/Area3D2" unique_id=2028015926]
+shape = SubResource("SphereShape3D_iynve")
+debug_color = Color(0, 0.6, 0.69803923, 1)
+
+[node name="Horse" parent="." unique_id=868036242 instance=ExtResource("6_unxl6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2257156, -20.298265)
+
+[node name="torso" parent="Horse/root" parent_id_path=PackedInt32Array(868036242, 1147200466) index="0" unique_id=1528103011]
+visible = false
+
+[node name="Area3D" type="Area3D" parent="Horse" unique_id=1232224238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.589221, 0.21726799)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Horse/Area3D" unique_id=1267549792]
+shape = SubResource("SphereShape3D_iynve")
+debug_color = Color(0, 0.6, 0.69803923, 1)
+
+[node name="GunArm" parent="." unique_id=1779582691 instance=ExtResource("6_unxl6")]
+transform = Transform3D(0.013279958, 0, 0.99991184, 0, 1, 0, -0.99991184, 0, 0.013279958, -19.827188, 3.2257156, 0.57798576)
+
+[node name="legs" parent="GunArm/root" parent_id_path=PackedInt32Array(1779582691, 1147200466) index="1" unique_id=2025559013]
+visible = false
+
+[node name="Area3D" type="Area3D" parent="GunArm" unique_id=83618283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.589221, 0.21726799)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GunArm/Area3D" unique_id=1494990663]
+shape = SubResource("SphereShape3D_iynve")
+debug_color = Color(0, 0.6, 0.69803923, 1)
+
 [connection signal="body_entered" from="Human/Area3D2" to="." method="_on_human_body_entered"]
+[connection signal="body_entered" from="SwordArm/Area3D2" to="." method="_on_sword_arm_body_entered"]
+[connection signal="body_entered" from="Horse/Area3D" to="." method="_on_horse_body_entered"]
+[connection signal="body_entered" from="GunArm/Area3D" to="." method="_on_gun_arm_body_entered"]
 
 [editable path="Player"]
 [editable path="Player/Body"]
-[editable path="Horse"]
 [editable path="Human"]
+[editable path="SwordArm"]
+[editable path="Horse"]
+[editable path="GunArm"]

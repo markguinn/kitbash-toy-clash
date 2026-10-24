@@ -3,7 +3,6 @@ extends Node3D
 
 const AUTO_CONNECT_SIGNALS = [
 	"attack_start", 
-	"attack_peak",
 	"attack_end",
 	"walk_start",
 	"walk_end",
@@ -40,7 +39,6 @@ var container: BodyPartContainer
 
 
 func _ready() -> void:
-	Log.debug(self, "enter tree", name)
 	container = _get_body_part_container()
 	if not container:
 		Log.error(self, "No body part container found!")
@@ -120,26 +118,36 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 
 		for i in range(dest_anim.get_track_count(), 0, -1):
 			var np: NodePath = dest_anim.track_get_path(i - 1)
-			#for t in dest_part.extra_tracks:
-				#if np.get_concatenated_names().begins_with(t):
-					#Log.debug(self, "Animation", anim_name, "removing track", i - 1, "for dest", np.get_concatenated_names())
-					#dest_anim.remove_track(i - 1)
+			var nps: String = np.get_concatenated_names()
+			var remove := false
+			for t in dest_part.extra_tracks:
+				if nps == t:
+					remove = true
+			for t in src_part.extra_tracks:
+				if nps == t:
+					remove = true
 			if np.slice(0, dest_part_path.get_name_count()) == dest_part_path:
+				remove = true
+			if remove:
 				Log.debug(self, "Animation", anim_name, "removing track", i - 1, "for dest", np.get_concatenated_names())
 				dest_anim.remove_track(i - 1)
 
 		for i in range(src_anim.get_track_count()):
 			var np: NodePath = src_anim.track_get_path(i)
-			#for t in src_part.extra_tracks:
-				#if np.get_concatenated_names().begins_with(t):
-					#Log.debug(self, "Animation", anim_name, "adding track", i, "for src", np.get_concatenated_names())
-					#src_anim.copy_track(i, dest_anim)
+			var nps: String = np.get_concatenated_names()
+			var add := false
+			for t in src_part.extra_tracks:
+				if nps == t:
+					add = true
 			if np.slice(0, dest_part_path.get_name_count()) == src_part_path:
+				add = true
+			if add:
 				Log.debug(self, "Animation", anim_name, "adding track", i, "for src", np.get_concatenated_names())
 				src_anim.copy_track(i, dest_anim)
+				#var new_idx := dest_anim.get_track_count() - 1
+				#dest_anim.track_set_path(new_idx, dest_part_path)
 				# TODO: if we hit this case where the parts aren't 1 for 1, we'll need this
 				#if src_part_path != dest_part_path:
-				#	var new_idx := dest_anim.get_track_count() - 1
 				#	# what? probably convert to string and then replace src prefix with dest?
 
 	dest_player.clear_caches()

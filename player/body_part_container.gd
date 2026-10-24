@@ -6,8 +6,6 @@ signal parts_changed(old_part: BodyPart, new_part: BodyPart)
 @warning_ignore("unused_signal")
 signal attack_start(dir: Vector3)
 @warning_ignore("unused_signal")
-signal attack_peak(dir: Vector3)
-@warning_ignore("unused_signal")
 signal attack_end(dir: Vector3)
 @warning_ignore("unused_signal")
 signal walk_start(dir: Vector3)
@@ -29,7 +27,8 @@ signal change_direction(dir: Vector3)
 ]
 
 var parts: Array[BodyPart] = []
-
+var can_move := true
+var can_attack := true
 
 func _ready() -> void:
 	if not host:
@@ -38,6 +37,8 @@ func _ready() -> void:
 		animation_player = host.get_node("AnimationPlayer")
 	_find_body_parts(self)
 	parts_changed.connect(_on_parts_changed)
+	attack_start.connect(_on_attack_start)
+	attack_end.connect(_on_attack_end)
 	Log.debug(self, host.name, "Body parts", parts.map(func(n): return n.name))
 
 
@@ -46,6 +47,18 @@ func _find_body_parts(node: Node) -> void:
 		if n is BodyPart:
 			parts.append(n)
 		_find_body_parts(n)
+
+
+# TODO: let each body part specify if it stops movement on attack
+# TODO: don't do this if no body parts have an attack
+func _on_attack_start(_dir: Vector3) -> void:
+	can_move = false
+	can_attack = false
+
+
+func _on_attack_end(_dir: Vector3) -> void:
+	can_move = true
+	can_attack = true
 
 
 func _on_parts_changed(old_part: BodyPart, new_part: BodyPart) -> void:
