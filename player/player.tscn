@@ -116,42 +116,43 @@ autostart = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="torso" parent="Body/root" parent_id_path=PackedInt32Array(1797291781, 1682393043) index="0" unique_id=698833126]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1669251, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1374874, 0)
 
 [node name="left_arm" parent="Body/root/torso" index="2" unique_id=2040636637]
-transform = Transform3D(0.13623223, 0.122226804, -0.98310804, -0.99067414, 0.019163676, -0.13489813, 0.0023517963, 0.9923172, 0.123697646, 0.9375, 0.0625, 0)
+transform = Transform3D(0.16077904, 0.15427072, -0.9748593, -0.9869899, 0.026158592, -0.15864012, 0.001027422, 0.9876823, 0.15646939, 0.9375, 0.0625, 0)
 
 [node name="left_arm2" parent="Body/root/torso/left_arm" index="1" unique_id=1538851636]
-transform = Transform3D(0.99232256, 0.12367663, 0, -0.12367663, 0.99232256, 0, 0, 0, 1, 0.875, 0, 0)
+transform = Transform3D(0.9876856, 0.15645173, 0, -0.15645173, 0.9876856, 0, 0, 0, 1, 0.875, 0, 0)
 
 [node name="right_arm" parent="Body/root/torso" index="3" unique_id=1196472177]
-transform = Transform3D(0.1362041, 3.775772e-08, -0.9906808, 0.9906808, -4.3304034e-08, 0.1362041, -3.775772e-08, -1, -4.3304034e-08, -0.9375, 0.0625, 0)
+transform = Transform3D(0.16075552, 3.668454e-08, -0.98699427, 0.98699427, -4.314289e-08, 0.16075552, -3.668454e-08, -1, -4.314289e-08, -0.9375, 0.0625, 0)
 
 [node name="right_arm2" parent="Body/root/torso/right_arm" index="1" unique_id=72985260]
-transform = Transform3D(0.99232256, -0.12367663, 0, 0.12367663, 0.99232256, 0, 0, 0, 1, -0.875, 0, 0)
+transform = Transform3D(0.9876856, -0.15645173, 0, 0.15645173, 0.9876856, 0, 0, 0, 1, -0.875, 0, 0)
 
 [node name="legs" parent="Body/root" parent_id_path=PackedInt32Array(1797291781, 1682393043) index="1" unique_id=1059167167]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.041537467, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05625626, 0)
 
 [node name="left_leg" parent="Body/root/legs" index="0" unique_id=707082117]
-transform = Transform3D(1, 0, 0, 0, 0.9841141, 0.17753705, 0, -0.17753705, 0.9841141, 0.3125, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9723638, 0.23347083, 0, -0.23347083, 0.9723638, 0.3125, 0, 0)
 
 [node name="left_shin" parent="Body/root/legs/left_leg" index="1" unique_id=247408340]
-transform = Transform3D(1, 0, 0, 0, 0.9400623, -0.3410028, 0, 0.3410028, 0.9400623, 0, -0.8125, 0)
+transform = Transform3D(1, 0, 0, 0, 0.89098275, -0.4540372, 0, 0.4540372, 0.89098275, 0, -0.8125, 0)
 
 [node name="left_foot" parent="Body/root/legs/left_leg/left_shin" index="1" unique_id=1977854222]
-transform = Transform3D(1, 0, 0, 0, 0.9841141, 0.17753705, 0, -0.17753705, 0.9841141, 0, -0.9375, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9723638, 0.23347083, 0, -0.23347083, 0.9723638, 0, -0.9375, 0)
 
 [node name="right_leg" parent="Body/root/legs" index="1" unique_id=694382133]
-transform = Transform3D(1, 0, 0, 0, 0.9841141, 0.17753705, 0, -0.17753705, 0.9841141, -0.3125, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9723638, 0.23347083, 0, -0.23347083, 0.9723638, -0.3125, 0, 0)
 
 [node name="right_shin" parent="Body/root/legs/right_leg" index="1" unique_id=1601666836]
-transform = Transform3D(1, 0, 0, 0, 0.9400623, -0.3410028, 0, 0.3410028, 0.9400623, 0, -0.8125, 0)
+transform = Transform3D(1, 0, 0, 0, 0.89098275, -0.4540372, 0, 0.4540372, 0.89098275, 0, -0.8125, 0)
 
 [node name="right_foot" parent="Body/root/legs/right_leg/right_shin" index="1" unique_id=588957280]
-transform = Transform3D(1, 0, 0, 0, 0.9841141, 0.17753705, 0, -0.17753705, 0.9841141, 0, -0.9375, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9723638, 0.23347083, 0, -0.23347083, 0.9723638, 0, -0.9375, 0)
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=695912119]
+active = false
 root_node = NodePath("../Body")
 tree_root = SubResource("AnimationNodeBlendTree_yw30f")
 advance_expression_base_node = NodePath("..")

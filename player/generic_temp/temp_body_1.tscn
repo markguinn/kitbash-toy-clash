@@ -19,6 +19,7 @@ height = 3.0
 [sub_resource type="Resource" id="Resource_wd0vf"]
 script = ExtResource("5_7qy1q")
 move_speed = 10.0
+turn_speed = 0.2
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [node name="blockbench_export" unique_id=1797291781 instance=ExtResource("1_fug3q")]

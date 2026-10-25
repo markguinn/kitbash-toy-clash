@@ -1,8 +1,5 @@
 class_name Player extends CharacterBody3D
 
-@export var speed := 10.0
-@export var rotation_speed := 0.4
-
 var cur_dir := Vector3(0.0, 0.0, 1.0)
 var cur_cam := 0
 var target_rot: float
@@ -98,7 +95,10 @@ func _physics_process(delta: float) -> void:
 			is_walking = false
 
 	if !is_equal_approx(body_mesh.rotation.y, target_rot):
-		body_mesh.rotation.y = rotate_toward(body_mesh.rotation.y, target_rot, delta * PI * 2.0 / rotation_speed)
+		if body_root.stats.turn_speed > 0.0:
+			body_mesh.rotation.y = rotate_toward(body_mesh.rotation.y, target_rot, delta * PI * 2.0 / body_root.stats.turn_speed)
+		else:
+			body_mesh.rotation.y = target_rot
 		cur_dir = _angle_to_vec3(body_mesh.rotation.y)
 
 	if not is_on_floor():

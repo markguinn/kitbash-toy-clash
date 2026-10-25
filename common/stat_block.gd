@@ -10,8 +10,13 @@ extends Resource
 # what else? luck?
 
 ## meters/sec, averaged across parts
-## 0 means this part doesn't impact move speed at all
+## 0 means this part doesn't impact the stat at all
 @export var move_speed: float = 0.0
+
+## seconds to turn fully, averaged across parts
+## 0 means this part doesn't impact the stat at all
+@export var turn_speed: float = 0.0
+
 
 ## milliseconds, averaged across parts
 ## 0 means this part doesn't impact the cooldown at all
@@ -28,19 +33,21 @@ func merge(blocks_or_parts: Array) -> void:
 	# these are the total parts that carry weight for stats that are averaged
 	var total_attack_cooldowns := 1 if attack_cooldown > 0 else 0
 	var total_move_speeds := 1 if move_speed > 0.0 else 0
+	var total_turn_speeds := 1 if turn_speed > 0.0 else 0
 	
 	# collect stats for each part
 	for bop in blocks_or_parts:
 		var b: StatBlock = bop if bop is StatBlock else bop.stats
-		
+
 		if b.attack_cooldown > 0:
 			attack_cooldown += b.attack_cooldown 
 			total_attack_cooldowns += 1
-			
 		if b.move_speed > 0.0:
 			move_speed += b.move_speed
 			total_move_speeds += 1
-		
+		if b.turn_speed > 0.0:
+			turn_speed += b.turn_speed
+			total_turn_speeds += 1
 		min_collider_height = max(min_collider_height, b.min_collider_height)
 		
 	# apply averaging
@@ -48,3 +55,5 @@ func merge(blocks_or_parts: Array) -> void:
 		attack_cooldown = attack_cooldown / total_attack_cooldowns
 	if total_move_speeds > 0:
 		move_speed = move_speed / total_move_speeds
+	if total_turn_speeds > 0:
+		turn_speed = turn_speed / total_turn_speeds

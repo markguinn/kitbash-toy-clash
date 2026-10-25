@@ -15,6 +15,7 @@ metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 [sub_resource type="Resource" id="Resource_nflsb"]
 script = ExtResource("6_xnjbx")
 move_speed = 20.0
+turn_speed = 1.0
 min_collider_height = 3.0
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
