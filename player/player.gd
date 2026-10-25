@@ -9,6 +9,7 @@ var target_rot: float
 
 var is_attacking := false
 var is_walking := false
+var walk_blend_tween: Tween
 
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var life: Life = $Life
@@ -26,13 +27,15 @@ var is_walking := false
 @onready var body_mesh: Node3D = $Body
 @onready var body_root: BodyPartContainer = $Body/root
 @onready var animation_player: AnimationPlayer = $Body/AnimationPlayer
+@onready var animation_tree: AnimationTree = $AnimationTree
 
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
 
 func _ready() -> void:
 	_set_cam(0)
-	animation_player.play(&"idle")
+	animation_tree.active = true
+	animation_tree["parameters/moving/blend_amount"] = 0.0
 
 
 func _vec2_to_vec3(dir: Vector2) -> Vector3:
@@ -65,8 +68,16 @@ func _get_input_dir() -> Vector2:
 	return dir.rotated(-compensation)
 
 
+func _tween_walk_blend(val: float) -> void:
+	if walk_blend_tween and walk_blend_tween.is_running():
+		walk_blend_tween.stop()
+	walk_blend_tween = create_tween()
+	walk_blend_tween.tween_property(animation_tree, "parameters/moving/blend_amount", val, 0.2)
+
+
 func _physics_process(delta: float) -> void:
 	var dir := _get_input_dir()
+
 	if dir.length() > 0.0 and body_root.can_move:
 		var walk_dir := _vec2_to_vec3(dir)
 		var next_rot := _fix_angle(dir.angle())
@@ -74,22 +85,25 @@ func _physics_process(delta: float) -> void:
 		if not is_equal_approx(target_rot, next_rot):
 			body_root.change_direction.emit(walk_dir)
 		target_rot = next_rot
-		if animation_player.current_animation == "idle":
-			animation_player.play("walk", 0.2)
+		if not is_walking:
+			_tween_walk_blend(1.0)
 			body_root.walk_start.emit(walk_dir)
 			is_walking = true
 	else:
 		velocity = Vector3.ZERO
 		target_rot = body_mesh.rotation.y
-		is_walking = false
-		if animation_player.current_animation == "walk":
-			animation_player.play("idle", 0.2)
+		if is_walking:
+			_tween_walk_blend(0.0)
 			body_root.walk_end.emit(cur_dir)
+			is_walking = false
+
 	if !is_equal_approx(body_mesh.rotation.y, target_rot):
 		body_mesh.rotation.y = rotate_toward(body_mesh.rotation.y, target_rot, delta * PI * 2.0 / rotation_speed)
 		cur_dir = _angle_to_vec3(body_mesh.rotation.y)
+
 	if not is_on_floor():
 		velocity.y = -10.0
+
 	move_and_slide()
 
 
@@ -102,14 +116,11 @@ func _input(event: InputEvent) -> void:
 
 func _attack() -> void:
 	is_attacking = true
-	if animation_player.current_animation == &"attack":
-		animation_player.stop()
-	animation_player.play(&"attack")
+	animation_tree.set("parameters/attack/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	body_root.attack_start.emit(cur_dir)
 	await animation_player.animation_finished
 	body_root.attack_end.emit(cur_dir)
 	is_attacking = false
-	animation_player.play(&"idle", 0.2)
 
 
 func _on_health_drip() -> void:

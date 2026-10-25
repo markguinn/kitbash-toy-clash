@@ -16,7 +16,6 @@ size = Vector3(3, 4, 3)
 viewport_path = NodePath("HealthBar/the/health")
 
 [node name="BigEnemy" unique_id=1807322689 instance=ExtResource("1_2wib7")]
-take_damage_from_causing_it = 0.0
 
 [node name="Body" type="MeshInstance3D" parent="." index="0" unique_id=560195625]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)

@@ -17,6 +17,9 @@ radius = 4.2
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylolo"]
 radius = 4.5
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_n0k87"]
+viewport_path = NodePath("HealthBar/the/health")
+
 [node name="BigEnemySpawner" unique_id=1330096657 instance=ExtResource("1_fmq5e")]
 enemy_type = ExtResource("2_l7w4n")
 
@@ -26,9 +29,15 @@ mesh = SubResource("SphereMesh_ylolo")
 [node name="CollisionShape3D" parent="." index="1" unique_id=723521642]
 shape = SubResource("SphereShape3D_n0k87")
 
-[node name="CollisionShape3D" parent="HurtBox" parent_id_path=PackedInt32Array(149782567) index="0" unique_id=911874032]
+[node name="HurtBox" parent="." index="2" unique_id=149782567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="CollisionShape3D" parent="HurtBox" index="0" unique_id=911874032]
 shape = SubResource("SphereShape3D_ylolo")
 
 [node name="Life" parent="." index="3" unique_id=2033270747]
 starting_hp = 10.0
 armor = 1.2
+
+[node name="the" parent="HealthBar" parent_id_path=PackedInt32Array(749490317) index="0" unique_id=1753161793]
+texture = SubResource("ViewportTexture_n0k87")

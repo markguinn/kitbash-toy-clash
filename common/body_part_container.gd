@@ -74,17 +74,17 @@ func _find_body_parts(node: Node) -> void:
 # TODO: let each body part specify if it stops movement on attack
 # TODO: don't do this if no body parts have an attack
 func _on_attack_start(_dir: Vector3) -> void:
-	can_move = false
 	last_attack_at = Now.msec
 
 
 func _on_attack_end(_dir: Vector3) -> void:
-	can_move = true
+	pass
 
 
 func _calc_stats() -> void:
 	stats = base_stats.duplicate(true)
 	stats.merge(parts)
+
 
 func _on_parts_changed(old_part: BodyPart, new_part: BodyPart) -> void:
 	Log.debug(self, host.name, "Parts changed. old", old_part.name, "new", new_part.name)

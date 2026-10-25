@@ -64,6 +64,16 @@ func _get_animation_player() -> AnimationPlayer:
 	return null
 
 
+func _get_animation_tree() -> AnimationTree:
+	var p: Node3D = get_parent()
+	while p:
+		var ap = p.get_node_or_null("AnimationTree")
+		if ap:
+			return ap
+		p = p.get_parent()
+	return null
+
+
 func replace_with_body_part(src_part: BodyPart) -> void:
 	var host: Node3D = get_parent()
 	var src_player: AnimationPlayer = src_part._get_animation_player()
@@ -74,7 +84,12 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 	var dest_anim_root: Node = dest_player.get_node(dest_player.root_node)
 	var dest_part_path: NodePath = dest_anim_root.get_path_to(dest_part)
 	Log.debug(self, "Swapping", src_part, "for", dest_part, "player=", dest_player, "src path=", src_part_path, "dest path=", dest_part_path)
-	
+
+	var anim_tree: AnimationTree = _get_animation_tree()
+	var attack_oneshot: AnimationNodeOneShot
+	if anim_tree and anim_tree.tree_root is AnimationNodeBlendTree:
+		attack_oneshot = anim_tree.tree_root.get_node(&"attack")
+
 	# make a copy of the library because we're going to make destructive edits
 	var dest_al: AnimationLibrary = dest_player.get_animation_library("").duplicate_deep()
 	dest_player.remove_animation_library("")
@@ -106,6 +121,8 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 			if remove:
 				Log.debug(self, "Animation", anim_name, "removing track", i - 1, "for dest", np.get_concatenated_names())
 				dest_anim.remove_track(i - 1)
+				if attack_oneshot:
+					attack_oneshot.set_filter_path(np, false)
 
 		for i in range(src_anim.get_track_count()):
 			var np: NodePath = src_anim.track_get_path(i)
@@ -119,6 +136,10 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 			if add:
 				Log.debug(self, "Animation", anim_name, "adding track", i, "for src", np.get_concatenated_names())
 				src_anim.copy_track(i, dest_anim)
+				if attack_oneshot and src_part.stats.attack_cooldown > 0:
+					attack_oneshot.set_filter_path(np, true)
+					Log.debug(self, "Animation", anim_name, "filtering attack track", i, "for src", np.get_concatenated_names())
+
 				#var new_idx := dest_anim.get_track_count() - 1
 				#dest_anim.track_set_path(new_idx, dest_part_path)
 				# TODO: if we hit this case where the parts aren't 1 for 1, we'll need this
