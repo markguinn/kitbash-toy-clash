@@ -1,7 +1,7 @@
-class_name SwordArmBodyPart
+class_name MeleeAttackBodyPart
 extends BodyPart
 
-@onready var hit_box: HitBox = $left_arm2/mesh/HitBox
+@onready var hit_box: HitBox = $HitBox
 
 func _ready() -> void:
 	super._ready()

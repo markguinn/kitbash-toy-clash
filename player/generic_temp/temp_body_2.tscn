@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://v13awrp2jboj"]
 
 [ext_resource type="PackedScene" uid="uid://bng6sl0sm81dy" path="res://_source_assets/generic-player/generic_player_mods.gltf" id="1_y3yu8"]
-[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://common/body_part_container.gd" id="2_hnx4p"]
-[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://common/body_part.gd" id="3_rrwlk"]
-[ext_resource type="Script" uid="uid://c5gdsahklbswm" path="res://player/gun_arm.gd" id="4_ank5h"]
+[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://common/body_parts/body_part_container.gd" id="2_hnx4p"]
+[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://common/body_parts/body_part.gd" id="3_rrwlk"]
+[ext_resource type="Script" uid="uid://c5gdsahklbswm" path="res://common/body_parts/ranged_attack_body_part.gd" id="4_ank5h"]
 [ext_resource type="PackedScene" uid="uid://0iap8bwrf2kj" path="res://player/projectile.tscn" id="5_dmfhu"]
 [ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="6_xnjbx"]
 

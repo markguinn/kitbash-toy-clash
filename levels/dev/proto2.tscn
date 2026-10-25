@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dqvrj27ervih7" path="res://player/generic_temp/temp_body_1.tscn" id="5_g1bde"]
 [ext_resource type="PackedScene" uid="uid://v13awrp2jboj" path="res://player/generic_temp/temp_body_2.tscn" id="6_unxl6"]
 [ext_resource type="PackedScene" uid="uid://b64kv0p1jxrdi" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="7_tm3by"]
+[ext_resource type="PackedScene" uid="uid://qf3m6pmicxlt" path="res://player/generic_temp/temp_body_3.tscn" id="8_u5iaq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
 
@@ -128,7 +129,7 @@ size = 0.1
 metadata/_edit_lock_ = true
 
 [node name="Human" parent="." unique_id=1797291781 instance=ExtResource("5_g1bde")]
-transform = Transform3D(-0.999397, 0, 0.034723062, 0, 1, 0, -0.034723062, 0, -0.999397, 0, 2.1892014, 17.874622)
+transform = Transform3D(-0.999397, 0, 0.034723062, 0, 1, 0, -0.034723062, 0, -0.999397, 17.481916, 2.1892014, -19.838047)
 
 [node name="torso" parent="Human/root" parent_id_path=PackedInt32Array(1797291781, 1682393043) index="0" unique_id=698833126]
 visible = false
@@ -146,7 +147,7 @@ shape = SubResource("SphereShape3D_iynve")
 debug_color = Color(0, 0.6, 0.69803923, 1)
 
 [node name="SwordArm" parent="." unique_id=1788171193 instance=ExtResource("5_g1bde")]
-transform = Transform3D(0.053483307, 0, -0.9985687, 0, 1, 0, 0.9985687, 0, 0.053483307, 20.07767, 2.1892014, 0.46799088)
+transform = Transform3D(0.053483307, 0, -0.9985687, 0, 1, 0, 0.9985687, 0, 0.053483307, -20.766119, 2.1892014, 17.037405)
 
 [node name="legs" parent="SwordArm/root" parent_id_path=PackedInt32Array(1788171193, 1682393043) index="1" unique_id=1059167167]
 visible = false
@@ -193,10 +194,23 @@ debug_color = Color(0, 0.6, 0.69803923, 1)
 [node name="BigEnemySpawner" parent="." unique_id=1330096657 instance=ExtResource("7_tm3by")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.31403, 0, 39.95581)
 
+[node name="BigAx" parent="." unique_id=820212657 instance=ExtResource("8_u5iaq")]
+transform = Transform3D(0.7809132, 0, 0.6246396, 0, 1, 0, -0.6246396, 0, 0.7809132, -20.96474, 3.070137, -19.053059)
+
+[node name="Area3D" type="Area3D" parent="BigAx" unique_id=1545673325]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.589221, 0.21726799)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BigAx/Area3D" unique_id=1122190608]
+shape = SubResource("SphereShape3D_iynve")
+debug_color = Color(0, 0.6, 0.69803923, 1)
+
 [connection signal="body_entered" from="Human/Area3D2" to="." method="_on_human_body_entered"]
 [connection signal="body_entered" from="SwordArm/Area3D2" to="." method="_on_sword_arm_body_entered"]
 [connection signal="body_entered" from="Horse/Area3D" to="." method="_on_horse_body_entered"]
 [connection signal="body_entered" from="GunArm/Area3D" to="." method="_on_gun_arm_body_entered"]
+[connection signal="body_entered" from="BigAx/Area3D" to="." method="_on_ax_body_entered"]
 
 [editable path="Player"]
 [editable path="Player/Body"]
@@ -204,3 +218,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.31403, 0, 39.95581)
 [editable path="SwordArm"]
 [editable path="Horse"]
 [editable path="GunArm"]
+[editable path="BigAx"]

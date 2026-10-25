@@ -23,6 +23,9 @@ enum Slot {
 ## additional animation tracks that should be copied
 ## (beyond the ones that touch the actual part and its children)
 @export var extra_tracks: Array[String] = []
+## other body parts that come along with this one
+@export var extra_nodes: Array[Node3D] = []
+## how this body part impact the overall player stats
 @export var stats: StatBlock
 
 var container: BodyPartContainer
@@ -36,7 +39,7 @@ func _ready() -> void:
 		stats = StatBlock.new()
 	for signal_name in AUTO_CONNECT_SIGNALS:
 		var method_name: String = "_on_" + signal_name
-		if has_method(method_name):
+		if has_method(method_name) and container:
 			Log.debug(self, "connecting", signal_name, "to", method_name)
 			container.connect(signal_name, _handle_container_signal.bind(method_name))
 
@@ -78,11 +81,11 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 	var host: Node3D = get_parent()
 	var src_player: AnimationPlayer = src_part._get_animation_player()
 	var src_anim_root: Node = src_player.get_node(src_player.root_node)
-	var src_part_path: NodePath = src_anim_root.get_path_to(src_part)
+	var src_part_path: String = src_anim_root.get_path_to(src_part).get_concatenated_names()
 	var dest_part: Node3D = self
 	var dest_player: AnimationPlayer = dest_part._get_animation_player()
 	var dest_anim_root: Node = dest_player.get_node(dest_player.root_node)
-	var dest_part_path: NodePath = dest_anim_root.get_path_to(dest_part)
+	var dest_part_path: String = dest_anim_root.get_path_to(dest_part).get_concatenated_names()
 	Log.debug(self, "Swapping", src_part, "for", dest_part, "player=", dest_player, "src path=", src_part_path, "dest path=", dest_part_path)
 
 	var anim_tree: AnimationTree = _get_animation_tree()
@@ -96,9 +99,17 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 	dest_player.add_animation_library("", dest_al)
 
 	# replace the mesh nodes
+	for extra_node in src_part.extra_nodes:
+		var np: NodePath = src_part.get_path_to(extra_node)
+		var old_node: Node3D = self.get_node_or_null(np)
+		if old_node:
+			old_node.get_parent().remove_child(old_node)
+			old_node.queue_free()
+		var cloned_node: Node3D = extra_node.duplicate()
+		host.add_child(cloned_node)
+
 	host.remove_child(self)
 	var cloned_part: Node3D = src_part.duplicate()
-	cloned_part.transform = self.transform
 	host.add_child(cloned_part)
 
 	# replace the animations
@@ -116,10 +127,13 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 			for t in src_part.extra_tracks:
 				if nps == t:
 					remove = true
-			if np.slice(0, dest_part_path.get_name_count()) == dest_part_path:
+			if nps.begins_with(dest_part_path):
 				remove = true
+			for extra_node in src_part.extra_nodes:
+				if nps.begins_with(src_anim_root.get_path_to(extra_node).get_concatenated_names()):
+					remove = true
 			if remove:
-				Log.debug(self, "Animation", anim_name, "removing track", i - 1, "for dest", np.get_concatenated_names())
+				Log.debug(self, "Animation", anim_name, "removing track", i - 1, "for dest", nps)
 				dest_anim.remove_track(i - 1)
 				if attack_oneshot:
 					attack_oneshot.set_filter_path(np, false)
@@ -131,14 +145,17 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 			for t in src_part.extra_tracks:
 				if nps == t:
 					add = true
-			if np.slice(0, dest_part_path.get_name_count()) == src_part_path:
+			if nps.begins_with(src_part_path):
 				add = true
+			for extra_node in src_part.extra_nodes:
+				if nps.begins_with(src_anim_root.get_path_to(extra_node).get_concatenated_names()):
+					add = true
 			if add:
-				Log.debug(self, "Animation", anim_name, "adding track", i, "for src", np.get_concatenated_names())
+				Log.debug(self, "Animation", anim_name, "adding track", i, "for src", nps)
 				src_anim.copy_track(i, dest_anim)
 				if attack_oneshot and src_part.stats.attack_cooldown > 0:
 					attack_oneshot.set_filter_path(np, true)
-					Log.debug(self, "Animation", anim_name, "filtering attack track", i, "for src", np.get_concatenated_names())
+					Log.debug(self, "Animation", anim_name, "filtering attack track", i, "for src", nps)
 
 				#var new_idx := dest_anim.get_track_count() - 1
 				#dest_anim.track_set_path(new_idx, dest_part_path)

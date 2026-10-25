@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://qf3m6pmicxlt"]
+
+[ext_resource type="PackedScene" uid="uid://dyo24c5cbdobb" path="res://_source_assets/generic-player/generic_player_ax.gltf" id="1_6e3uf"]
+[ext_resource type="Script" uid="uid://bb7mqdux6xdrk" path="res://common/hit_box.gd" id="2_i4utn"]
+[ext_resource type="Script" uid="uid://cduhh7u3r7tsb" path="res://common/body_parts/melee_attack_body_part.gd" id="2_it5jm"]
+[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://common/body_parts/body_part.gd" id="2_mo3dw"]
+[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://common/body_parts/body_part_container.gd" id="2_wy3wo"]
+[ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="3_j5ffu"]
+
+[sub_resource type="Resource" id="Resource_j5ffu"]
+script = ExtResource("3_j5ffu")
+turn_speed = 0.6
+attack_cooldown = 1000
+metadata/_custom_type_script = "uid://dwctbgtrj80mq"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iynve"]
+size = Vector3(3.157074, 3.586975, 1)
+
+[node name="blockbench_export" unique_id=820212657 instance=ExtResource("1_6e3uf")]
+
+[node name="root" parent="." index="0" unique_id=550965669]
+script = ExtResource("2_wy3wo")
+
+[node name="left_arm" parent="root/torso" parent_id_path=PackedInt32Array(186194084) index="2" unique_id=479957023 node_paths=PackedStringArray("extra_nodes")]
+script = ExtResource("2_it5jm")
+slot = 3
+extra_tracks = Array[String](["root/torso"])
+extra_nodes = [NodePath("../right_arm")]
+stats = SubResource("Resource_j5ffu")
+
+[node name="HitBox" type="Area3D" parent="root/torso/left_arm" index="1" unique_id=199978391]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.375, 2.1875, 0)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_i4utn")
+damage = 10.0
+metadata/_custom_type_script = "uid://bb7mqdux6xdrk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="root/torso/left_arm/HitBox" index="0" unique_id=1457913581]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.078537, 0.082455635, 0)
+shape = SubResource("BoxShape3D_iynve")
+debug_color = Color(0.9309958, 0.23757973, 0.28869233, 1)
+
+[node name="right_arm" parent="root/torso" parent_id_path=PackedInt32Array(186194084) index="3" unique_id=816751645]
+script = ExtResource("2_mo3dw")

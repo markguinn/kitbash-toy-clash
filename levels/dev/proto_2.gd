@@ -44,3 +44,13 @@ func _on_gun_arm_body_entered(body: Node3D) -> void:
 		Log.info(self, "swapping to gun arm", src, dest)
 		if dest and src:
 			dest.replace_with_body_part(src)
+
+
+func _on_ax_body_entered(body: Node3D) -> void:
+	if body is Player:
+		has_gun = !has_gun
+		var src: BodyPart = $BigAx.get_node("root/torso/left_arm")
+		var dest: BodyPart = body_part_container.get_node("root/torso/left_arm")
+		Log.info(self, "swapping to big ax", src, dest)
+		if dest and src:
+			dest.replace_with_body_part(src)

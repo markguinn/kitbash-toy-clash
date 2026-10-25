@@ -1,7 +1,7 @@
-class_name GunArmBodyPart
+class_name RangedAttackBodyPart
 extends BodyPart
 
-@export var projectile_speed := 30.0
+@export var projectile_speed := 50.0
 @export var projectile_tpl: PackedScene
 @export var fire_delay := 0.1
 
