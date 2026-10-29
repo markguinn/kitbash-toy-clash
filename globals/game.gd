@@ -96,6 +96,13 @@ func quit_to_title() -> void:
 
 #region THROWAWAY PROTOTYPE STUFF
 
+
+# TODO: delete this when we get a pause menu etc
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		quit_to_title.call_deferred()
+
+
 func _on_enemy_died(enemy, _hit_box) -> void:
 	var dc = enemy.get("loot_parts_dc")
 	if dc and randf() <= dc:
