@@ -8,6 +8,14 @@ signal attack_start(dir: Vector3)
 @warning_ignore("unused_signal")
 signal attack_end(dir: Vector3)
 @warning_ignore("unused_signal")
+signal special_start(dir: Vector3)
+@warning_ignore("unused_signal")
+signal special_end(dir: Vector3)
+@warning_ignore("unused_signal")
+signal dash_start(dir: Vector3)
+@warning_ignore("unused_signal")
+signal dash_end(dir: Vector3)
+@warning_ignore("unused_signal")
 signal walk_start(dir: Vector3)
 @warning_ignore("unused_signal")
 signal walk_end(dir: Vector3)
@@ -32,7 +40,8 @@ var stats: StatBlock
 var parts: Array[BodyPart] = []
 var can_move := true
 var last_attack_at: int
-
+var last_special_at: int
+var last_dash_at: int
 
 var can_attack: bool:
 	get():
@@ -42,6 +51,26 @@ var can_attack: bool:
 		)
 	set(v):
 		last_attack_at = 0 if v else Now.msec + 1000
+
+
+var can_special: bool:
+	get():
+		return (
+			stats.special_cooldown > 0
+			and last_special_at + stats.special_cooldown < Now.msec
+		)
+	set(v):
+		last_special_at = 0 if v else Now.msec + 1000
+
+
+var can_dash: bool:
+	get():
+		return (
+			stats.dash_cooldown > 0
+			and last_dash_at + stats.dash_cooldown < Now.msec
+		)
+	set(v):
+		last_dash_at = 0 if v else Now.msec + 1000
 
 
 func _ready() -> void:
@@ -60,7 +89,6 @@ func _ready() -> void:
 	_calc_stats()
 	parts_changed.connect(_on_parts_changed)
 	attack_start.connect(_on_attack_start)
-	attack_end.connect(_on_attack_end)
 	Log.debug(self, host.name, "Body parts", parts.map(func(n): return n.name))
 
 
@@ -71,14 +99,16 @@ func _find_body_parts(node: Node) -> void:
 		_find_body_parts(n)
 
 
-# TODO: let each body part specify if it stops movement on attack
-# TODO: don't do this if no body parts have an attack
 func _on_attack_start(_dir: Vector3) -> void:
 	last_attack_at = Now.msec
 
 
-func _on_attack_end(_dir: Vector3) -> void:
-	pass
+func _on_special_start(_dir: Vector3) -> void:
+	last_special_at = Now.msec
+
+
+func _on_dash_start(_dir: Vector3) -> void:
+	last_dash_at = Now.msec
 
 
 func _calc_stats() -> void:

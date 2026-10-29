@@ -4,6 +4,10 @@ extends Node3D
 const AUTO_CONNECT_SIGNALS = [
 	"attack_start", 
 	"attack_end",
+	"special_start", 
+	"special_end",
+	"dash_start", 
+	"dash_end",
 	"walk_start",
 	"walk_end",
 	"change_direction",

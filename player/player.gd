@@ -5,6 +5,8 @@ var cur_cam := 0
 var target_rot: float
 
 var is_attacking := false
+var is_special_attacking := false
+var is_dashing := false
 var is_walking := false
 var walk_blend_tween: Tween
 
@@ -35,8 +37,14 @@ func _ready() -> void:
 	animation_tree["parameters/moving/blend_amount"] = 0.0
 
 
+# TODO: these probably go in a helper class
+
 func _vec2_to_vec3(dir: Vector2) -> Vector3:
 	return Vector3(dir.x, 0.0, dir.y)
+
+
+func _vec3_to_vec2(dir: Vector3) -> Vector2:
+	return Vector2(dir.x, dir.z)
 
 
 func _fix_angle(angle: float) -> float:
@@ -73,12 +81,15 @@ func _tween_walk_blend(val: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var dir := _get_input_dir()
+	var dir:= _get_input_dir() if not is_dashing else _vec3_to_vec2(cur_dir)
 
 	if dir.length() > 0.0 and body_root.can_move:
 		var walk_dir := _vec2_to_vec3(dir)
 		var next_rot := _fix_angle(dir.angle())
-		velocity = walk_dir * body_root.stats.move_speed
+		if is_dashing:
+			velocity = walk_dir * body_root.stats.dash_speed
+		else:
+			velocity = walk_dir * body_root.stats.move_speed
 		if not is_equal_approx(target_rot, next_rot):
 			body_root.change_direction.emit(walk_dir)
 		target_rot = next_rot
@@ -108,8 +119,13 @@ func _physics_process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	# TODO: think about this state management
 	if event.is_action_pressed("attack1") and body_root.can_attack:
 		_attack.call_deferred()
+	if event.is_action_pressed("attack2") and body_root.can_special:
+		_special_attack.call_deferred()
+	if event.is_action_pressed("dash") and body_root.can_dash:
+		_dash.call_deferred()
 	if event.is_action_pressed("switch_cam"):
 		_set_cam(cur_cam + 1)
 
@@ -121,6 +137,19 @@ func _attack() -> void:
 	await animation_player.animation_finished
 	body_root.attack_end.emit(cur_dir)
 	is_attacking = false
+
+
+func _special_attack() -> void:
+	pass # TODO
+
+
+func _dash() -> void:
+	is_dashing = true
+	#animation_tree.set("parameters/attack/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	body_root.dash_start.emit(cur_dir)
+	await get_tree().create_timer(body_root.stats.dash_lengh).timeout
+	body_root.dash_end.emit(cur_dir)
+	is_dashing = false
 
 
 func _on_health_drip() -> void:

@@ -13,6 +13,10 @@ extends Resource
 ## 0 means this part doesn't impact the stat at all
 @export var move_speed: float = 0.0
 
+@export var dash_speed: float = 70.0
+
+@export var dash_lengh: float = 0.3
+
 ## seconds to turn fully, averaged across parts
 ## 0 means this part doesn't impact the stat at all
 @export var turn_speed: float = 0.0
@@ -22,7 +26,8 @@ extends Resource
 ## 0 means this part doesn't impact the cooldown at all
 ## if all parts have a 0 for this value, the player can't attack at all
 @export var attack_cooldown: int = 0
-#@export var special_attack_cooldown: float = 0
+@export var special_cooldown: int = 0
+@export var dash_cooldown: int = 2000
 
 ## this is really only needed for legs that are longer than the default
 ## highest value wins
@@ -32,6 +37,8 @@ extends Resource
 func merge(blocks_or_parts: Array) -> void:
 	# these are the total parts that carry weight for stats that are averaged
 	var total_attack_cooldowns := 1 if attack_cooldown > 0 else 0
+	var total_special_cooldowns := 1 if special_cooldown > 0 else 0
+	var total_dash_cooldowns := 1 if dash_cooldown > 0 else 0
 	var total_move_speeds := 1 if move_speed > 0.0 else 0
 	var total_turn_speeds := 1 if turn_speed > 0.0 else 0
 	
@@ -42,6 +49,12 @@ func merge(blocks_or_parts: Array) -> void:
 		if b.attack_cooldown > 0:
 			attack_cooldown += b.attack_cooldown 
 			total_attack_cooldowns += 1
+		if b.special_cooldown > 0:
+			special_cooldown += b.special_cooldown 
+			total_special_cooldowns += 1
+		if b.dash_cooldown > 0:
+			dash_cooldown += b.dash_cooldown 
+			total_dash_cooldowns += 1
 		if b.move_speed > 0.0:
 			move_speed += b.move_speed
 			total_move_speeds += 1
@@ -53,6 +66,10 @@ func merge(blocks_or_parts: Array) -> void:
 	# apply averaging
 	if total_attack_cooldowns > 0:
 		attack_cooldown = attack_cooldown / total_attack_cooldowns
+	if total_special_cooldowns > 0:
+		special_cooldown = special_cooldown / total_special_cooldowns
+	if total_dash_cooldowns > 0:
+		dash_cooldown = dash_cooldown / total_dash_cooldowns
 	if total_move_speeds > 0:
 		move_speed = move_speed / total_move_speeds
 	if total_turn_speeds > 0:
