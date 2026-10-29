@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://d258f6hbtesvg"]
+
+[ext_resource type="Theme" uid="uid://cvcbe2em0ehmf" path="res://ui/theme.tres" id="1_dxfxk"]
+[ext_resource type="Script" uid="uid://7b24u8emy6rq" path="res://common/ui/file_label.gd" id="2_7840x"]
+[ext_resource type="Script" uid="uid://6arxcfsx130h" path="res://common/ui/scene_change_button.gd" id="2_ouiyl"]
+
+[node name="DevTitleScreen" type="CanvasLayer" unique_id=1639024175]
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1753645063]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1477254935]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1814381509]
+layout_mode = 2
+theme = ExtResource("1_dxfxk")
+theme_type_variation = &"HeaderLarge"
+text = "Kitbash Toy Clash"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer" unique_id=1073598982]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Proto1" type="Button" parent="MarginContainer/VBoxContainer" unique_id=716290262]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Prototype #1"
+script = ExtResource("2_ouiyl")
+target_scene = "uid://ctjamigafagl3"
+is_primary = true
+metadata/_custom_type_script = "uid://6arxcfsx130h"
+
+[node name="Proto2" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1726603703]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Prototype #2"
+script = ExtResource("2_ouiyl")
+target_scene = "uid://dprhdayetcchx"
+is_primary = true
+metadata/_custom_type_script = "uid://6arxcfsx130h"
+
+[node name="Control2" type="Control" parent="MarginContainer/VBoxContainer" unique_id=1088315750]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Version" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1784152790]
+layout_mode = 2
+text = "dev build"
+horizontal_alignment = 1
+script = ExtResource("2_7840x")
+file_path = "res://version.txt"
+metadata/_custom_type_script = "uid://7b24u8emy6rq"

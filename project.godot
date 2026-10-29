@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Kitbash Toy Clash"
-run/main_scene="uid://dprhdayetcchx"
+run/main_scene="uid://diymwm2lkwnj2"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://dsvwud0ydk0rd"
 
@@ -31,7 +31,6 @@ gdscript/warnings/integer_division=0
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="viewport"
-window/stretch/aspect="expand"
 window/stretch/scale_mode="integer"
 
 [file_customization]
@@ -47,6 +46,11 @@ player=""
 enemies=""
 spawners=""
 confirm_dlg=""
+scene_container=""
+
+[gui]
+
+theme/custom="uid://cvcbe2em0ehmf"
 
 [input]
 

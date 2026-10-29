@@ -1,0 +1,16 @@
+[gd_resource type="Theme" format=3 uid="uid://cvcbe2em0ehmf"]
+
+[ext_resource type="FontFile" uid="uid://dk02jqbwkcdf6" path="res://common/fonts/Tiny5-Regular.ttf" id="1_rqugq"]
+
+[resource]
+default_base_scale = 2.0
+default_font = ExtResource("1_rqugq")
+default_font_size = 32
+Button/font_sizes/font_size = 48
+HeaderLarge/base_type = &"Label"
+HeaderLarge/font_sizes/font_size = 128
+MarginContainer/constants/margin_bottom = 24
+MarginContainer/constants/margin_left = 32
+MarginContainer/constants/margin_right = 32
+MarginContainer/constants/margin_top = 24
+VBoxContainer/constants/separation = 24
