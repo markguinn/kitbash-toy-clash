@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://diymwm2lkwnj2"]
 
+[ext_resource type="Script" uid="uid://e48dhhiuf4uj" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://d258f6hbtesvg" path="res://ui/dev/dev_title_screen.tscn" id="1_ig7tw"]
 
-[node name="Main" type="Node" unique_id=1686355258]
-
-[node name="SceneContainer" type="Node" parent="." unique_id=1694750468 groups=["scene_container"]]
-
-[node name="DevTitleScreen" parent="SceneContainer" unique_id=1371519828 instance=ExtResource("1_ig7tw")]
+[node name="Main" type="Node3D" unique_id=1447503994]
+script = ExtResource("1_0xm2m")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=2141545794]
+
+[node name="SceneContainer" type="Node3D" parent="." unique_id=329446184 groups=["scene_container"]]
+
+[node name="DevTitleScreen" parent="SceneContainer" unique_id=1371519828 instance=ExtResource("1_ig7tw")]

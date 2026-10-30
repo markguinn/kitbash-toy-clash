@@ -65,6 +65,7 @@ func change_scene(new_scene_path: String, params = {}) -> void:
 		#await fade_out_tween.finished
 
 	# TODO: load on a thread?
+	Log.measure_start(&"load_level")
 	var new_scene: Resource = load(new_scene_path)
 	if not new_scene:
 		new_scene = load(TITLE_SCREEN)

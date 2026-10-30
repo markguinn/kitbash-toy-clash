@@ -22,6 +22,7 @@ func get_player(idx: int = 0) -> Player:
 #endregion
 #region Virtuals
 
+
 func _init() -> void:
 	container = Node3D.new()
 	container.name = &"InstanceContainer"
@@ -34,6 +35,9 @@ func _enter_tree() -> void:
 
 func _exit_tree() -> void:
 	if current == self: current = null
+
+func _ready() -> void:
+	Log.measure_end(&"load_level")
 
 
 #endregion
