@@ -1,6 +1,7 @@
 extends Node
 
 const EMPTY = ""
+const debounced_log_ms = 500
 
 enum LogLevel {DEBUG, INFO, WARNING, ERROR}
 
@@ -94,11 +95,18 @@ func debug(source: Variant, ...args) -> void:
 		_log(source, LogLevel.DEBUG, args)
 
 
-var debounced_log_ms := 500
-var debounced_log_level := LogLevel.DEBUG
-func debounced(source: Variant, ...args) -> void:
-	if Game.is_dev_mode() and not Now.throttle(debounced_log_ms, str(source)):
-		_log(source, debounced_log_level, args)
+func debounced_log(source: Variant, level: int, ...args) -> void:
+	if Game.is_dev_mode() and not Now.throttle(debounced_log_ms, "d%d:%s" % [level, _get_source_name(source)]):
+		_log(source, level, args)
+
+
+func d_info(source: Variant, ...args) -> void:
+	debounced_log(source, LogLevel.INFO, args)
+
+
+func d_debug(source: Variant, ...args) -> void:
+	if Game.is_dev_mode():
+		debounced_log(source, LogLevel.DEBUG, args)
 
 
 #region perf logging
