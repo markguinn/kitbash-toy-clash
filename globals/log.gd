@@ -101,17 +101,32 @@ func debounced(source: Variant, ...args) -> void:
 		_log(source, debounced_log_level, args)
 
 
-var measurements: Dictionary[StringName, int] = {}
-func measure_start(op_name: StringName) -> void:
+#region perf logging
+
+var measurements: Dictionary[String, int] = {}
+
+func measure_start(op_name: String) -> void:
 	measurements[op_name] = Time.get_ticks_msec()
 
-func measure(op_name: StringName, op_tag: StringName, warn_threshold = 1000) -> void:
-	var ms: int = Time.get_ticks_msec() - measurements.get(op_name, 0)
+
+func measure(op_name: String, op_tag: StringName, warn_threshold = 1000) -> void:
+	log_measurement(op_name, op_tag, Time.get_ticks_msec() - measurements.get(op_name, 0), warn_threshold)
+
+
+func log_measurement(op_name: String, op_tag: String, ms: int, warn_threshold = 1000) -> void:
 	var format: String = Game.config.get_value("log_format", "PERF", "")
 	if format:
 		print_rich(format % [Now.msec, op_name, op_tag, ms])
 	if ms > warn_threshold:
 		warn("SLOW", op_name, op_tag, ":", ms, ">", warn_threshold)
 
-func measure_end(op_name: StringName, warn_threshold = 1000) -> void:
+
+func measure_end(op_name: String, warn_threshold = 1000) -> void:
+	if op_name == &"global_ready":
+		var window = JavaScriptBridge.get_interface("window")
+		if window:
+			log_measurement(op_name, &"end", window.measureGlobalReadyEnd())
+			return
 	measure(op_name, &"end", warn_threshold)
+
+#endregion
