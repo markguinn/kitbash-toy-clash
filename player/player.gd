@@ -39,28 +39,6 @@ func _ready() -> void:
 	animation_tree["parameters/overrides/blend_amount"] = 0.0
 
 
-# TODO: these probably go in a helper class
-
-func _vec2_to_vec3(dir: Vector2) -> Vector3:
-	return Vector3(dir.x, 0.0, dir.y)
-
-
-func _vec3_to_vec2(dir: Vector3) -> Vector2:
-	return Vector2(dir.x, dir.z)
-
-
-func _fix_angle(angle: float) -> float:
-	return -angle + PI / 2.0
-
-
-func _angle_to_vec2(angle: float) -> Vector2:
-	return Vector2.RIGHT.rotated(_fix_angle(angle))
-
-
-func _angle_to_vec3(angle: float) -> Vector3:
-	return _vec2_to_vec3(_angle_to_vec2(angle))
-
-
 func _set_cam(num: int) -> void:
 	cur_cam = num % cams.size()
 	for c in cams:
@@ -90,11 +68,11 @@ func _tween_overrides_blend(val: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var dir:= _get_input_dir() if not is_dashing else _vec3_to_vec2(cur_dir)
+	var dir:= _get_input_dir() if not is_dashing else Coords.vec3_to_vec2(cur_dir)
 
 	if dir.length() > 0.0 and body_root.can_move:
-		var walk_dir := _vec2_to_vec3(dir)
-		var next_rot := _fix_angle(dir.angle())
+		var walk_dir := Coords.vec2_to_vec3(dir)
+		var next_rot := Coords.fix_angle(dir.angle())
 		if is_dashing:
 			velocity = walk_dir * body_root.stats.dash_speed
 		else:
@@ -119,7 +97,7 @@ func _physics_process(delta: float) -> void:
 			body_mesh.rotation.y = rotate_toward(body_mesh.rotation.y, target_rot, delta * PI * 2.0 / body_root.stats.turn_speed)
 		else:
 			body_mesh.rotation.y = target_rot
-		cur_dir = _angle_to_vec3(body_mesh.rotation.y)
+		cur_dir = Coords.angle_to_vec3(body_mesh.rotation.y)
 
 	if not is_on_floor():
 		velocity.y = -10.0
