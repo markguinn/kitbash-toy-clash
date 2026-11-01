@@ -3,7 +3,7 @@ extends CharacterBody3D
 
 @export var speed := 5.0
 @export var loot_parts_dc := 0.1
-@export var take_damage_from_causing_it := 1.0
+@export var take_damage_from_causing_it := 0.2
 @export var projectile_seconds := 1.0
 
 var last_projectile := 0

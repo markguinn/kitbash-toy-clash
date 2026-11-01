@@ -89,6 +89,8 @@ func _ready() -> void:
 	_calc_stats()
 	parts_changed.connect(_on_parts_changed)
 	attack_start.connect(_on_attack_start)
+	special_start.connect(_on_special_start)
+	dash_start.connect(_on_dash_start)
 	Log.debug(self, host.name, "Body parts", parts.map(func(n): return n.name))
 
 

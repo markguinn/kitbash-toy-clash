@@ -10,6 +10,7 @@
 [sub_resource type="Resource" id="Resource_xnjbx"]
 script = ExtResource("5_7qy1q")
 attack_cooldown = 700
+special_cooldown = 10000
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
@@ -19,31 +20,31 @@ height = 3.0
 [sub_resource type="Resource" id="Resource_wd0vf"]
 script = ExtResource("5_7qy1q")
 move_speed = 10.0
+dash_cooldown = 2000
 turn_speed = 0.2
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [node name="blockbench_export" unique_id=1797291781 instance=ExtResource("1_fug3q")]
 
-[node name="root" parent="." index="0" unique_id=1682393043]
+[node name="root" parent="." index="0" unique_id=1164343148]
 script = ExtResource("2_33150")
 
-[node name="torso" parent="root" index="0" unique_id=698833126]
+[node name="torso" parent="root" index="0" unique_id=2100511907]
 script = ExtResource("3_rlt0s")
 slot = 2
 
-[node name="head" parent="root/torso" index="1" unique_id=1052155131]
+[node name="head" parent="root/torso" index="1" unique_id=1484843447]
 script = ExtResource("3_rlt0s")
 slot = 1
 
-[node name="left_arm" parent="root/torso" index="2" unique_id=2040636637]
-transform = Transform3D(0.043619365, -4.1804725e-08, -0.99904823, -0.99904823, -4.3669786e-08, -0.043619365, -4.1804725e-08, 1, -4.3669786e-08, 0.9375, 0.0625, 0)
+[node name="left_arm" parent="root/torso" index="2" unique_id=803233479]
 script = ExtResource("4_nflsb")
 slot = 3
 extra_tracks = Array[String](["root/torso"])
 stats = SubResource("Resource_xnjbx")
 
 [node name="HitBox" type="Area3D" parent="root/torso/left_arm" index="1" unique_id=1651195800]
-transform = Transform3D(1, 0, 1.8256033e-15, 7.1054274e-15, 1, 7.1054274e-15, 1.8256033e-15, 0, 1, 1.9375, 1.8829556, 5.9604645e-08)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9375, 1.8829556, 5.9604645e-08)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("6_gjhtx")
@@ -54,13 +55,12 @@ metadata/_custom_type_script = "uid://bb7mqdux6xdrk"
 shape = SubResource("CapsuleShape3D_iynve")
 debug_color = Color(0.99215686, 0.039215688, 0.23137255, 1)
 
-[node name="right_arm" parent="root/torso" index="3" unique_id=1196472177]
-transform = Transform3D(0.043619365, 4.1804725e-08, -0.99904823, 0.99904823, -4.3669786e-08, 0.043619365, -4.1804725e-08, -1, -4.3669786e-08, -0.9375, 0.0625, 0)
+[node name="right_arm" parent="root/torso" index="3" unique_id=1949786288]
 script = ExtResource("3_rlt0s")
 slot = 4
 extra_tracks = Array[String](["root/torso"])
 
-[node name="legs" parent="root" index="1" unique_id=1059167167]
+[node name="legs" parent="root" index="1" unique_id=1109858301]
 script = ExtResource("3_rlt0s")
 slot = 5
 stats = SubResource("Resource_wd0vf")

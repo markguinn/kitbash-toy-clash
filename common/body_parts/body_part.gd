@@ -118,6 +118,8 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 
 	# replace the animations
 	for anim_name in dest_player.get_animation_list():
+		if not dest_player.has_animation(anim_name) or not src_player.has_animation(anim_name):
+			continue
 		var dest_anim: Animation = dest_player.get_animation(anim_name)
 		var src_anim: Animation = src_player.get_animation(anim_name)
 

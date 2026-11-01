@@ -9,6 +9,7 @@ var is_special_attacking := false
 var is_dashing := false
 var is_walking := false
 var walk_blend_tween: Tween
+var override_blend_tween: Tween
 
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var life: Life = $Life
@@ -35,6 +36,7 @@ func _ready() -> void:
 	_set_cam(0)
 	animation_tree.active = true
 	animation_tree["parameters/moving/blend_amount"] = 0.0
+	animation_tree["parameters/overrides/blend_amount"] = 0.0
 
 
 # TODO: these probably go in a helper class
@@ -78,6 +80,13 @@ func _tween_walk_blend(val: float) -> void:
 		walk_blend_tween.stop()
 	walk_blend_tween = create_tween()
 	walk_blend_tween.tween_property(animation_tree, "parameters/moving/blend_amount", val, 0.2)
+
+
+func _tween_overrides_blend(val: float) -> void:
+	if override_blend_tween and override_blend_tween.is_running():
+		override_blend_tween.stop()
+	override_blend_tween = create_tween()
+	override_blend_tween.tween_property(animation_tree, "parameters/overrides/blend_amount", val, 0.1)
 
 
 func _physics_process(delta: float) -> void:
@@ -140,15 +149,27 @@ func _attack() -> void:
 
 
 func _special_attack() -> void:
-	pass # TODO
+	is_attacking = true
+	_tween_overrides_blend(1)
+	body_root.special_start.emit(cur_dir)
+	# TODO: this is just temporary. i think we'll want to either
+	# based this on the animation (and make it a one-shot) or 
+	# let the body parts send the special_end event and have total control
+	# or maybe put it in the stat block. let's cross that bridge after
+	# we've designed some of these though
+	await get_tree().create_timer(2.0).timeout
+	body_root.special_end.emit(cur_dir)
+	_tween_overrides_blend(0)
+	is_attacking = false
 
 
 func _dash() -> void:
 	is_dashing = true
-	#animation_tree.set("parameters/attack/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	_tween_overrides_blend(-1)
 	body_root.dash_start.emit(cur_dir)
-	await get_tree().create_timer(body_root.stats.dash_lengh).timeout
+	await get_tree().create_timer(body_root.stats.dash_length).timeout
 	body_root.dash_end.emit(cur_dir)
+	_tween_overrides_blend(0)
 	is_dashing = false
 
 

@@ -17,9 +17,17 @@ func _ready() -> void:
 
 func _on_attack_start(_dir: Vector3) -> void:
 	hit_box.enable()
-	pass
 
 
 func _on_attack_end(_dir: Vector3) -> void:
 	hit_box.disable()
-	pass
+
+
+func _on_special_start(_dir: Vector3) -> void:
+	hit_box.enable()
+	hit_box.scale = Vector3.ONE * 5.0
+
+
+func _on_special_end(_dir: Vector3) -> void:
+	hit_box.disable()
+	hit_box.scale = Vector3.ONE
