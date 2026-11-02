@@ -38,6 +38,7 @@ signal change_direction(dir: Vector3)
 
 var stats: StatBlock
 var parts: Array[BodyPart] = []
+var torso_part: BodyPart
 var can_move := true
 var last_attack_at: int
 var last_special_at: int
@@ -94,11 +95,27 @@ func _ready() -> void:
 	Log.debug(self, host.name, "Body parts", parts.map(func(n): return n.name))
 
 
+## Returns the primary direction the body is facing
+## Naively we just look at the torso for now. This way
+## it responds to animations like spinning.
+func get_facing_dir() -> Vector3:
+	if torso_part:
+		return Coords.angle_to_vec3(torso_part.global_rotation.y)
+	Log.warn(self, "get_facing_dir: no torso part found")
+	return Vector3.ZERO
+
 func _find_body_parts(node: Node) -> void:
 	for n in node.get_children():
 		if n is BodyPart:
 			parts.append(n)
 		_find_body_parts(n)
+
+# I think we'll want to change this to look at the slot?
+func _find_body_part(_name: String) -> BodyPart:
+	var idx := parts.find_custom(func (p): return p.name == _name)
+	if idx >= 0:
+		return parts[idx]
+	return null
 
 
 func _on_attack_start(_dir: Vector3) -> void:
@@ -131,3 +148,6 @@ func _on_parts_changed(old_part: BodyPart, new_part: BodyPart) -> void:
 		if not is_equal_approx(shape.height, stats.min_collider_height):
 			shape.height = stats.min_collider_height
 			Log.debug(self, host.name, "updating collider height", shape.height)
+	
+	torso_part = _find_body_part(&"torso")
+	Log.debug(self, host.name, "torso part", torso_part)

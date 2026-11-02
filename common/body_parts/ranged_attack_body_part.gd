@@ -12,14 +12,28 @@ var fire_after: float = 0.0
 var in_special: bool = false
 
 
+func _ready() -> void:
+	super._ready()
+	if projectile_tpl:
+		SceneCacheWarmer.add(projectile_tpl)
+		#var p = projectile_tpl.instantiate()
+		#add_child(p)
+		#get_tree().create_timer(1.0).connect("timeout", p.queue_free)
+
+
 func _on_attack_start(_dir: Vector3) -> void:
 	fire_after = fire_delay
 
 
 func _fire_projectile(dir: Vector3) -> void:
+	Log.measure_start(&"projectile")
 	var p: Projectile = projectile_tpl.instantiate()
 	p.tree_entered.connect( ## Shoot the projectile once it's valid
 		p.apply_impulse.bind(dir * projectile_speed),
+		CONNECT_ONE_SHOT
+	)
+	p.ready.connect(
+		Log.measure_end.bind(&"projectile", 100),
 		CONNECT_ONE_SHOT
 	)
 	Level.add_to_scene(p, locator.global_position)
@@ -39,9 +53,5 @@ func _process(delta: float) -> void:
 	if fire_after > 0.0:
 		fire_after -= delta
 		if fire_after <= 0.0:
-			# TODO: this should roll back to the player rotation I think?
-			# it's awkward right now because the animation is doing the spinning
-			# but this is still placeholder territory
-			var dir = Coords.angle_to_vec3(get_parent().global_rotation.y)
-			_fire_projectile(dir)
+			_fire_projectile.call_deferred(container.get_facing_dir())
 			fire_after = fire_cooldown_during_special if in_special else 0.0
