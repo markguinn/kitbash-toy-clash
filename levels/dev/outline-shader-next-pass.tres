@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bho1r3fgbwdi4"]
+
+[ext_resource type="Texture2D" uid="uid://q3doy2i1i1tq" path="res://_source_assets/generic-player/generic_player_0.png" id="1_tq3av"]
+[ext_resource type="Shader" uid="uid://bryaewreckn67" path="res://levels/dev/outline-shader-next-pass.gdshader" id="2_mpxa1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1nole"]
+render_priority = 0
+shader = ExtResource("2_mpxa1")
+
+[resource]
+next_pass = SubResource("ShaderMaterial_1nole")
+albedo_texture = ExtResource("1_tq3av")
+texture_filter = 0
