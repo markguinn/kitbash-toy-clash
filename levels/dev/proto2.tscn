@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://v13awrp2jboj" path="res://player/generic_temp/temp_body_2.tscn" id="6_unxl6"]
 [ext_resource type="PackedScene" uid="uid://b64kv0p1jxrdi" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="7_tm3by"]
 [ext_resource type="PackedScene" uid="uid://qf3m6pmicxlt" path="res://player/generic_temp/temp_body_3.tscn" id="8_u5iaq"]
+[ext_resource type="Texture2D" uid="uid://bx0f0ir5b8mna" path="res://palette.png" id="9_ckf24"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
 
@@ -19,18 +20,29 @@ background_mode = 2
 sky = SubResource("Sky_hchdm")
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 0.5
+ambient_light_energy = 0.2
 fog_mode = 1
 fog_density = 1.0
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_iynve"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hchdm"]
+[sub_resource type="Gradient" id="Gradient_eaxg1"]
+offsets = PackedFloat32Array(0.42741936, 0.8655914)
+colors = PackedColorArray(0.26666668, 0.25882354, 0.19607843, 1, 0.7372549, 0.7176471, 0.64705884, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_asdw4"]
+frequency = 0.005
+fractal_lacunarity = 1.8
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ckf24"]
+noise = SubResource("FastNoiseLite_asdw4")
+color_ramp = SubResource("Gradient_eaxg1")
+seamless = true
+seamless_blend_skirt = 0.242
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hchdm"]
-albedo_color = Color(0.23392558, 0.23392543, 0.2339254, 1)
-albedo_texture = SubResource("PlaceholderTexture2D_hchdm")
-uv1_scale = Vector3(10, 10, 10)
+albedo_texture = SubResource("NoiseTexture2D_ckf24")
+uv1_scale = Vector3(8, 8, 8)
 texture_filter = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_iynve"]
@@ -63,7 +75,6 @@ cancel_button_text = "End Run"
 environment = SubResource("Environment_iynve")
 
 [node name="[pixelate!]" type="CanvasLayer" parent="." unique_id=1411301213]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="[pixelate!]" unique_id=397246020]
 material = ExtResource("2_u5iaq")
@@ -102,6 +113,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
 texture = SubResource("ViewportTexture_u5iaq")
 
+[node name="root" parent="Player/Body" parent_id_path=PackedInt32Array(1653260376, 1797291781) index="0" unique_id=1164343148]
+transform = Transform3D(1, 0, 0, 0, 0.88701075, -0.46174857, 0, 0.46174857, 0.88701075, 0, 0, 0)
+
 [node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=853497229]
 transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 10, 20, 10)
 projection = 1
@@ -131,10 +145,10 @@ metadata/_edit_lock_ = true
 [node name="Human" parent="." unique_id=1797291781 instance=ExtResource("5_g1bde")]
 transform = Transform3D(-0.999397, 0, 0.034723062, 0, 1, 0, -0.034723062, 0, -0.999397, 17.481916, 2.1892014, -19.838047)
 
-[node name="torso" parent="Human/root" parent_id_path=PackedInt32Array(1797291781, 1682393043) index="0" unique_id=698833126]
+[node name="torso" parent="Human/root" parent_id_path=PackedInt32Array(1797291781, 1164343148) index="0" unique_id=2100511907]
 visible = false
 
-[node name="mesh" parent="Human/root/torso/left_arm/left_arm2" parent_id_path=PackedInt32Array(1797291781, 1538851636) index="2" unique_id=1047245733]
+[node name="mesh" parent="Human/root/torso/left_arm/left_arm2" parent_id_path=PackedInt32Array(1797291781, 1048516543) index="2" unique_id=369254279]
 visible = false
 
 [node name="Area3D2" type="Area3D" parent="Human" unique_id=1558935058]
@@ -149,7 +163,7 @@ debug_color = Color(0, 0.6, 0.69803923, 1)
 [node name="SwordArm" parent="." unique_id=1788171193 instance=ExtResource("5_g1bde")]
 transform = Transform3D(0.053483307, 0, -0.9985687, 0, 1, 0, 0.9985687, 0, 0.053483307, -20.766119, 2.1892014, 17.037405)
 
-[node name="legs" parent="SwordArm/root" parent_id_path=PackedInt32Array(1788171193, 1682393043) index="1" unique_id=1059167167]
+[node name="legs" parent="SwordArm/root" parent_id_path=PackedInt32Array(1788171193, 1164343148) index="1" unique_id=1109858301]
 visible = false
 
 [node name="Area3D2" type="Area3D" parent="SwordArm" unique_id=208993331]
@@ -205,6 +219,31 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BigAx/Area3D" unique_id=1122190608]
 shape = SubResource("SphereShape3D_iynve")
 debug_color = Color(0, 0.6, 0.69803923, 1)
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=197359882]
+transform = Transform3D(42, 0, 0, 0, 42, 0, 0, 0, 42, 0, 35.526707, -41.859924)
+billboard = 1
+texture = ExtResource("9_ckf24")
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=1720288672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.179497, 12.828768, -4.7030315)
+light_energy = 5.0
+omni_range = 30.823
+omni_attenuation = -0.44
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=1882780412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.955574, 1.6618099, 28.421995)
+light_color = Color(0.9121407, 0.37068966, 0, 1)
+light_energy = 5.0
+omni_range = 30.823
+omni_attenuation = -0.84
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=1838394166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.88834, 6.9230957, -6.3280544)
+light_color = Color(0.94812816, 0.7636347, 2.3102762e-06, 1)
+light_energy = 5.0
+omni_range = 20.0
+omni_attenuation = -0.12
 
 [connection signal="body_entered" from="Human/Area3D2" to="." method="_on_human_body_entered"]
 [connection signal="body_entered" from="SwordArm/Area3D2" to="." method="_on_sword_arm_body_entered"]
