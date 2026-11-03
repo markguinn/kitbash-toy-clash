@@ -49,7 +49,7 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_u5iaq"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_ckf24"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iynve"]
@@ -111,7 +111,7 @@ mesh = SubResource("PlaneMesh_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_u5iaq")
+texture = SubResource("ViewportTexture_ckf24")
 
 [node name="root" parent="Player/Body" parent_id_path=PackedInt32Array(1653260376, 1797291781) index="0" unique_id=1164343148]
 transform = Transform3D(1, 0, 0, 0, 0.88701075, -0.46174857, 0, 0.46174857, 0.88701075, 0, 0, 0)
