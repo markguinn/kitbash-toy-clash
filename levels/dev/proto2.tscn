@@ -2,13 +2,23 @@
 
 [ext_resource type="Script" uid="uid://xfplf03kdq1b" path="res://levels/dev/proto_2.gd" id="1_unxl6"]
 [ext_resource type="Material" uid="uid://o3vkef848hpm" path="res://common/vfx/pixelated/pixelated-material.tres" id="2_u5iaq"]
+[ext_resource type="Script" uid="uid://s2pnkfeasrbj" path="res://common/vfx/pixelated/palette_injector.gd" id="3_asdw4"]
 [ext_resource type="Texture2D" uid="uid://mg6lqudn1f05" path="res://common/vfx/pixelated/crt-effect.png" id="3_ckf24"]
+[ext_resource type="Texture2D" uid="uid://b28byf47axofp" path="res://_source_assets/alt-palettes/aap-64-8x.png" id="5_6lio0"]
 [ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="5_eaxg1"]
 [ext_resource type="PackedScene" uid="uid://dqvrj27ervih7" path="res://player/generic_temp/temp_body_1.tscn" id="5_g1bde"]
 [ext_resource type="PackedScene" uid="uid://v13awrp2jboj" path="res://player/generic_temp/temp_body_2.tscn" id="6_unxl6"]
+[ext_resource type="Texture2D" uid="uid://dwlxi55n0kapm" path="res://_source_assets/alt-palettes/brazilian-afternoon-8x.png" id="6_wx8kr"]
+[ext_resource type="Texture2D" uid="uid://36skmsxtep75" path="res://_source_assets/alt-palettes/lost-century-8x.png" id="7_arp0d"]
 [ext_resource type="PackedScene" uid="uid://b64kv0p1jxrdi" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="7_tm3by"]
 [ext_resource type="PackedScene" uid="uid://qf3m6pmicxlt" path="res://player/generic_temp/temp_body_3.tscn" id="8_u5iaq"]
+[ext_resource type="Texture2D" uid="uid://ro2dmvnwekqc" path="res://_source_assets/alt-palettes/duel-8x.png" id="8_vbc45"]
+[ext_resource type="Texture2D" uid="uid://dfhwbnoi1bdid" path="res://_source_assets/alt-palettes/fantasy-24-8x.png" id="9_751em"]
 [ext_resource type="Texture2D" uid="uid://bx0f0ir5b8mna" path="res://palette.png" id="9_ckf24"]
+[ext_resource type="Texture2D" uid="uid://50htn5xvn3el" path="res://_source_assets/alt-palettes/darkseed-16-8x.png" id="10_umte1"]
+[ext_resource type="Texture2D" uid="uid://cyx72ioxi226b" path="res://_source_assets/alt-palettes/mojave20-8x.png" id="11_sehbl"]
+[ext_resource type="Texture2D" uid="uid://2p5wmbj6psti" path="res://_source_assets/alt-palettes/soft4-8x.png" id="12_lrfq1"]
+[ext_resource type="Shader" uid="uid://1bvpn32qyahx" path="res://common/vfx/pixelated/pixelated-shader.gdshader" id="15_umte1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
 
@@ -49,8 +59,20 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ckf24"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_751em"]
 viewport_path = NodePath("HealthBar/the/health")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_751em"]
+render_priority = 0
+shader = ExtResource("15_umte1")
+shader_parameter/size = Vector2(8, 8)
+shader_parameter/quantization_algorithm = 0
+shader_parameter/palette_size = Vector2(0, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_yrna3"]
+material = SubResource("ShaderMaterial_751em")
+flip_faces = true
+size = Vector2(2, 2)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iynve"]
 radius = 3.649
@@ -75,14 +97,19 @@ cancel_button_text = "End Run"
 environment = SubResource("Environment_iynve")
 
 [node name="[pixelate!]" type="CanvasLayer" parent="." unique_id=1411301213]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="[pixelate!]" unique_id=397246020]
+visible = false
 material = ExtResource("2_u5iaq")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_asdw4")
+quantization_algorithm = 2
+palettes = Array[Texture2D]([ExtResource("9_ckf24"), ExtResource("5_6lio0"), ExtResource("6_wx8kr"), ExtResource("7_arp0d"), ExtResource("8_vbc45"), ExtResource("9_751em"), ExtResource("10_umte1"), ExtResource("11_sehbl"), ExtResource("12_lrfq1")])
 
 [node name="[crt effect]" type="CanvasLayer" parent="." unique_id=2027285743]
 visible = false
@@ -111,7 +138,7 @@ mesh = SubResource("PlaneMesh_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_ckf24")
+texture = SubResource("ViewportTexture_751em")
 
 [node name="root" parent="Player/Body" parent_id_path=PackedInt32Array(1653260376, 1797291781) index="0" unique_id=1164343148]
 transform = Transform3D(1, 0, 0, 0, 0.88701075, -0.46174857, 0, 0.46174857, 0.88701075, 0, 0, 0)
@@ -130,6 +157,9 @@ projection = 1
 size = 30.0
 near = 0.001
 metadata/_edit_lock_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/CamOrthoStraight" unique_id=1411257765]
+mesh = SubResource("QuadMesh_yrna3")
 
 [node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=1374804059]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20, 6)
@@ -219,11 +249,6 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BigAx/Area3D" unique_id=1122190608]
 shape = SubResource("SphereShape3D_iynve")
 debug_color = Color(0, 0.6, 0.69803923, 1)
-
-[node name="Sprite3D" type="Sprite3D" parent="." unique_id=197359882]
-transform = Transform3D(42, 0, 0, 0, 42, 0, 0, 0, 42, 0, 35.526707, -41.859924)
-billboard = 1
-texture = ExtResource("9_ckf24")
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=1720288672]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.179497, 12.828768, -4.7030315)

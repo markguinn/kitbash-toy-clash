@@ -5,9 +5,9 @@ const int PALETTE_SIZE = 27;
 uniform vec2 size = vec2(8.0, 8.0); // size of pixel - adjust to taste
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
-uniform int dist_type = 0;
-uniform bool quantize_palette = true;
-uniform vec3[PALETTE_SIZE] palette : source_color;
+uniform int quantization_algorithm;
+//uniform int active_colors;
+//uniform vec3[MAX_PALETTE_SIZE] palette;
 uniform sampler2D palette_texture : source_color;
 uniform vec2 palette_size;
 
@@ -64,7 +64,7 @@ vec3 rgb_to_lab(vec3 rgb){
 }
 
 float measure_dist(vec3 original_color, vec3 palette_color) {
-	if (dist_type == 1) {
+	if (quantization_algorithm == 2) {
 		vec3 ohsv = rgb_to_lab(original_color);
 		vec3 phsv = rgb_to_lab(palette_color);
 		return distance(ohsv, phsv);
@@ -76,9 +76,9 @@ vec3 quantize_color(vec3 original_color) {
 	float min_dist = 9999.0;
 	vec3 quantized_color = vec3(0.0, 1.0, 0.0); //bright debug-green color
 
-	//for (int i = 0; i < PALETTE_SIZE; i++) {
+	//for (int i = 0; i < active_colors; i++) {
 		//vec3 palette_color = palette[i];
-		//float dist = distance(original_color.rgb, palette_color);
+		//float dist = measure_dist(original_color.rgb, palette_color);
 		//if (dist < min_dist) {
 			//min_dist = dist;
 			//quantized_color = palette_color;
@@ -105,7 +105,7 @@ void fragment() {
 	vec2 uv = SCREEN_UV + vec2(s.x, 0.0);
 	vec2 final_uv = floor(uv / s) * s;
 	vec4 original_color = textureLod(screen_texture, final_uv, 0.0);
-	if (quantize_palette) {
+	if (quantization_algorithm > 0) {
 		vec3 quantized_color = quantize_color(original_color.rgb);
 		COLOR = vec4(quantized_color, original_color.a);
 	} else {
