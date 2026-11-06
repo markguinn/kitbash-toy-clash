@@ -24,12 +24,19 @@ func _ready() -> void:
 	if starting_hp > max_hp: max_hp = starting_hp
 	if not host:
 		host = get_parent()
-	label = get_node_or_null("HealthLabel")
-	if not label:
-		label = host.get_node_or_null("HealthLabel")
+	
+	# label above head eg. "hp: 9"
+	# TODO: is this the key and section you would prefer? feel free to refactor
+	if Game.config.get_value("display", "hp_labels_enabled", false):
+		label = get_node_or_null("HealthLabel")
+		if not label:
+			label = host.get_node_or_null("HealthLabel")
+	
+	# red progress bar style health bar
 	healthBar = get_node_or_null("HealthBar/the/health/bar")
 	if not healthBar:
 		healthBar = host.get_node_or_null("HealthBar/the/health/bar")
+		
 	_update_label()
 
 
