@@ -18,7 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://50htn5xvn3el" path="res://_source_assets/alt-palettes/darkseed-16-8x.png" id="10_umte1"]
 [ext_resource type="Texture2D" uid="uid://cyx72ioxi226b" path="res://_source_assets/alt-palettes/mojave20-8x.png" id="11_sehbl"]
 [ext_resource type="Texture2D" uid="uid://2p5wmbj6psti" path="res://_source_assets/alt-palettes/soft4-8x.png" id="12_lrfq1"]
-[ext_resource type="Shader" uid="uid://1bvpn32qyahx" path="res://common/vfx/pixelated/pixelated-shader.gdshader" id="15_umte1"]
+[ext_resource type="Shader" uid="uid://blxa8pw8fsqvk" path="res://common/vfx/pixelated/pixelated-shader-3d.gdshader" id="15_umte1"]
+[ext_resource type="Script" uid="uid://dft3fawera0dd" path="res://common/vfx/pixelated/post_processing_mesh.gd" id="16_sehbl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
 
@@ -59,15 +60,23 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_751em"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_sehbl"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_751em"]
 render_priority = 0
 shader = ExtResource("15_umte1")
-shader_parameter/size = Vector2(8, 8)
+shader_parameter/size = Vector2(4, 3)
 shader_parameter/quantization_algorithm = 0
-shader_parameter/palette_size = Vector2(0, 0)
+shader_parameter/palette_texture = ExtResource("9_ckf24")
+shader_parameter/palette_size = Vector2(9, 9)
+shader_parameter/creases = false
+shader_parameter/crease_slope_tol = 0.1
+shader_parameter/outline = true
+shader_parameter/use_closest_point_in_pixel = false
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/depth_threshold = 0.8
+shader_parameter/min_depth_for_outlines = 1940.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_yrna3"]
 material = SubResource("ShaderMaterial_751em")
@@ -100,7 +109,6 @@ environment = SubResource("Environment_iynve")
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="[pixelate!]" unique_id=397246020]
-visible = false
 material = ExtResource("2_u5iaq")
 anchors_preset = 15
 anchor_right = 1.0
@@ -138,10 +146,7 @@ mesh = SubResource("PlaneMesh_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_751em")
-
-[node name="root" parent="Player/Body" parent_id_path=PackedInt32Array(1653260376, 1797291781) index="0" unique_id=1164343148]
-transform = Transform3D(1, 0, 0, 0, 0.88701075, -0.46174857, 0, 0.46174857, 0.88701075, 0, 0, 0)
+texture = SubResource("ViewportTexture_sehbl")
 
 [node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=853497229]
 transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 10, 20, 10)
@@ -158,8 +163,13 @@ size = 30.0
 near = 0.001
 metadata/_edit_lock_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/CamOrthoStraight" unique_id=1411257765]
+[node name="PostProcessingMesh" type="MeshInstance3D" parent="Player/CamOrthoStraight" unique_id=1411257765]
+cast_shadow = 0
+extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_yrna3")
+script = ExtResource("16_sehbl")
+outlines = null
+palettes = Array[Texture2D]([ExtResource("9_ckf24"), ExtResource("5_6lio0"), ExtResource("6_wx8kr"), ExtResource("7_arp0d"), ExtResource("8_vbc45"), ExtResource("9_751em"), ExtResource("10_umte1"), ExtResource("11_sehbl"), ExtResource("12_lrfq1")])
 
 [node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=1374804059]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20, 6)
