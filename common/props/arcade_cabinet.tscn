@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dq6je8agh7fv5"]
+
+[ext_resource type="PackedScene" uid="uid://b0hw2xk4d5jkb" path="res://common/props/arcade-machine-lowpoly-csg.fbx" id="1_ak4kw"]
+
+[node name="arcade-cabinet" type="Node3D" unique_id=1489820438]
+
+[node name="arcade-machine-lowpoly-csg" parent="." unique_id=1216190895 instance=ExtResource("1_ak4kw")]

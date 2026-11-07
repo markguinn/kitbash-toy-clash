@@ -39,6 +39,10 @@ folder_colors={
 "res://_source_assets/": "orange"
 }
 
+[filesystem]
+
+import/blender/enabled=false
+
 [global_group]
 
 player=""
