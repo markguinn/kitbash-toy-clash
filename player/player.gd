@@ -14,6 +14,13 @@ var override_blend_tween: Tween
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var life: Life = $Life
 
+## this was an experiment. we'll probably rip it out before release
+## if this is set to something besides zero the player's animations
+## will lock to that FPS (e.g. 6 or 12 would look like an old pixel art
+## game)
+@export var fps := 0.0
+var advance_delta := 0.0
+
 # We won't leave this in the final game. I suspect we'll use
 # the ortho straight or ortho 45 view, but I'm not ready to
 # commit yet. Press tab to swap between them.
@@ -37,6 +44,8 @@ func _ready() -> void:
 	animation_tree.active = true
 	animation_tree["parameters/moving/blend_amount"] = 0.0
 	animation_tree["parameters/overrides/blend_amount"] = 0.0
+	if fps > 0.0:
+		animation_tree.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
 
 
 func _set_cam(num: int) -> void:
@@ -65,6 +74,14 @@ func _tween_overrides_blend(val: float) -> void:
 		override_blend_tween.stop()
 	override_blend_tween = create_tween()
 	override_blend_tween.tween_property(animation_tree, "parameters/overrides/blend_amount", val, 0.1)
+
+
+func _process(delta: float) -> void:
+	if fps > 0.0:
+		advance_delta += delta
+		if advance_delta >= 1.0 / fps:
+			animation_tree.advance(advance_delta)
+			advance_delta = 0.0
 
 
 func _physics_process(delta: float) -> void:
