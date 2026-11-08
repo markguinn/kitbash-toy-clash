@@ -9,6 +9,10 @@ static func vec3_to_vec2(dir: Vector3) -> Vector2:
 	return Vector2(dir.x, dir.z)
 
 
+static func vec3_to_angle(dir: Vector3) -> float:
+	return fix_angle(vec3_to_vec2(dir).angle())
+
+
 static func fix_angle(angle: float) -> float:
 	return -angle + PI / 2.0
 

@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://2p5wmbj6psti" path="res://_source_assets/alt-palettes/soft4-8x.png" id="12_lrfq1"]
 [ext_resource type="Shader" uid="uid://blxa8pw8fsqvk" path="res://common/vfx/pixelated/pixelated-shader-3d.gdshader" id="15_umte1"]
 [ext_resource type="Script" uid="uid://dft3fawera0dd" path="res://common/vfx/pixelated/post_processing_mesh.gd" id="16_sehbl"]
+[ext_resource type="PackedScene" uid="uid://6kthxvx2vud2" path="res://enemies/robot/robot_enemy.tscn" id="20_lrfq1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
 
@@ -60,7 +61,7 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_sehbl"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_sfh3s"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_751em"]
@@ -72,7 +73,7 @@ shader_parameter/palette_texture = ExtResource("9_ckf24")
 shader_parameter/palette_size = Vector2(9, 9)
 shader_parameter/creases = false
 shader_parameter/crease_slope_tol = 0.1
-shader_parameter/outline = true
+shader_parameter/outline = false
 shader_parameter/use_closest_point_in_pixel = false
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/depth_threshold = 0.8
@@ -146,7 +147,7 @@ mesh = SubResource("PlaneMesh_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_sehbl")
+texture = SubResource("ViewportTexture_sfh3s")
 
 [node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=853497229]
 transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 10, 20, 10)
@@ -168,7 +169,6 @@ cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_yrna3")
 script = ExtResource("16_sehbl")
-outlines = null
 palettes = Array[Texture2D]([ExtResource("9_ckf24"), ExtResource("5_6lio0"), ExtResource("6_wx8kr"), ExtResource("7_arp0d"), ExtResource("8_vbc45"), ExtResource("9_751em"), ExtResource("10_umte1"), ExtResource("11_sehbl"), ExtResource("12_lrfq1")])
 
 [node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=1374804059]
@@ -247,6 +247,7 @@ debug_color = Color(0, 0.6, 0.69803923, 1)
 
 [node name="BigEnemySpawner" parent="." unique_id=1330096657 instance=ExtResource("7_tm3by")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.31403, 0, 39.95581)
+enemy_type = ExtResource("20_lrfq1")
 
 [node name="BigAx" parent="." unique_id=820212657 instance=ExtResource("8_u5iaq")]
 transform = Transform3D(0.7809132, 0, 0.6246396, 0, 1, 0, -0.6246396, 0, 0.7809132, -20.96474, 3.070137, -19.053059)
