@@ -13,7 +13,10 @@ var config: ConfigFile = ConfigFile.new()
 
 
 func _ready() -> void:
+	# log not yet ready
+	# Log.info(self, "Loading config.ini")
 	print("Loading config.ini")
+	
 	config.load("res://config.ini")
 	if FileAccess.file_exists("res://config.local.ini"):
 		config.load("res://config.local.ini")

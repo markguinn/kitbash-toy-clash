@@ -40,7 +40,7 @@ var advance_delta := 0.0
 
 
 func _ready() -> void:
-	print("Initializing Player")
+	Log.info(self, "Initializing Player")
 	_set_cam(0)
 	animation_tree.active = true
 	animation_tree["parameters/moving/blend_amount"] = 0.0
