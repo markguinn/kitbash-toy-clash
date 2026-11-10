@@ -28,6 +28,7 @@ func _ready() -> void:
 	# label above head eg. "hp: 9"
 	# TODO: is this the key and section you would prefer? feel free to refactor
 	if Game.config.get_value("display", "hp_labels_enabled", false):
+		print("Initializing hp label for "+get_parent().name)
 		label = get_node_or_null("HealthLabel")
 		if not label:
 			label = host.get_node_or_null("HealthLabel")

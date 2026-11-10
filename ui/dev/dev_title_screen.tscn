@@ -18,6 +18,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1567936822]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1469030300]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1024, 1024)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=1163020507]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Node3D" unique_id=925347054]
+transform = Transform3D(-0.7996847, -0.05128604, 0.59822583, 0, 0.9963453, 0.08541692, -0.6004202, 0.0683066, -0.7967621, 5.1932616, 5.052036, -6.925655)
+
+[node name="arcade-machine-lowpoly-csg" parent="SubViewportContainer/SubViewport/Node3D" unique_id=1216190895 instance=ExtResource("4_4o8pb")]
+script = ExtResource("5_ltgga")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Node3D" unique_id=806929071]
+transform = Transform3D(0.8711254, -0.26718578, 0.41201007, 0, 0.8390208, 0.5440994, -0.4910606, -0.4739788, 0.7308923, 0, 5.760566, -6.5485435)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/Node3D" unique_id=1350067424]
+environment = SubResource("Environment_kdu0b")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1477254935]
 layout_mode = 2
 
@@ -61,24 +84,3 @@ horizontal_alignment = 1
 script = ExtResource("2_7840x")
 file_path = "res://version.txt"
 metadata/_custom_type_script = "uid://7b24u8emy6rq"
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1567936822]
-layout_mode = 2
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1469030300]
-transparent_bg = true
-size = Vector2i(1024, 1024)
-
-[node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=1163020507]
-
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Node3D" unique_id=925347054]
-transform = Transform3D(-0.7996847, -0.05128604, 0.59822583, 0, 0.9963453, 0.08541692, -0.6004202, 0.0683066, -0.7967621, 5.1932616, 5.052036, -6.925655)
-
-[node name="arcade-machine-lowpoly-csg" parent="SubViewportContainer/SubViewport/Node3D" unique_id=1216190895 instance=ExtResource("4_4o8pb")]
-script = ExtResource("5_ltgga")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Node3D" unique_id=806929071]
-transform = Transform3D(0.8711254, -0.26718578, 0.41201007, 0, 0.8390208, 0.5440994, -0.4910606, -0.4739788, 0.7308923, 0, 5.760566, -6.5485435)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/Node3D" unique_id=1350067424]
-environment = SubResource("Environment_kdu0b")

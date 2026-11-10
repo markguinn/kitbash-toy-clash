@@ -129,14 +129,14 @@ autostart = true
 [node name="Body" parent="." unique_id=1797291781 instance=ExtResource("5_qjkh3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
-[node name="root" parent="Body" index="0" unique_id=1164343148]
+[node name="root" parent="Body" index="0" unique_id=1953150178]
 transform = Transform3D(1, 0, 0, 0, 0.88701075, -0.46174857, 0, 0.46174857, 0.88701075, 0, 0, 0)
 
-[node name="left_arm" parent="Body/root/torso" parent_id_path=PackedInt32Array(1797291781, 2100511907) index="2" unique_id=803233479]
+[node name="left_arm" parent="Body/root/torso" parent_id_path=PackedInt32Array(1797291781, 1796458807) index="2" unique_id=1194581571]
 transform = Transform3D(-0.20906815, -0.056022726, -0.976295, 0.25882074, -0.9659254, 2.6673079e-06, -0.94302833, -0.25268483, 0.21644406, 0.9375, 0.0625, 0)
 
-[node name="right_arm" parent="Body/root/torso" parent_id_path=PackedInt32Array(1797291781, 2100511907) index="3" unique_id=1949786288]
-transform = Transform3D(0.13052611, 0.0864101, 0.98767215, -1.5042122e-07, -0.9961947, 0.087155744, 0.9914449, -0.011376249, -0.13002941, -0.9375, 0.0625, 0)
+[node name="right_arm" parent="Body/root/torso" parent_id_path=PackedInt32Array(1797291781, 1796458807) index="3" unique_id=953609240]
+transform = Transform3D(0.13052608, 0.086410135, 0.98767215, 8.709011e-08, -0.9961947, 0.087155744, 0.9914449, -0.011376012, -0.13002941, -0.9375, 0.0625, 0)
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=695912119]
 root_node = NodePath("../Body")
