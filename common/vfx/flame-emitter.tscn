@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://c778iqbs0ok47"]
+
+[ext_resource type="Material" uid="uid://divhuogeusi1v" path="res://common/vfx/flame-particle-mat.tres" id="1_6t20l"]
+[ext_resource type="Gradient" uid="uid://ccse8jvxfv2s" path="res://common/vfx/flame-gradient.tres" id="2_e15g2"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_kdu0b"]
+material = ExtResource("1_6t20l")
+custom_aabb = AABB(-10, -10, -10, 20, 20, 100)
+
+[sub_resource type="Curve" id="Curve_vpsdc"]
+_data = [Vector2(0, 0.2), 0.0, 0.8000001, 0, 1, Vector2(1, 1), 0.8000001, 0.0, 1, 0]
+point_count = 2
+metadata/_snap_enabled = true
+
+[node name="flame-emitter" type="Node3D" unique_id=1061110755]
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1499686469]
+cast_shadow = 0
+custom_aabb = AABB(-10, -10, -10, 20, 20, 100)
+gi_mode = 0
+amount = 128
+lifetime_randomness = 0.2
+draw_order = 1
+mesh = SubResource("QuadMesh_kdu0b")
+direction = Vector3(0, 0, 1)
+spread = 5.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 16.0
+initial_velocity_max = 64.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+damping_min = 10.0
+damping_max = 10.0
+angle_min = -15.0
+angle_max = 15.0
+scale_amount_min = 4.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_vpsdc")
+color_ramp = ExtResource("2_e15g2")
+hue_variation_max = 0.25
