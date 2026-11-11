@@ -1,7 +1,7 @@
 class_name RobotEnemy
 extends Enemy
 
-const FLAME_DC = 0.1
+const FLAME_DC = 0.2
 const BETWEEN_ATTACKS = 10.0
 const ATTACK_LEN = 1.0
 

@@ -51,19 +51,20 @@ func _update_particles() -> void:
 func _update_hitbox() -> void:
 	if not hit_box:
 		return
-	if damage > 0.0:
+	var capsule: CapsuleShape3D = hit_box_shape.shape
+	if damage > 0.0 and intensity > 0:
 		if not Engine.is_editor_hint():
 			hit_box.enable()
+			hit_box_shape.disabled = false
 		hit_box.damage = damage
 		hit_box.set_collision_layer_value(3, hurts_enemies)
 		hit_box.set_collision_layer_value(4, hurts_players)
-		var capsule: CapsuleShape3D = hit_box_shape.shape
 		capsule.height = lerpf(capsule.radius * 2.0, HITBOX_HEIGHT, intensity)
 		hit_box_shape.position.z = capsule.height / 2.0
-		prints(intensity, capsule.height, hit_box_shape.position.z)
 	else:
 		if not Engine.is_editor_hint():
 			hit_box.disable()
+			hit_box_shape.disabled = true
 
 
 func tween_to_intensity(v: float, s = INTENSITY_TWEEN_SECONDS) -> void:

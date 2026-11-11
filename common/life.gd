@@ -1,6 +1,8 @@
 class_name Life
 extends Node
 
+const SHOW_HP_SECONDS = 2.0
+
 signal healed(gained_hp: float)
 signal hurt(lost_hp: float, from_hit_box: HitBox)
 signal dead(from_hit_box: HitBox)
@@ -18,6 +20,8 @@ var label: Label3D
 var healthBar: TextureProgressBar
 
 var hp: float
+var label_seconds_remaining: float = 0.0
+
 
 func _ready() -> void:
 	hp = starting_hp
@@ -26,21 +30,25 @@ func _ready() -> void:
 		host = get_parent()
 	
 	# label above head eg. "hp: 9"
-	# TODO: is this the key and section you would prefer? feel free to refactor
-	if Game.config.get_value("display", "hp_labels_enabled", false):
-		Log.debug(self, "Initializing hp label for", get_parent().name)
-		label = get_node_or_null("HealthLabel")
-		if not label:
-			label = host.get_node_or_null("HealthLabel")
-	else:
-		Log.debug(self, get_parent().name, "hp label deactivated due to hp_labels_enabled setting")
-	
+	label = get_node_or_null("HealthLabel")
+	if not label:
+		label = host.get_node_or_null("HealthLabel")
+	if label and not Game.config.get_value("display", "hp_labels_enabled", false):
+		label.hide()
+		label = null
+
 	# red progress bar style health bar
 	healthBar = get_node_or_null("HealthBar/the/health/bar")
 	if not healthBar:
 		healthBar = host.get_node_or_null("HealthBar/the/health/bar")
-		
+	if healthBar and not Game.config.get_value("display", "healthbars_enabled", false):
+		healthBar.hide()
+		healthBar = null
+
 	_update_label()
+	if Game.config.get_value("display", "hide_healthbars_after", 0.0) > 0.0:
+		_hide_label()
+		label_seconds_remaining = -1.0
 
 
 func add_health(incoming_healing: float) -> float:
@@ -70,13 +78,34 @@ func add_damage(incoming_damage: float, from_hit_box: HitBox = null, bypass_armo
 		dead.emit.call_deferred(from_hit_box)
 	else:
 		hurt.emit.call_deferred(damage, from_hit_box)
-		_update_label.call_deferred()
+		_update_label.call_deferred(!!from_hit_box)
 	return damage
 
 
-func _update_label() -> void:
+func _update_label(show = true) -> void:
 	if label:
 		label.text = "hp: %d" % [int(hp)]
+		if show:
+			label.show()
 	if healthBar:
 		healthBar.value = (hp / max_hp) * 100
-		# Log.info(self, "new health bar value:"+str(healthBar.value))
+		if show:
+			healthBar.show()
+	var hide_after: float = Game.config.get_value("display", "hide_healthbars_after", 0.0)
+	if show and hide_after > 0.0:
+		label_seconds_remaining = hide_after
+
+
+func _hide_label() -> void:
+	if label:
+		label.hide()
+	if healthBar:
+		healthBar.hide()
+
+
+func _process(delta: float) -> void:
+	if label_seconds_remaining > 0.0:
+		label_seconds_remaining -= delta
+		if label_seconds_remaining <= 0.0:
+			label_seconds_remaining = 0.0
+			_hide_label()

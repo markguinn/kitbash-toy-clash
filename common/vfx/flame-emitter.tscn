@@ -16,6 +16,7 @@ metadata/_snap_enabled = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
 radius = 1.0
+height = 30.0
 
 [node name="flame-emitter" type="Node3D" unique_id=1061110755]
 script = ExtResource("1_dm3wc")
@@ -47,7 +48,10 @@ hue_variation_max = 0.25
 
 [node name="HitBox" type="Area3D" parent="." unique_id=317630368]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+collision_layer = 8
+collision_mask = 0
 script = ExtResource("4_amgcv")
+damage = 100.0
 metadata/_custom_type_script = "uid://bb7mqdux6xdrk"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" unique_id=1740549618]

@@ -365,6 +365,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 [node name="FlameEmitter" parent="Body/root/torso" parent_id_path=PackedInt32Array(1350397396, 611024050) index="0" unique_id=1061110755 instance=ExtResource("4_w1bxk")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1875, 0.375)
+damage = 100.0
 hurts_enemies = false
 
 [node name="ChestFlame" type="MeshInstance3D" parent="Body/root/torso" parent_id_path=PackedInt32Array(1350397396, 611024050) index="1" unique_id=1392623333]
