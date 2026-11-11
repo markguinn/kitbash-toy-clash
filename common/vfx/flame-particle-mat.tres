@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://4mlap3lbjrd2" path="res://common/vfx/flame-particle-tex.png" id="1_n4sh6"]
 
 [resource]
-transparency = 1
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
 shading_mode = 0
 specular_mode = 2
 disable_ambient_light = true

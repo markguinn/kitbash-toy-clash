@@ -133,19 +133,19 @@ func _on_continue() -> void:
 	Log.debug(self, "continuing")
 	get_tree().paused = false
 	var player = get_tree().get_first_node_in_group("player")
-	if last_enemy:
-		var pb = player.get_node("Body")
-		var hurtbox = last_enemy.get_node("HurtBox")
-		var body = last_enemy.get_node("Body")
-		if last_enemy.speed < player.speed:
-			player.speed = last_enemy.speed
-			player.get_node("Body/Leg_L").mesh.material.albedo_color = body.mesh.material.albedo_color
-			player.get_node("Body/Leg_L").scale *= 2.0
-			player.get_node("Body/Leg_R").scale *= 2.0
-			#player.get_node("Body/Leg_R").mesh.material.albedo_color = body.mesh.material.albedo_color
-		elif hurtbox.armor < player.life.armor:
-			player.life.armor = player.life.armor
-			pb.mesh.material.albedo_color = body.mesh.material.albedo_color
+	#if last_enemy:
+		#var pb = player.get_node("Body")
+		#var hurtbox = last_enemy.get_node("HurtBox")
+		#var body = last_enemy.get_node("Body")
+		#if last_enemy.speed < player.speed:
+			#player.speed = last_enemy.speed
+			#player.get_node("Body/Leg_L").mesh.material.albedo_color = body.mesh.material.albedo_color
+			#player.get_node("Body/Leg_L").scale *= 2.0
+			#player.get_node("Body/Leg_R").scale *= 2.0
+			##player.get_node("Body/Leg_R").mesh.material.albedo_color = body.mesh.material.albedo_color
+		#elif hurtbox.armor < player.life.armor:
+			#player.life.armor = player.life.armor
+			#pb.mesh.material.albedo_color = body.mesh.material.albedo_color
 	for n in get_tree().get_nodes_in_group("enemies"):
 		# TODO: probably by distance?
 		n.queue_free()

@@ -165,7 +165,6 @@ near = 0.001
 metadata/_edit_lock_ = true
 
 [node name="PostProcessingMesh" type="MeshInstance3D" parent="Player/CamOrthoStraight" unique_id=1411257765]
-visible = false
 cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_yrna3")
