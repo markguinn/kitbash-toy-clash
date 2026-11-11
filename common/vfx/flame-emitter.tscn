@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://c778iqbs0ok47"]
 
 [ext_resource type="Material" uid="uid://divhuogeusi1v" path="res://common/vfx/flame-particle-mat.tres" id="1_6t20l"]
+[ext_resource type="Script" uid="uid://36qmos1r2ggd" path="res://common/vfx/flame_emitter.gd" id="1_dm3wc"]
 [ext_resource type="Gradient" uid="uid://ccse8jvxfv2s" path="res://common/vfx/flame-gradient.tres" id="2_e15g2"]
+[ext_resource type="Script" uid="uid://bb7mqdux6xdrk" path="res://common/hit_box.gd" id="4_amgcv"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_kdu0b"]
 material = ExtResource("1_6t20l")
@@ -12,7 +14,11 @@ _data = [Vector2(0, 0.2), 0.0, 0.8000001, 0, 1, Vector2(1, 1), 0.8000001, 0.0, 1
 point_count = 2
 metadata/_snap_enabled = true
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
+radius = 1.0
+
 [node name="flame-emitter" type="Node3D" unique_id=1061110755]
+script = ExtResource("1_dm3wc")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1499686469]
 cast_shadow = 0
@@ -38,3 +44,13 @@ scale_amount_max = 4.0
 scale_amount_curve = SubResource("Curve_vpsdc")
 color_ramp = ExtResource("2_e15g2")
 hue_variation_max = 0.25
+
+[node name="HitBox" type="Area3D" parent="." unique_id=317630368]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+script = ExtResource("4_amgcv")
+metadata/_custom_type_script = "uid://bb7mqdux6xdrk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" unique_id=1740549618]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_iynve")
+debug_color = Color(1, 0, 0.116666794, 1)

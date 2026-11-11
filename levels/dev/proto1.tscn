@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="1_sxqe5"]
 [ext_resource type="MeshLibrary" uid="uid://b27p3wokfin6l" path="res://levels/dev/proto-mesh-lib.tres" id="2_sxqe5"]
 [ext_resource type="PackedScene" uid="uid://bmepk0rhitnsc" path="res://enemies/small_enemy/small_enemy_spawner.tscn" id="4_pomcm"]
+[ext_resource type="PackedScene" uid="uid://c778iqbs0ok47" path="res://common/vfx/flame-emitter.tscn" id="4_uv483"]
 [ext_resource type="PackedScene" uid="uid://b64kv0p1jxrdi" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="5_pomcm"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_iynve"]
@@ -65,6 +66,9 @@ grow_vertical = 2
 offset_transform_position = Vector2(4, 4)
 texture = ExtResource("1_2u2g5")
 stretch_mode = 2
+
+[node name="flame-emitter" parent="." unique_id=1061110755 instance=ExtResource("4_uv483")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.236784, 0, -9.467596)
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=1360731257]
 

@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c5e1xidjh4txk" path="res://enemies/enemy.tscn" id="1_3wpnq"]
 [ext_resource type="Script" uid="uid://db2sbu63piphh" path="res://enemies/robot/robot_enemy.gd" id="2_fluq6"]
 [ext_resource type="PackedScene" uid="uid://b2l11710ia1vv" path="res://enemies/robot/art/robot1.gltf" id="2_p8y7s"]
+[ext_resource type="PackedScene" uid="uid://c778iqbs0ok47" path="res://common/vfx/flame-emitter.tscn" id="4_w1bxk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p8y7s"]
 size = Vector3(2, 7, 1)
@@ -13,8 +14,17 @@ size = Vector3(2.2, 7, 1.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_w1bxk"]
 size = Vector3(2.4, 4, 2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_fluq6"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_w1bxk"]
 viewport_path = NodePath("HealthBar/the/health")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6r6se"]
+emission_enabled = true
+emission = Color(0.9137255, 0.24705882, 0.007843138, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_l7t1d"]
+material = SubResource("StandardMaterial3D_6r6se")
+radius = 0.4
+height = 0.8
 
 [sub_resource type="Animation" id="Animation_p8y7s"]
 resource_name = "RESET"
@@ -345,26 +355,36 @@ max_hp = 10.0
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 8.5, 0)
 
 [node name="the" parent="HealthBar" index="0" unique_id=216841935]
-texture = SubResource("ViewportTexture_fluq6")
+texture = SubResource("ViewportTexture_w1bxk")
 
 [node name="HealthLabel" parent="." index="5" unique_id=37585518]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 
 [node name="Body" parent="." index="6" unique_id=1350397396 instance=ExtResource("2_p8y7s")]
 
-[node name="left_arm" parent="Body/root/torso" parent_id_path=PackedInt32Array(1350397396, 1836268463) index="3" unique_id=175632199]
+[node name="FlameEmitter" parent="Body/root/torso" parent_id_path=PackedInt32Array(1350397396, 611024050) index="0" unique_id=1061110755 instance=ExtResource("4_w1bxk")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1875, 0.375)
+hurts_enemies = false
+
+[node name="ChestFlame" type="MeshInstance3D" parent="Body/root/torso" parent_id_path=PackedInt32Array(1350397396, 611024050) index="1" unique_id=1392623333]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.1875, 0.49707627)
+mesh = SubResource("CapsuleMesh_l7t1d")
+
+[node name="left_arm" parent="Body/root/torso" parent_id_path=PackedInt32Array(1350397396, 611024050) index="4" unique_id=1588210268]
 transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 1, 1.625, 0)
 
-[node name="left_forearm" parent="Body/root/torso/left_arm" index="2" unique_id=2063168294]
+[node name="left_forearm" parent="Body/root/torso/left_arm" index="2" unique_id=776838839]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1875, -1.0625, 0)
 
-[node name="right_arm" parent="Body/root/torso" parent_id_path=PackedInt32Array(1350397396, 1836268463) index="4" unique_id=1727741787]
+[node name="right_arm" parent="Body/root/torso" parent_id_path=PackedInt32Array(1350397396, 611024050) index="5" unique_id=1162612214]
 transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.7071067, 0, -0.7071067, 0.7071067, -1, 1.625, 0)
 
-[node name="right_forearm" parent="Body/root/torso/right_arm" index="2" unique_id=1537128724]
+[node name="right_forearm" parent="Body/root/torso/right_arm" index="2" unique_id=1376328224]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1875, -1.0625, 0)
 
-[node name="wheel2" parent="Body/root/legs" parent_id_path=PackedInt32Array(1350397396, 1911736192) index="3" unique_id=206135643]
+[node name="wheel2" parent="Body/root/legs" parent_id_path=PackedInt32Array(1350397396, 975181211) index="3" unique_id=1074992309]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, -1.5625, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body" index="1" unique_id=506144053]

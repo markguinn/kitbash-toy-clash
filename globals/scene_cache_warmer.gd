@@ -9,7 +9,7 @@ static var was_cached: Dictionary[String, bool] = {}
 static var singleton: SceneCacheWarmer
 
 static func add(scene: PackedScene) -> void:
-	if not was_cached.has(scene.resource_path):
+	if not was_cached.has(scene.resource_path) and singleton:
 		var instance = scene.instantiate()
 		if instance.has_method("_on_warming_cache"):
 			instance._on_warming_cache()

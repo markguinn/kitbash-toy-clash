@@ -23,7 +23,6 @@ func update_params() -> void:
 	if active_palette < palettes.size():
 		sm.set_shader_parameter("palette_texture", palettes[active_palette])
 		sm.set_shader_parameter("palette_size", palettes[active_palette].get_size() / 8.0)
-		Log.info(self, "quantization_algorithm", quantization_algorithm, "palette_texture", palettes[active_palette].resource_path)
 
 
 func _input(event: InputEvent) -> void:
