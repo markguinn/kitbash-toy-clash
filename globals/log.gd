@@ -49,6 +49,9 @@ func _get_source_name(source: Variant) -> String:
 func _format(source: Variant, level: LogLevel, args: Array[Variant]) -> String:
 	var source_name := _get_source_name(source)
 	var target_level_raw = Game.config.get_value("log_levels", source_name, default_level)
+	# when using F6 / "run current scene" from godot editor
+	# the config call above returns null, so pick a sensible default
+	if target_level_raw == null or target_level_raw == "": target_level_raw = 0
 	var target_level: LogLevel = target_level_raw if target_level_raw is int else LogLevel[target_level_raw]
 	if level < target_level:
 		return EMPTY
