@@ -1,0 +1,203 @@
+[gd_scene format=3 uid="uid://4l2oj0s0ovap"]
+
+[ext_resource type="Script" uid="uid://xfplf03kdq1b" path="res://levels/dev/proto_2.gd" id="1_jjqii"]
+[ext_resource type="Material" uid="uid://o3vkef848hpm" path="res://common/vfx/pixelated/pixelated-material.tres" id="2_6ckf2"]
+[ext_resource type="Script" uid="uid://s2pnkfeasrbj" path="res://common/vfx/pixelated/palette_injector.gd" id="3_vur5q"]
+[ext_resource type="Texture2D" uid="uid://bx0f0ir5b8mna" path="res://palette.png" id="4_xkel2"]
+[ext_resource type="Texture2D" uid="uid://b28byf47axofp" path="res://_source_assets/alt-palettes/aap-64-8x.png" id="5_e02jy"]
+[ext_resource type="Texture2D" uid="uid://dwlxi55n0kapm" path="res://_source_assets/alt-palettes/brazilian-afternoon-8x.png" id="6_s4vim"]
+[ext_resource type="Texture2D" uid="uid://36skmsxtep75" path="res://_source_assets/alt-palettes/lost-century-8x.png" id="7_fgkp8"]
+[ext_resource type="Texture2D" uid="uid://ro2dmvnwekqc" path="res://_source_assets/alt-palettes/duel-8x.png" id="8_ext25"]
+[ext_resource type="Texture2D" uid="uid://dfhwbnoi1bdid" path="res://_source_assets/alt-palettes/fantasy-24-8x.png" id="9_1rkdg"]
+[ext_resource type="Texture2D" uid="uid://50htn5xvn3el" path="res://_source_assets/alt-palettes/darkseed-16-8x.png" id="10_35y38"]
+[ext_resource type="Texture2D" uid="uid://cyx72ioxi226b" path="res://_source_assets/alt-palettes/mojave20-8x.png" id="11_8p5el"]
+[ext_resource type="Texture2D" uid="uid://2p5wmbj6psti" path="res://_source_assets/alt-palettes/soft4-8x.png" id="12_pso0b"]
+[ext_resource type="Texture2D" uid="uid://mg6lqudn1f05" path="res://common/vfx/pixelated/crt-effect.png" id="13_60tka"]
+[ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="14_rltm1"]
+[ext_resource type="Shader" uid="uid://blxa8pw8fsqvk" path="res://common/vfx/pixelated/pixelated-shader-3d.gdshader" id="15_20n2w"]
+[ext_resource type="Script" uid="uid://dft3fawera0dd" path="res://common/vfx/pixelated/post_processing_mesh.gd" id="16_2qm0g"]
+[ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_inputs.gd" id="17_onds3"]
+[ext_resource type="MeshLibrary" uid="uid://b27p3wokfin6l" path="res://levels/dev/proto-mesh-lib.tres" id="21_6ckf2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
+
+[sub_resource type="Sky" id="Sky_hchdm"]
+sky_material = SubResource("ProceduralSkyMaterial_hchdm")
+
+[sub_resource type="Environment" id="Environment_iynve"]
+background_mode = 2
+sky = SubResource("Sky_hchdm")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.2
+fog_mode = 1
+fog_density = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_751em"]
+render_priority = 0
+shader = ExtResource("15_20n2w")
+shader_parameter/size = Vector2(4, 3)
+shader_parameter/quantization_algorithm = 0
+shader_parameter/palette_texture = ExtResource("4_xkel2")
+shader_parameter/palette_size = Vector2(9, 9)
+shader_parameter/creases = false
+shader_parameter/crease_slope_tol = 0.1
+shader_parameter/outline = false
+shader_parameter/use_closest_point_in_pixel = false
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/depth_threshold = 0.8
+shader_parameter/min_depth_for_outlines = 1940.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_yrna3"]
+material = SubResource("ShaderMaterial_751em")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_iynve"]
+
+[sub_resource type="Gradient" id="Gradient_eaxg1"]
+colors = PackedColorArray(0.071129836, 0.06797088, 0.04277982, 1, 0.16820115, 0.15879714, 0.12537944, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_asdw4"]
+frequency = 0.005
+fractal_lacunarity = 1.8
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ckf24"]
+noise = SubResource("FastNoiseLite_asdw4")
+color_ramp = SubResource("Gradient_eaxg1")
+seamless = true
+seamless_blend_skirt = 0.242
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hchdm"]
+albedo_texture = SubResource("NoiseTexture2D_ckf24")
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_iynve"]
+material = SubResource("StandardMaterial3D_hchdm")
+size = Vector2(100, 100)
+
+[node name="PrototypeLevel" type="Node3D" unique_id=987540971]
+script = ExtResource("1_jjqii")
+metadata/_custom_type_script = "uid://d0o1anlkqfg33"
+
+[node name="ConfirmContinue" type="ConfirmationDialog" parent="." unique_id=20908460 groups=["confirm_dlg"]]
+unique_name_in_owner = true
+process_mode = 3
+oversampling_override = 1.0
+title = "Continue?"
+initial_position = 2
+size = Vector2i(300, 168)
+ok_button_text = "Continue"
+dialog_text = "You can end your run here or use a magic crystal to continue. Your character may absorb some traits of your attacker if you do."
+dialog_autowrap = true
+cancel_button_text = "End Run"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=347613716]
+environment = SubResource("Environment_iynve")
+
+[node name="CamOrthoStraight" type="Camera3D" parent="." unique_id=865568906 groups=["camera_options"]]
+transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 25, 27)
+projection = 1
+size = 40.0
+near = 0.001
+metadata/_edit_lock_ = true
+
+[node name="PostProcessingMesh" type="MeshInstance3D" parent="CamOrthoStraight" unique_id=1411257765]
+visible = false
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_yrna3")
+script = ExtResource("16_2qm0g")
+palettes = Array[Texture2D]([ExtResource("4_xkel2"), ExtResource("5_e02jy"), ExtResource("6_s4vim"), ExtResource("7_fgkp8"), ExtResource("8_ext25"), ExtResource("9_1rkdg"), ExtResource("10_35y38"), ExtResource("11_8p5el"), ExtResource("12_pso0b")])
+
+[node name="CamOrtho45" type="Camera3D" parent="." unique_id=853497229 groups=["camera_options"]]
+transform = Transform3D(0.7071068, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071068, -0.579228, 0.4055798, 10, 21, 10)
+projection = 1
+current = true
+size = 30.389
+near = 0.001
+metadata/_edit_lock_ = true
+
+[node name="[pixelate!]" type="CanvasLayer" parent="." unique_id=1411301213]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="[pixelate!]" unique_id=397246020]
+material = ExtResource("2_6ckf2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_vur5q")
+quantization_algorithm = 2
+palettes = Array[Texture2D]([ExtResource("4_xkel2"), ExtResource("5_e02jy"), ExtResource("6_s4vim"), ExtResource("7_fgkp8"), ExtResource("8_ext25"), ExtResource("9_1rkdg"), ExtResource("10_35y38"), ExtResource("11_8p5el"), ExtResource("12_pso0b")])
+
+[node name="[crt effect]" type="CanvasLayer" parent="." unique_id=2027285743]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="[crt effect]" unique_id=1583350516]
+texture_filter = 5
+texture_repeat = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_position = Vector2(4, 4)
+texture = ExtResource("13_60tka")
+stretch_mode = 2
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1360731257]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=332006049]
+shape = SubResource("WorldBoundaryShape3D_iynve")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=692776542]
+mesh = SubResource("PlaneMesh_iynve")
+
+[node name="Player" parent="." unique_id=1653260376 instance=ExtResource("14_rltm1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="PlayerInputSource" type="Node" parent="Player" unique_id=2008149081]
+script = ExtResource("17_onds3")
+keyboard_wasd = false
+controller_2 = false
+metadata/_custom_type_script = "uid://18fy30k87d84"
+
+[node name="Player2" parent="." unique_id=1681601076 instance=ExtResource("14_rltm1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 9.750935)
+
+[node name="PlayerInputSource" type="Node" parent="Player2" unique_id=1271504789]
+script = ExtResource("17_onds3")
+keyboard_arrows = false
+controller_1 = false
+metadata/_custom_type_script = "uid://18fy30k87d84"
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=1720288672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.179497, 12.828768, -4.7030315)
+light_energy = 5.0
+omni_range = 30.823
+omni_attenuation = -0.44
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=1882780412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.955574, 1.6618099, 28.421995)
+light_color = Color(0.9121407, 0.37068966, 0, 1)
+light_energy = 5.0
+omni_range = 30.823
+omni_attenuation = -0.84
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=1838394166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.88834, 6.9230957, -6.3280544)
+light_color = Color(0.94812816, 0.7636347, 2.3102762e-06, 1)
+light_energy = 5.0
+omni_range = 20.0
+omni_attenuation = -0.12
+
+[node name="GridMap" type="GridMap" parent="." unique_id=722759648]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh_library = ExtResource("21_6ckf2")
+data = {
+"cells": PackedInt32Array(65525, 11, 1, 65526, 11, 1, 65527, 11, 1, 65528, 11, 1, 65529, 11, 1, 65530, 11, 1, 65531, 11, 1, 65532, 11, 1, 65533, 11, 1, 65534, 11, 1, 65535, 11, 1, 0, 11, 1, 1, 11, 1, 2, 11, 1, 3, 11, 1, 4, 11, 1, 5, 11, 1, 6, 11, 1, 7, 11, 1, 8, 11, 1, 9, 11, 1, 10, 11, 1, 11, 11, 1, 12, 11, 1, 65524, 11, 1, 14, 65532, 1, 13, 11, 1441795, 65523, 11, 655363, 65522, 65531, 1048579, 65523, 10, 1048577, 65523, 9, 1048577, 65522, 8, 1048577, 65522, 7, 1048577, 65522, 6, 1048577, 65522, 5, 1048577, 65522, 4, 1048577, 65522, 3, 1048577, 65522, 2, 1048577, 65522, 1, 1048577, 65522, 0, 1048577, 65522, 65535, 1048577, 65523, 8, 1048577, 65521, 65535, 1048577, 65521, 65534, 1048577, 65521, 65533, 1048577, 65522, 65533, 1048577, 65522, 65532, 1048577, 65522, 65534, 1048577, 65523, 7, 1048577, 65523, 65533, 1048577, 65523, 65532, 1048579, 65523, 65534, 1048577, 65523, 6, 1048577, 65523, 4, 1048577, 65523, 3, 1048577, 65523, 2, 1048577, 65523, 1, 1048577, 65523, 0, 1048577, 65523, 65535, 1048577, 65523, 5, 1048577, 13, 10, 1048577, 13, 9, 1048577, 14, 9, 1048577, 14, 8, 1048577, 14, 7, 1048577, 14, 6, 1048577, 14, 5, 1048577, 14, 4, 1048577, 13, 6, 1048577, 13, 7, 1048577, 13, 8, 1048577, 14, 3, 1048577, 14, 2, 1048577, 14, 1, 1048577, 14, 0, 1048577, 15, 65535, 1048577, 15, 65534, 1048577, 15, 65533, 1048577, 14, 65534, 1048577, 14, 65533, 1048577, 14, 65535, 1048577, 13, 5, 1048577, 13, 65533, 1048577, 13, 65534, 1048577, 13, 65535, 1048577, 13, 0, 1048577, 13, 1, 1048577, 13, 2, 1048577, 13, 3, 1048577, 13, 4, 1048577, 65523, 65531, 1, 65524, 65531, 1, 65525, 65531, 1, 65526, 65531, 1, 65527, 65531, 1, 65528, 65531, 1, 65529, 65531, 1, 65530, 65531, 1, 65531, 65531, 1, 65532, 65531, 1, 65533, 65531, 1, 65534, 65531, 1, 65535, 65532, 1, 0, 65532, 1, 1, 65532, 1, 2, 65532, 1, 3, 65532, 1, 4, 65532, 1, 5, 65532, 1, 6, 65532, 1, 7, 65532, 1, 8, 65532, 1, 9, 65532, 1, 10, 65532, 1, 11, 65532, 1, 12, 65532, 1, 13, 65532, 3, 14, 65531, 1, 13, 65531, 1, 12, 65531, 1, 11, 65531, 1, 10, 65531, 1, 9, 65531, 1, 8, 65531, 1, 7, 65531, 1, 6, 65531, 1, 5, 65531, 1, 4, 65531, 1, 3, 65531, 1, 2, 65531, 1, 1, 65531, 1, 0, 65531, 1, 65535, 65531, 1, 65533, 65532, 1, 65534, 65532, 1, 65524, 65532, 1, 65525, 65532, 1, 65528, 65530, 1, 65532, 65532, 1, 65531, 65532, 1, 65530, 65532, 1, 65529, 65532, 1, 65528, 65532, 1, 65527, 65532, 1, 65526, 65532, 1)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)

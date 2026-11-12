@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="1_sxqe5"]
 [ext_resource type="MeshLibrary" uid="uid://b27p3wokfin6l" path="res://levels/dev/proto-mesh-lib.tres" id="2_sxqe5"]
 [ext_resource type="PackedScene" uid="uid://bmepk0rhitnsc" path="res://enemies/small_enemy/small_enemy_spawner.tscn" id="4_pomcm"]
-[ext_resource type="PackedScene" uid="uid://c778iqbs0ok47" path="res://common/vfx/flame-emitter.tscn" id="4_uv483"]
 [ext_resource type="PackedScene" uid="uid://b64kv0p1jxrdi" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="5_pomcm"]
+[ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_inputs.gd" id="6_uv483"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_iynve"]
 
@@ -67,9 +67,6 @@ offset_transform_position = Vector2(4, 4)
 texture = ExtResource("1_2u2g5")
 stretch_mode = 2
 
-[node name="flame-emitter" parent="." unique_id=1061110755 instance=ExtResource("4_uv483")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.236784, 0, -9.467596)
-
 [node name="Floor" type="StaticBody3D" parent="." unique_id=1360731257]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=332006049]
@@ -102,7 +99,14 @@ environment = SubResource("Environment_iynve")
 [node name="Player" parent="." unique_id=1653260376 instance=ExtResource("1_sxqe5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=771552401]
+[node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=1087218669 groups=["camera_options"]]
+transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 20, 15)
+projection = 1
+size = 30.0
+near = 0.001
+metadata/_edit_lock_ = true
+
+[node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=771552401 groups=["camera_options"]]
 transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 10, 20, 10)
 projection = 1
 current = true
@@ -110,23 +114,20 @@ size = 30.389
 near = 0.001
 metadata/_edit_lock_ = true
 
-[node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=1087218669]
-transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 20, 15)
-projection = 1
-size = 30.0
-near = 0.001
-metadata/_edit_lock_ = true
-
-[node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=449395750]
+[node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=449395750 groups=["camera_options"]]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20, 6)
 projection = 2
 size = 0.1
 metadata/_edit_lock_ = true
 
-[node name="CamPerspective" type="Camera3D" parent="Player" unique_id=1341667469]
+[node name="CamPerspective" type="Camera3D" parent="Player" unique_id=1341667469 groups=["camera_options"]]
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 10, 15, 10)
 size = 0.1
 metadata/_edit_lock_ = true
+
+[node name="PlayerInputSource" type="Node" parent="Player" unique_id=2144815098]
+script = ExtResource("6_uv483")
+metadata/_custom_type_script = "uid://18fy30k87d84"
 
 [node name="ConfirmContinue" type="ConfirmationDialog" parent="." unique_id=20908460 groups=["confirm_dlg"]]
 unique_name_in_owner = true

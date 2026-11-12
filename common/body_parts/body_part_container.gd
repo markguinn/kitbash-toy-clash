@@ -83,7 +83,9 @@ func _ready() -> void:
 			primary_collider = n.get_node_or_null("CollisionShape3D")
 			n = n.get_parent()
 	if not animation_player:
-		animation_player = host.get_node("AnimationPlayer")
+		animation_player = host.get_node_or_null("AnimationPlayer")
+	if not animation_player:
+		animation_player = get_node_or_null("AnimationPlayer")
 	if not base_stats:
 		base_stats = StatBlock.new()
 	_find_body_parts(self)

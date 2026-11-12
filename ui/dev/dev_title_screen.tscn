@@ -70,7 +70,14 @@ size_flags_horizontal = 4
 text = "Prototype #2"
 script = ExtResource("2_ouiyl")
 target_scene = "uid://dprhdayetcchx"
-is_primary = true
+metadata/_custom_type_script = "uid://6arxcfsx130h"
+
+[node name="TestTwoPlayer" type="Button" parent="VBoxContainer" unique_id=1963234811]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Two Player Test"
+script = ExtResource("2_ouiyl")
+target_scene = "uid://4l2oj0s0ovap"
 metadata/_custom_type_script = "uid://6arxcfsx130h"
 
 [node name="Control2" type="Control" parent="VBoxContainer" unique_id=1088315750]

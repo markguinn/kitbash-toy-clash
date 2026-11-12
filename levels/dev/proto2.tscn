@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://2p5wmbj6psti" path="res://_source_assets/alt-palettes/soft4-8x.png" id="12_lrfq1"]
 [ext_resource type="Shader" uid="uid://blxa8pw8fsqvk" path="res://common/vfx/pixelated/pixelated-shader-3d.gdshader" id="15_umte1"]
 [ext_resource type="Script" uid="uid://dft3fawera0dd" path="res://common/vfx/pixelated/post_processing_mesh.gd" id="16_sehbl"]
+[ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_inputs.gd" id="17_lrfq1"]
 [ext_resource type="PackedScene" uid="uid://cval3opchqdx4" path="res://enemies/robot/robot_spawner.tscn" id="20_sehbl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
@@ -148,15 +149,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
 texture = SubResource("ViewportTexture_sehbl")
 
-[node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=853497229]
-transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 10, 20, 10)
-projection = 1
-current = true
-size = 30.389
-near = 0.001
-metadata/_edit_lock_ = true
-
-[node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=865568906]
+[node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=865568906 groups=["camera_options"]]
 transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 20, 15)
 projection = 1
 size = 30.0
@@ -171,16 +164,28 @@ mesh = SubResource("QuadMesh_yrna3")
 script = ExtResource("16_sehbl")
 palettes = Array[Texture2D]([ExtResource("9_ckf24"), ExtResource("5_6lio0"), ExtResource("6_wx8kr"), ExtResource("7_arp0d"), ExtResource("8_vbc45"), ExtResource("9_751em"), ExtResource("10_umte1"), ExtResource("11_sehbl"), ExtResource("12_lrfq1")])
 
-[node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=1374804059]
+[node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=853497229 groups=["camera_options"]]
+transform = Transform3D(0.7071068, -0.5792279, 0.40557978, 2.9802326e-08, 0.57357645, 0.819152, -0.7071068, -0.5792279, 0.40557984, 10, 19.999998, 9.999999)
+projection = 1
+current = true
+size = 30.389
+near = 0.001
+metadata/_edit_lock_ = true
+
+[node name="CamFrustrum" type="Camera3D" parent="Player" unique_id=1374804059 groups=["camera_options"]]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20, 6)
 projection = 2
 size = 0.1
 metadata/_edit_lock_ = true
 
-[node name="CamPerspective" type="Camera3D" parent="Player" unique_id=655540465]
+[node name="CamPerspective" type="Camera3D" parent="Player" unique_id=655540465 groups=["camera_options"]]
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 10, 15, 10)
 size = 0.1
 metadata/_edit_lock_ = true
+
+[node name="PlayerInputSource" type="Node" parent="Player" unique_id=286436842]
+script = ExtResource("17_lrfq1")
+metadata/_custom_type_script = "uid://18fy30k87d84"
 
 [node name="Human" parent="." unique_id=1797291781 instance=ExtResource("5_g1bde")]
 transform = Transform3D(-0.999397, 0, 0.034723062, 0, 1, 0, -0.034723062, 0, -0.999397, 17.481916, 2.1892014, -19.838047)

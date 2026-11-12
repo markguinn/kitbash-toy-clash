@@ -11,6 +11,7 @@ var is_walking := false
 var walk_blend_tween: Tween
 var override_blend_tween: Tween
 
+@onready var input_source: InputSource = $PlayerInputSource
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var life: Life = $Life
 
@@ -24,12 +25,7 @@ var advance_delta := 0.0
 # We won't leave this in the final game. I suspect we'll use
 # the ortho straight or ortho 45 view, but I'm not ready to
 # commit yet. Press tab to swap between them.
-@onready var cams: Array[Camera3D] = [
-	$CamOrthoStraight,
-	$CamOrtho45,
-	$CamPerspective,
-	$CamFrustrum,
-]
+var cams: Array[Camera3D]
 
 @onready var body_mesh: Node3D = $Body
 @onready var body_root: BodyPartContainer = $Body/root
@@ -41,12 +37,18 @@ var advance_delta := 0.0
 
 func _ready() -> void:
 	Log.info(self, "Initializing Player")
+	for n in get_tree().get_nodes_in_group("camera_options"):
+		if n is Camera3D:
+			cams.append(n)
 	_set_cam(0)
 	animation_tree.active = true
 	animation_tree["parameters/moving/blend_amount"] = 0.0
 	animation_tree["parameters/overrides/blend_amount"] = 0.0
 	if fps > 0.0:
 		animation_tree.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
+	input_source.attack.connect(_attack)
+	input_source.special_attack.connect(_special_attack)
+	input_source.dash.connect(_dash)
 
 
 func _set_cam(num: int) -> void:
@@ -54,13 +56,6 @@ func _set_cam(num: int) -> void:
 	for c in cams:
 		c.current = false
 	cams[cur_cam].current = true
-
-
-func _get_input_dir() -> Vector2:
-	var cam: Camera3D = get_viewport().get_camera_3d()
-	var dir: Vector2 = Input.get_vector("left", "right", "up", "down")
-	var compensation = snappedf(cam.rotation.y, PI / 4.0)
-	return dir.rotated(-compensation)
 
 
 func _tween_walk_blend(val: float) -> void:
@@ -86,7 +81,7 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var dir:= _get_input_dir() if not is_dashing else Coords.vec3_to_vec2(cur_dir)
+	var dir:= input_source.get_move_dir() if not is_dashing else Coords.vec3_to_vec2(cur_dir)
 
 	if dir.length() > 0.0 and body_root.can_move:
 		var walk_dir := Coords.vec2_to_vec3(dir)
@@ -124,18 +119,13 @@ func _physics_process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	# TODO: think about this state management
-	if event.is_action_pressed("attack1") and body_root.can_attack:
-		_attack.call_deferred()
-	if event.is_action_pressed("attack2") and body_root.can_special:
-		_special_attack.call_deferred()
-	if event.is_action_pressed("dash") and body_root.can_dash:
-		_dash.call_deferred()
 	if event.is_action_pressed("switch_cam"):
 		_set_cam(cur_cam + 1)
 
 
 func _attack() -> void:
+	if not body_root.can_attack:
+		return
 	is_attacking = true
 	animation_tree.set("parameters/attack/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	body_root.attack_start.emit(cur_dir)
@@ -145,6 +135,8 @@ func _attack() -> void:
 
 
 func _special_attack() -> void:
+	if not body_root.can_special:
+		return
 	is_attacking = true
 	_tween_overrides_blend(1)
 	body_root.special_start.emit(cur_dir)
@@ -160,6 +152,8 @@ func _special_attack() -> void:
 
 
 func _dash() -> void:
+	if not body_root.can_dash:
+		return
 	is_dashing = true
 	_tween_overrides_blend(-1)
 	body_root.dash_start.emit(cur_dir)
