@@ -19,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://2p5wmbj6psti" path="res://_source_assets/alt-palettes/soft4-8x.png" id="12_lrfq1"]
 [ext_resource type="Shader" uid="uid://blxa8pw8fsqvk" path="res://common/vfx/pixelated/pixelated-shader-3d.gdshader" id="15_umte1"]
 [ext_resource type="Script" uid="uid://dft3fawera0dd" path="res://common/vfx/pixelated/post_processing_mesh.gd" id="16_sehbl"]
-[ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_inputs.gd" id="17_lrfq1"]
+[ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_input_source.gd" id="17_lrfq1"]
 [ext_resource type="PackedScene" uid="uid://cval3opchqdx4" path="res://enemies/robot/robot_spawner.tscn" id="20_sehbl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]

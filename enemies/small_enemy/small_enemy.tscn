@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://gtfpiwnhfods"]
 
 [ext_resource type="PackedScene" uid="uid://c5e1xidjh4txk" path="res://enemies/enemy.tscn" id="1_24whq"]
+[ext_resource type="Script" uid="uid://do6mjhni753bt" path="res://enemies/default_enemy_input_source.gd" id="2_ucjr4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_24whq"]
 
@@ -15,6 +16,9 @@ albedo_color = Color(0.03137255, 0.38431373, 0.77254903, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ucjr4"]
 material = SubResource("StandardMaterial3D_fds3k")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_yemch"]
+viewport_path = NodePath("HealthBar/the/health")
 
 [node name="SmallEnemy" unique_id=1807322689 instance=ExtResource("1_24whq")]
 
@@ -37,3 +41,10 @@ shape = SubResource("BoxShape3D_yemch")
 [node name="Body" type="MeshInstance3D" parent="." index="4" unique_id=1909754093]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_ucjr4")
+
+[node name="the" parent="HealthBar" parent_id_path=PackedInt32Array(38360166) index="0" unique_id=216841935]
+texture = SubResource("ViewportTexture_yemch")
+
+[node name="InputSource" type="Node" parent="." index="7" unique_id=760919355]
+script = ExtResource("2_ucjr4")
+metadata/_custom_type_script = "uid://do6mjhni753bt"

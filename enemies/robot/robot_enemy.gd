@@ -1,8 +1,7 @@
 class_name RobotEnemy
 extends Enemy
 
-const FLAME_DC = 0.2
-const BETWEEN_ATTACKS = 10.0
+const FLAME_DC = 1.2
 const ATTACK_LEN = 1.0
 
 @onready var chest_flame: MeshInstance3D = %ChestFlame
@@ -19,21 +18,10 @@ func _ready() -> void:
 		chest_flame.hide()
 		has_flame = false
 	else:
-		_start_attack_timer()
-
-
-func _start_attack_timer() -> void:
-	Log.debug(self, "starting attack timer")
-	get_tree().create_timer(BETWEEN_ATTACKS).timeout.connect(_on_attack_start)
+		input_source.attack.connect(_on_attack_start)
 
 
 func _on_attack_start() -> void:
-	Log.debug(self, "attack!")
 	flame_emitter.tween_to_intensity(1.0, ATTACK_LEN)
-	get_tree().create_timer(1.0).timeout.connect(_on_attack_end)
-
-
-func _on_attack_end() -> void:
-	Log.debug(self, "stop attack!")
+	await get_tree().create_timer(1.0).timeout
 	flame_emitter.tween_to_intensity(0.0, 3.0)
-	_start_attack_timer()

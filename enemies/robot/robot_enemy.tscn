@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c778iqbs0ok47" path="res://common/vfx/flame-emitter.tscn" id="4_w1bxk"]
 [ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://common/body_parts/body_part_container.gd" id="4_xd7h8"]
 [ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="5_xd7h8"]
+[ext_resource type="Script" uid="uid://do6mjhni753bt" path="res://enemies/default_enemy_input_source.gd" id="8_fijov"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p8y7s"]
 size = Vector3(2, 7, 1)
@@ -432,5 +433,11 @@ transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, -1.5625,
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body" index="1" unique_id=506144053]
 libraries/ = SubResource("AnimationLibrary_w1bxk")
 autoplay = &"walk"
+
+[node name="InputSource" type="Node" parent="." index="7" unique_id=1636008466]
+script = ExtResource("8_fijov")
+attack_min_seconds = 8.0
+attack_max_seconds = 12.0
+metadata/_custom_type_script = "uid://do6mjhni753bt"
 
 [editable path="Body"]

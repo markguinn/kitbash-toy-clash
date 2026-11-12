@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="14_rltm1"]
 [ext_resource type="Shader" uid="uid://blxa8pw8fsqvk" path="res://common/vfx/pixelated/pixelated-shader-3d.gdshader" id="15_20n2w"]
 [ext_resource type="Script" uid="uid://dft3fawera0dd" path="res://common/vfx/pixelated/post_processing_mesh.gd" id="16_2qm0g"]
-[ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_inputs.gd" id="17_onds3"]
+[ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_input_source.gd" id="17_onds3"]
 [ext_resource type="MeshLibrary" uid="uid://b27p3wokfin6l" path="res://levels/dev/proto-mesh-lib.tres" id="21_6ckf2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]

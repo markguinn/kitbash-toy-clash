@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dnacs0frc57fw"]
 
 [ext_resource type="PackedScene" uid="uid://c5e1xidjh4txk" path="res://enemies/enemy.tscn" id="1_2wib7"]
+[ext_resource type="Script" uid="uid://do6mjhni753bt" path="res://enemies/default_enemy_input_source.gd" id="2_xn02x"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fds3k"]
 albedo_color = Color(1, 1, 0.14117648, 1)
@@ -12,7 +13,7 @@ size = Vector3(2, 3, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_2wib7"]
 size = Vector3(3, 4, 3)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_2wib7"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_tnhl3"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [node name="BigEnemy" unique_id=1807322689 instance=ExtResource("1_2wib7")]
@@ -30,4 +31,8 @@ starting_hp = 2.0
 armor = 1.1
 
 [node name="the" parent="HealthBar" parent_id_path=PackedInt32Array(38360166) index="0" unique_id=216841935]
-texture = SubResource("ViewportTexture_2wib7")
+texture = SubResource("ViewportTexture_tnhl3")
+
+[node name="InputSource" type="Node" parent="." index="7" unique_id=2123339629]
+script = ExtResource("2_xn02x")
+metadata/_custom_type_script = "uid://do6mjhni753bt"

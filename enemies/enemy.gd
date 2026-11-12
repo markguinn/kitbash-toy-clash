@@ -8,6 +8,7 @@ extends CharacterBody3D
 @export var rotate_to_move_direction := true
 @export var min_animation_speed := 0.8
 @export var max_animation_speed := 1.2
+@export var input_source: InputSource
 
 var last_projectile := 0
 
@@ -15,7 +16,6 @@ var last_projectile := 0
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var life: Life = $Life
 @onready var body: Node3D = $Body
-
 
 func _ready() -> void:
 	life.dead.connect(_on_dead)
@@ -26,13 +26,16 @@ func _ready() -> void:
 			anim_player.speed_scale = randf_range(min_animation_speed, max_animation_speed)
 		else:
 			Log.warn(self, "no animation player found")
+	if not input_source:
+		input_source = get_node_or_null("InputSource")
+	if not input_source:
+		input_source = get_node_or_null("DefaultEnemyInputSource")
+	if not input_source:
+		Log.error(self, "No input source found for", name)
 
 
 func _physics_process(_delta: float) -> void:
-	var player: CharacterBody3D = get_tree().get_first_node_in_group("player")
-	if not player:
-		return
-	var dir := global_position.direction_to(player.global_position)
+	var dir := Coords.vec2_to_vec3(input_source.get_move_dir())
 	if body and rotate_to_move_direction:
 		body.rotation.y = Coords.vec3_to_angle(dir)
 	velocity = dir * speed
