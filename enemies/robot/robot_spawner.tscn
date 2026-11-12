@@ -1,0 +1,348 @@
+[gd_scene format=3 uid="uid://cval3opchqdx4"]
+
+[ext_resource type="PackedScene" uid="uid://xldcauwg5ipv" path="res://enemies/spawner.tscn" id="1_f0pr2"]
+[ext_resource type="PackedScene" uid="uid://6kthxvx2vud2" path="res://enemies/robot/robot_enemy.tscn" id="2_a612p"]
+[ext_resource type="PackedScene" uid="uid://cquxkiw4a2sc1" path="res://enemies/robot/art/robot-spawner.gltf" id="2_ve2p4"]
+[ext_resource type="Texture2D" uid="uid://33mlkdw3htne" path="res://enemies/robot/art/robot-spawner_0.png" id="4_6kx27"]
+[ext_resource type="Texture2D" uid="uid://4mlap3lbjrd2" path="res://common/vfx/flame-particle-tex.png" id="5_tm7aj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6kx27"]
+size = Vector3(8, 10, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tm7aj"]
+size = Vector3(8.2, 10, 8.2)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ve2p4"]
+viewport_path = NodePath("HealthBar/the/health")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6kx27"]
+resource_name = "material_0"
+cull_mode = 2
+albedo_texture = ExtResource("4_6kx27")
+emission_enabled = true
+emission = Color(1, 0.40192473, 0.2268183, 1)
+backlight = Color(18.892, 18.892, 18.892, 1)
+texture_filter = 0
+texture_repeat = false
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_looog"]
+resource_name = "material_0"
+cull_mode = 2
+albedo_texture = ExtResource("4_6kx27")
+backlight_enabled = true
+texture_filter = 0
+texture_repeat = false
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="Animation" id="Animation_tm7aj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/root/top/sphere:surface_material_override/0")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_6kx27")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/root/top:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Body/root/mid/mesh2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SmokeParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_6kx27"]
+resource_name = "idle"
+length = 4.0
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/root/top/sphere:surface_material_override/0")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_6kx27"), SubResource("StandardMaterial3D_looog")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/root/top/sphere2:surface_material_override/0")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_looog"), SubResource("StandardMaterial3D_6kx27"), SubResource("StandardMaterial3D_looog")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Body/root/top/sphere3:surface_material_override/0")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_looog"), SubResource("StandardMaterial3D_6kx27"), SubResource("StandardMaterial3D_looog")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Body/root/top/sphere4:surface_material_override/0")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_looog"), SubResource("StandardMaterial3D_6kx27"), SubResource("StandardMaterial3D_looog")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Body/root/top/sphere5:surface_material_override/0")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 3, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_looog"), SubResource("StandardMaterial3D_6kx27"), SubResource("StandardMaterial3D_looog")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Body/root/top/sphere6:surface_material_override/0")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_looog"), SubResource("StandardMaterial3D_6kx27"), SubResource("StandardMaterial3D_looog")]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Body/root/top/sphere7:surface_material_override/0")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_looog"), SubResource("StandardMaterial3D_6kx27"), SubResource("StandardMaterial3D_looog")]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Body/root/top/sphere8:surface_material_override/0")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_looog"), SubResource("StandardMaterial3D_6kx27"), SubResource("StandardMaterial3D_looog")]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Body/root/top:scale")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.1, 0.8, 1.1), Vector3(1, 1, 1), Vector3(0.9, 1.2, 0.9), Vector3(1, 1, 1), Vector3(1.1, 0.8, 1.1), Vector3(1, 1, 1), Vector3(0.9, 1.2, 0.9), Vector3(1, 1, 1), Vector3(1.1, 0.8, 1.1), Vector3(1, 1, 1), Vector3(0.9, 1.2, 0.9), Vector3(1, 1, 1), Vector3(1.1, 0.8, 1.1), Vector3(1, 1, 1), Vector3(0.9, 1.2, 0.9)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Body/root/mid/mesh2:scale")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.1, 0.8, 1.1), Vector3(1, 1, 1), Vector3(0.9, 1.4, 0.9), Vector3(1, 1, 1), Vector3(1.1, 0.8, 1.1), Vector3(1, 1, 1), Vector3(0.9, 1.4, 0.9), Vector3(1, 1, 1), Vector3(1.1, 0.8, 1.1), Vector3(1, 1, 1), Vector3(0.9, 1.4, 0.9), Vector3(1, 1, 1), Vector3(1.1, 0.8, 1.1), Vector3(1, 1, 1), Vector3(0.9, 1.4, 0.9)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("SmokeParticles:emitting")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 1, 1.25, 1.5, 2, 2.25, 2.5, 3, 3.25, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, false, true, false, false, true, false, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tm7aj"]
+_data = {
+&"RESET": SubResource("Animation_tm7aj"),
+&"idle": SubResource("Animation_6kx27")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_itf83"]
+transparency = 1
+shading_mode = 0
+specular_mode = 2
+disable_ambient_light = true
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("5_tm7aj")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_vqlpp"]
+material = SubResource("StandardMaterial3D_itf83")
+custom_aabb = AABB(-10, -10, -10, 20, 20, 100)
+subdivide_width = 5
+subdivide_depth = 5
+
+[sub_resource type="Curve" id="Curve_i2kbu"]
+_data = [Vector2(0, 0.2), 0.0, 0.8000001, 0, 1, Vector2(1, 1), 0.8000001, 0.0, 1, 0]
+point_count = 2
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_tm7aj"]
+colors = PackedColorArray(0.9130578, 0.9124923, 0.90876585, 1, 1, 1, 1, 0)
+
+[node name="RobotSpawner" unique_id=1330096657 instance=ExtResource("1_f0pr2")]
+enemy_type = ExtResource("2_a612p")
+spawn_seconds = 5.0
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=723521642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+shape = SubResource("BoxShape3D_6kx27")
+
+[node name="CollisionShape3D" parent="HurtBox" parent_id_path=PackedInt32Array(149782567) index="0" unique_id=911874032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+shape = SubResource("BoxShape3D_tm7aj")
+
+[node name="Life" parent="." index="2" unique_id=2033270747]
+starting_hp = 20.0
+
+[node name="HealthBar" parent="." index="3" unique_id=749490317]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 13.680382, 0)
+
+[node name="the" parent="HealthBar" index="0" unique_id=1753161793]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5135441, 0)
+render_priority = 2
+texture = SubResource("ViewportTexture_ve2p4")
+
+[node name="HealthLabel" parent="." index="4" unique_id=506479108]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.361246, 0)
+render_priority = 2
+
+[node name="Body" parent="." index="5" unique_id=1906375604 instance=ExtResource("2_ve2p4")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+
+[node name="top" parent="Body/root" parent_id_path=PackedInt32Array(1906375604, 1772651598) index="2" unique_id=905141506]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07180246, 0)
+
+[node name="sphere" parent="Body/root/top" index="1" unique_id=1325692254]
+surface_material_override/0 = SubResource("StandardMaterial3D_6kx27")
+
+[node name="sphere2" parent="Body/root/top" index="2" unique_id=1874133380]
+surface_material_override/0 = SubResource("StandardMaterial3D_looog")
+
+[node name="sphere3" parent="Body/root/top" index="3" unique_id=654023430]
+surface_material_override/0 = SubResource("StandardMaterial3D_looog")
+
+[node name="sphere4" parent="Body/root/top" index="4" unique_id=1021480225]
+surface_material_override/0 = SubResource("StandardMaterial3D_6kx27")
+
+[node name="sphere5" parent="Body/root/top" index="5" unique_id=1784042876]
+surface_material_override/0 = SubResource("StandardMaterial3D_looog")
+
+[node name="sphere6" parent="Body/root/top" index="6" unique_id=242286061]
+surface_material_override/0 = SubResource("StandardMaterial3D_looog")
+
+[node name="sphere7" parent="Body/root/top" index="7" unique_id=1457882268]
+surface_material_override/0 = SubResource("StandardMaterial3D_looog")
+
+[node name="sphere8" parent="Body/root/top" index="8" unique_id=1226127620]
+surface_material_override/0 = SubResource("StandardMaterial3D_looog")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6" unique_id=720406468]
+libraries/ = SubResource("AnimationLibrary_tm7aj")
+autoplay = &"idle"
+
+[node name="SmokeParticles" type="CPUParticles3D" parent="." index="7" unique_id=613899730]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.474762, 0)
+cast_shadow = 0
+custom_aabb = AABB(-10, -10, -10, 20, 20, 100)
+gi_mode = 0
+emitting = false
+amount = 50
+one_shot = true
+explosiveness = 0.78
+lifetime_randomness = 0.2
+mesh = SubResource("QuadMesh_vqlpp")
+direction = Vector3(0, 1, 0)
+spread = 10.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 16.0
+initial_velocity_max = 32.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+damping_min = 10.0
+damping_max = 40.8
+angle_min = -15.0
+angle_max = 15.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_i2kbu")
+color_ramp = SubResource("Gradient_tm7aj")
+
+[editable path="Body"]

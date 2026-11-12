@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://v13awrp2jboj" path="res://player/generic_temp/temp_body_2.tscn" id="6_unxl6"]
 [ext_resource type="Texture2D" uid="uid://dwlxi55n0kapm" path="res://_source_assets/alt-palettes/brazilian-afternoon-8x.png" id="6_wx8kr"]
 [ext_resource type="Texture2D" uid="uid://36skmsxtep75" path="res://_source_assets/alt-palettes/lost-century-8x.png" id="7_arp0d"]
-[ext_resource type="PackedScene" uid="uid://b64kv0p1jxrdi" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="7_tm3by"]
 [ext_resource type="PackedScene" uid="uid://qf3m6pmicxlt" path="res://player/generic_temp/temp_body_3.tscn" id="8_u5iaq"]
 [ext_resource type="Texture2D" uid="uid://ro2dmvnwekqc" path="res://_source_assets/alt-palettes/duel-8x.png" id="8_vbc45"]
 [ext_resource type="Texture2D" uid="uid://dfhwbnoi1bdid" path="res://_source_assets/alt-palettes/fantasy-24-8x.png" id="9_751em"]
@@ -20,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://2p5wmbj6psti" path="res://_source_assets/alt-palettes/soft4-8x.png" id="12_lrfq1"]
 [ext_resource type="Shader" uid="uid://blxa8pw8fsqvk" path="res://common/vfx/pixelated/pixelated-shader-3d.gdshader" id="15_umte1"]
 [ext_resource type="Script" uid="uid://dft3fawera0dd" path="res://common/vfx/pixelated/post_processing_mesh.gd" id="16_sehbl"]
-[ext_resource type="PackedScene" uid="uid://6kthxvx2vud2" path="res://enemies/robot/robot_enemy.tscn" id="20_lrfq1"]
+[ext_resource type="PackedScene" uid="uid://cval3opchqdx4" path="res://enemies/robot/robot_spawner.tscn" id="20_sehbl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
 
@@ -61,7 +60,7 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_lrfq1"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_sehbl"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_751em"]
@@ -147,7 +146,7 @@ mesh = SubResource("PlaneMesh_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_lrfq1")
+texture = SubResource("ViewportTexture_sehbl")
 
 [node name="CamOrtho45" type="Camera3D" parent="Player" unique_id=853497229]
 transform = Transform3D(0.7071067, -0.579228, 0.4055798, 0, 0.57357645, 0.81915206, -0.7071067, -0.579228, 0.4055798, 10, 20, 10)
@@ -165,6 +164,7 @@ near = 0.001
 metadata/_edit_lock_ = true
 
 [node name="PostProcessingMesh" type="MeshInstance3D" parent="Player/CamOrthoStraight" unique_id=1411257765]
+visible = false
 cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_yrna3")
@@ -277,10 +277,8 @@ light_energy = 5.0
 omni_range = 20.0
 omni_attenuation = -0.12
 
-[node name="BigEnemySpawner" parent="." unique_id=1330096657 instance=ExtResource("7_tm3by")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 37)
-enemy_type = ExtResource("20_lrfq1")
-spawn_seconds = 5.0
+[node name="RobotSpawner" parent="." unique_id=1330096657 instance=ExtResource("20_sehbl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.173798, 0, 18.796743)
 
 [connection signal="body_entered" from="Human/Area3D2" to="." method="_on_human_body_entered"]
 [connection signal="body_entered" from="SwordArm/Area3D2" to="." method="_on_sword_arm_body_entered"]
