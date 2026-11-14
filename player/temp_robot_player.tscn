@@ -115,7 +115,8 @@ metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [sub_resource type="Resource" id="Resource_g3wen"]
 script = ExtResource("8_nkiwt")
-move_speed = 20.0
+move_speed = 30.0
+turn_speed = 1.0
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [sub_resource type="Animation" id="Animation_p8y7s"]
@@ -1184,10 +1185,10 @@ stats = SubResource("Resource_ij0ag")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1875, -1.0625, 0)
 
 [node name="right_top_finger" parent="Body/root/torso/right_arm/right_forearm/right_hand" parent_id_path=PackedInt32Array(2038730817, 1344125992) index="1" unique_id=1120907657]
-transform = Transform3D(1, 0, 0, 0, 1, -1.11736494e-13, 0, 1.11736494e-13, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9807315, -0.19536066, 0, 0.19536066, 0.9807315, 0, 0, 0)
 
 [node name="right_bottom_finger" parent="Body/root/torso/right_arm/right_forearm/right_hand" parent_id_path=PackedInt32Array(2038730817, 1344125992) index="2" unique_id=1474214186]
-transform = Transform3D(1, 0, 0, 0, 1, 1.1173654e-13, 0, -1.1173654e-13, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9807314, 0.1953608, 0, -0.1953608, 0.9807314, 0, 0, 0)
 
 [node name="legs" parent="Body/root" index="1" unique_id=975181211]
 script = ExtResource("7_jkbha")

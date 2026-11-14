@@ -27,6 +27,7 @@ custom_aabb = AABB(-10, -10, -10, 20, 20, 100)
 gi_mode = 0
 amount = 128
 lifetime_randomness = 0.2
+local_coords = true
 mesh = SubResource("QuadMesh_kdu0b")
 direction = Vector3(0, 0, 1)
 spread = 5.0
