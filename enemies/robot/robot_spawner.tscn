@@ -12,7 +12,7 @@ size = Vector3(8, 10, 8)
 [sub_resource type="BoxShape3D" id="BoxShape3D_tm7aj"]
 size = Vector3(8.2, 10, 8.2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ve2p4"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_tm7aj"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6kx27"]
@@ -231,15 +231,20 @@ _data = {
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_itf83"]
-transparency = 1
+transparency = 2
+alpha_scissor_threshold = 0.1
+alpha_antialiasing_mode = 0
 shading_mode = 0
+diffuse_mode = 3
 specular_mode = 2
 disable_ambient_light = true
+disable_specular_occlusion = true
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("5_tm7aj")
+texture_filter = 2
 billboard_mode = 3
 billboard_keep_scale = true
-particles_anim_h_frames = 1
+particles_anim_h_frames = 10
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
@@ -253,9 +258,6 @@ subdivide_depth = 5
 _data = [Vector2(0, 0.2), 0.0, 0.8000001, 0, 1, Vector2(1, 1), 0.8000001, 0.0, 1, 0]
 point_count = 2
 metadata/_snap_enabled = true
-
-[sub_resource type="Gradient" id="Gradient_tm7aj"]
-colors = PackedColorArray(0.9130578, 0.9124923, 0.90876585, 1, 1, 1, 1, 0)
 
 [node name="RobotSpawner" unique_id=1330096657 instance=ExtResource("1_f0pr2")]
 enemy_type = ExtResource("2_a612p")
@@ -278,7 +280,7 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 13.680382, 0)
 [node name="the" parent="HealthBar" index="0" unique_id=1753161793]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5135441, 0)
 render_priority = 2
-texture = SubResource("ViewportTexture_ve2p4")
+texture = SubResource("ViewportTexture_tm7aj")
 
 [node name="HealthLabel" parent="." index="4" unique_id=506479108]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.361246, 0)
@@ -343,6 +345,7 @@ angle_max = 15.0
 scale_amount_min = 2.0
 scale_amount_max = 4.0
 scale_amount_curve = SubResource("Curve_i2kbu")
-color_ramp = SubResource("Gradient_tm7aj")
+anim_speed_min = 1.0
+anim_speed_max = 1.0
 
 [editable path="Body"]

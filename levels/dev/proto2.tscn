@@ -61,7 +61,7 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_sehbl"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_lrfq1"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_751em"]
@@ -147,7 +147,7 @@ mesh = SubResource("PlaneMesh_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_sehbl")
+texture = SubResource("ViewportTexture_lrfq1")
 
 [node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=865568906 groups=["camera_options"]]
 transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 20, 15)
@@ -157,7 +157,6 @@ near = 0.001
 metadata/_edit_lock_ = true
 
 [node name="PostProcessingMesh" type="MeshInstance3D" parent="Player/CamOrthoStraight" unique_id=1411257765]
-visible = false
 cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_yrna3")
