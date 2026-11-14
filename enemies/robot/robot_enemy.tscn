@@ -18,7 +18,7 @@ size = Vector3(2.2, 7, 1.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_w1bxk"]
 size = Vector3(2.4, 4, 2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_w1bxk"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_fijov"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fijov"]
@@ -1021,7 +1021,7 @@ max_hp = 10.0
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 8.5, 0)
 
 [node name="the" parent="HealthBar" index="0" unique_id=216841935]
-texture = SubResource("ViewportTexture_w1bxk")
+texture = SubResource("ViewportTexture_fijov")
 
 [node name="HealthLabel" parent="." index="5" unique_id=37585518]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
