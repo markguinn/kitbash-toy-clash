@@ -23,14 +23,13 @@ move_speed = 10.0
 dash_length = 0.2
 dash_cooldown = 1000
 turn_speed = 0.2
+min_collider_height = 5.0
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [node name="blockbench_export" unique_id=1797291781 instance=ExtResource("1_fug3q")]
-
-[node name="root" parent="." index="0" unique_id=1164343148]
 script = ExtResource("2_33150")
 
-[node name="torso" parent="root" index="0" unique_id=2100511907]
+[node name="torso" parent="root" parent_id_path=PackedInt32Array(1164343148) index="0" unique_id=2100511907]
 script = ExtResource("3_rlt0s")
 slot = 2
 
@@ -61,7 +60,7 @@ script = ExtResource("3_rlt0s")
 slot = 4
 extra_tracks = Array[String](["root/torso"])
 
-[node name="legs" parent="root" index="1" unique_id=1109858301]
+[node name="legs" parent="root" parent_id_path=PackedInt32Array(1164343148) index="1" unique_id=1109858301]
 script = ExtResource("3_rlt0s")
 slot = 5
 stats = SubResource("Resource_wd0vf")

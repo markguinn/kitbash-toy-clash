@@ -28,7 +28,7 @@ var advance_delta := 0.0
 var cams: Array[Camera3D]
 
 @onready var body_mesh: Node3D = $Body
-@onready var body_root: BodyPartContainer = $Body/root
+@onready var body_root: BodyPartContainer = $Body
 @onready var animation_player: AnimationPlayer = $Body/AnimationPlayer
 @onready var animation_tree: AnimationTree = $AnimationTree
 
