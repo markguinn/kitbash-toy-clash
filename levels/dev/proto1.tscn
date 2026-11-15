@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://bmepk0rhitnsc" path="res://enemies/small_enemy/small_enemy_spawner.tscn" id="4_pomcm"]
 [ext_resource type="PackedScene" uid="uid://b64kv0p1jxrdi" path="res://enemies/big_enemy/big_enemy_spawner.tscn" id="5_pomcm"]
 [ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_input_source.gd" id="6_uv483"]
+[ext_resource type="PackedScene" uid="uid://dnacs0frc57fw" path="res://enemies/big_enemy/big_enemy.tscn" id="8_k4cv0"]
+[ext_resource type="PackedScene" uid="uid://gtfpiwnhfods" path="res://enemies/small_enemy/small_enemy.tscn" id="10_umuyv"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_iynve"]
 
@@ -143,6 +145,8 @@ cancel_button_text = "End Run"
 
 [node name="BigEnemySpawner" parent="." unique_id=803562640 instance=ExtResource("5_pomcm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.65137, 0, -8.604748)
+enemy_types = Array[PackedScene]([ExtResource("8_k4cv0")])
 
 [node name="Spawner" parent="." unique_id=1330096657 instance=ExtResource("4_pomcm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.435489, 0, 22)
+enemy_types = Array[PackedScene]([ExtResource("10_umuyv")])

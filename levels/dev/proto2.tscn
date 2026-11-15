@@ -21,6 +21,8 @@
 [ext_resource type="Script" uid="uid://dft3fawera0dd" path="res://common/vfx/pixelated/post_processing_mesh.gd" id="16_sehbl"]
 [ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_input_source.gd" id="17_lrfq1"]
 [ext_resource type="PackedScene" uid="uid://cval3opchqdx4" path="res://enemies/robot/robot_spawner.tscn" id="20_sehbl"]
+[ext_resource type="PackedScene" uid="uid://6kthxvx2vud2" path="res://enemies/robot/basic_robot.tscn" id="22_q6py8"]
+[ext_resource type="PackedScene" uid="uid://bpyf0wel0ps62" path="res://enemies/robot/flamethrower_robot.tscn" id="23_qsqhj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
 
@@ -61,7 +63,7 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_lrfq1"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_q6py8"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_751em"]
@@ -147,7 +149,7 @@ mesh = SubResource("PlaneMesh_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_lrfq1")
+texture = SubResource("ViewportTexture_q6py8")
 
 [node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=865568906 groups=["camera_options"]]
 transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 20, 15)
@@ -283,6 +285,10 @@ omni_attenuation = -0.12
 
 [node name="RobotSpawner" parent="." unique_id=1330096657 instance=ExtResource("20_sehbl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.173798, 0, 18.796743)
+enemy_types = Array[PackedScene]([ExtResource("23_qsqhj"), ExtResource("22_q6py8")])
+enemy_type_weight = Array[int]([1, 4])
+spawn_min_seconds = 4.0
+spawn_max_seconds = 5.0
 
 [connection signal="body_entered" from="Human/Area3D2" to="." method="_on_human_body_entered"]
 [connection signal="body_entered" from="SwordArm/Area3D2" to="." method="_on_sword_arm_body_entered"]

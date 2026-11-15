@@ -49,6 +49,7 @@ func _ready() -> void:
 
 
 func _handle_container_signal(dir: Vector3, method_name: String):
+	Log.debug(self, "boom", method_name, name)
 	call_deferred(method_name, dir)
 
 

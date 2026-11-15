@@ -1,14 +1,11 @@
 [gd_scene format=3 uid="uid://6kthxvx2vud2"]
 
-[ext_resource type="PackedScene" uid="uid://c5e1xidjh4txk" path="res://enemies/enemy.tscn" id="1_3wpnq"]
-[ext_resource type="Script" uid="uid://1l874seu0q1t" path="res://enemies/robot/robot_enemy.gd" id="2_fluq6"]
-[ext_resource type="PackedScene" uid="uid://b2l11710ia1vv" path="res://enemies/robot/art/robot1.gltf" id="2_p8y7s"]
-[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://common/body_parts/body_part.gd" id="4_68aaj"]
-[ext_resource type="PackedScene" uid="uid://c778iqbs0ok47" path="res://common/vfx/flame-emitter.tscn" id="4_w1bxk"]
-[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://common/body_parts/body_part_container.gd" id="4_xd7h8"]
-[ext_resource type="Script" uid="uid://db2sbu63piphh" path="res://enemies/robot/robot_torso.gd" id="5_obqe8"]
-[ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="5_xd7h8"]
-[ext_resource type="Script" uid="uid://do6mjhni753bt" path="res://enemies/default_enemy_input_source.gd" id="8_fijov"]
+[ext_resource type="PackedScene" uid="uid://c5e1xidjh4txk" path="res://enemies/enemy.tscn" id="1_1k7or"]
+[ext_resource type="PackedScene" uid="uid://b2l11710ia1vv" path="res://enemies/robot/art/robot1.gltf" id="2_k3kag"]
+[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://common/body_parts/body_part_container.gd" id="3_th62t"]
+[ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="4_fnrvp"]
+[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://common/body_parts/body_part.gd" id="5_w28gp"]
+[ext_resource type="Script" uid="uid://do6mjhni753bt" path="res://enemies/default_enemy_input_source.gd" id="6_fcqxx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p8y7s"]
 size = Vector3(2, 7, 1)
@@ -19,32 +16,28 @@ size = Vector3(2.2, 7, 1.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_w1bxk"]
 size = Vector3(2.4, 4, 2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_obqe8"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_1k7or"]
 viewport_path = NodePath("HealthBar/the/health")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fijov"]
-emission_enabled = true
-emission = Color(0.9137255, 0.24705882, 0.007843138, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_l7t1d"]
-material = SubResource("StandardMaterial3D_fijov")
-radius = 0.4
-height = 0.8
+[sub_resource type="Resource" id="Resource_6myvr"]
+script = ExtResource("4_fnrvp")
+min_collider_height = 7.0
+metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [sub_resource type="Resource" id="Resource_44ybt"]
-script = ExtResource("5_xd7h8")
+script = ExtResource("4_fnrvp")
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [sub_resource type="Resource" id="Resource_16wg5"]
-script = ExtResource("5_xd7h8")
+script = ExtResource("4_fnrvp")
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [sub_resource type="Resource" id="Resource_obqe8"]
-script = ExtResource("5_xd7h8")
+script = ExtResource("4_fnrvp")
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [sub_resource type="Resource" id="Resource_fijov"]
-script = ExtResource("5_xd7h8")
+script = ExtResource("4_fnrvp")
 move_speed = 30.0
 turn_speed = 1.0
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
@@ -999,8 +992,7 @@ _data = {
 &"walk": SubResource("Animation_fluq6")
 }
 
-[node name="RobotEnemy" unique_id=1807322689 instance=ExtResource("1_3wpnq")]
-script = ExtResource("2_fluq6")
+[node name="RobotEnemy" unique_id=1807322689 instance=ExtResource("1_1k7or")]
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=723521642]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
@@ -1025,50 +1017,40 @@ max_hp = 10.0
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 8.5, 0)
 
 [node name="the" parent="HealthBar" index="0" unique_id=216841935]
-texture = SubResource("ViewportTexture_obqe8")
+texture = SubResource("ViewportTexture_1k7or")
 
 [node name="HealthLabel" parent="." index="5" unique_id=37585518]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 
-[node name="Body" parent="." index="6" unique_id=1350397396 instance=ExtResource("2_p8y7s")]
-script = ExtResource("4_xd7h8")
+[node name="Body" parent="." index="6" unique_id=1350397396 instance=ExtResource("2_k3kag")]
+script = ExtResource("3_th62t")
+base_stats = SubResource("Resource_6myvr")
 
 [node name="torso" parent="Body/root" parent_id_path=PackedInt32Array(1350397396, 917119247) index="0" unique_id=611024050]
-script = ExtResource("5_obqe8")
+script = ExtResource("5_w28gp")
 
-[node name="FlameEmitter" parent="Body/root/torso" index="0" unique_id=1061110755 instance=ExtResource("4_w1bxk")]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1875, 0.375)
-damage = 100.0
-hurts_enemies = false
-
-[node name="ChestFlame" type="MeshInstance3D" parent="Body/root/torso" index="1" unique_id=1392623333]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.1875, 0.49707627)
-mesh = SubResource("CapsuleMesh_l7t1d")
-
-[node name="head" parent="Body/root/torso" index="3" unique_id=472762270]
-script = ExtResource("4_68aaj")
+[node name="head" parent="Body/root/torso" index="1" unique_id=472762270]
+script = ExtResource("5_w28gp")
 stats = SubResource("Resource_44ybt")
 
-[node name="left_arm" parent="Body/root/torso" index="4" unique_id=1588210268]
+[node name="left_arm" parent="Body/root/torso" index="2" unique_id=1588210268]
 transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 1, 1.625, 0)
-script = ExtResource("4_68aaj")
+script = ExtResource("5_w28gp")
 stats = SubResource("Resource_16wg5")
 
 [node name="left_forearm" parent="Body/root/torso/left_arm" index="2" unique_id=776838839]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1875, -1.0625, 0)
 
-[node name="right_arm" parent="Body/root/torso" index="5" unique_id=1162612214]
+[node name="right_arm" parent="Body/root/torso" index="3" unique_id=1162612214]
 transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.7071067, 0, -0.7071067, 0.7071067, -1, 1.625, 0)
-script = ExtResource("4_68aaj")
+script = ExtResource("5_w28gp")
 stats = SubResource("Resource_obqe8")
 
 [node name="right_forearm" parent="Body/root/torso/right_arm" index="2" unique_id=1376328224]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1875, -1.0625, 0)
 
 [node name="legs" parent="Body/root" parent_id_path=PackedInt32Array(1350397396, 917119247) index="1" unique_id=975181211]
-script = ExtResource("4_68aaj")
+script = ExtResource("5_w28gp")
 stats = SubResource("Resource_fijov")
 
 [node name="wheel2" parent="Body/root/legs" index="3" unique_id=1074992309]
@@ -1079,14 +1061,12 @@ libraries/ = SubResource("AnimationLibrary_w1bxk")
 autoplay = &"walk"
 
 [node name="InputSource" type="Node" parent="." index="7" unique_id=1636008466]
-script = ExtResource("8_fijov")
+script = ExtResource("6_fcqxx")
 retarget_min_seconds = 0.5
 retarget_max_seconds = 2.0
 move_speed_while_retargeting = 0.1
 attack_min_seconds = 8.0
 attack_max_seconds = 12.0
 metadata/_custom_type_script = "uid://do6mjhni753bt"
-
-[connection signal="attack" from="InputSource" to="Body/root/torso" method="_on_attack_start" binds= [Vector3(0, 0, 0)]]
 
 [editable path="Body"]

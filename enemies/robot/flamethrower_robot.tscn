@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://bpyf0wel0ps62"]
+
+[ext_resource type="PackedScene" uid="uid://6kthxvx2vud2" path="res://enemies/robot/basic_robot.tscn" id="1_8d2fy"]
+[ext_resource type="Script" uid="uid://db2sbu63piphh" path="res://enemies/robot/flamethrower_torso.gd" id="2_j00q0"]
+[ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="3_vms1h"]
+[ext_resource type="PackedScene" uid="uid://c778iqbs0ok47" path="res://common/vfx/flame-emitter.tscn" id="4_isp1o"]
+[ext_resource type="Material" uid="uid://divhuogeusi1v" path="res://common/vfx/flame-particle-mat.tres" id="5_j00q0"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_vms1h"]
+viewport_path = NodePath("HealthBar/the/health")
+
+[sub_resource type="Resource" id="Resource_6myvr"]
+script = ExtResource("3_vms1h")
+attack_cooldown = 4000
+metadata/_custom_type_script = "uid://dwctbgtrj80mq"
+
+[sub_resource type="QuadMesh" id="QuadMesh_isp1o"]
+material = ExtResource("5_j00q0")
+custom_aabb = AABB(-10, -10, -10, 20, 20, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fijov"]
+emission_enabled = true
+emission = Color(0.9137255, 0.24705882, 0.007843138, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_eqa2f"]
+material = SubResource("StandardMaterial3D_fijov")
+radius = 0.4
+height = 0.8
+
+[node name="RobotEnemy" unique_id=1807322689 instance=ExtResource("1_8d2fy")]
+
+[node name="the" parent="HealthBar" parent_id_path=PackedInt32Array(38360166) index="0" unique_id=216841935]
+texture = SubResource("ViewportTexture_vms1h")
+
+[node name="torso" parent="Body/root" parent_id_path=PackedInt32Array(1350397396, 917119247) index="0" unique_id=611024050]
+script = ExtResource("2_j00q0")
+stats = SubResource("Resource_6myvr")
+
+[node name="FlameEmitter" parent="Body/root/torso" index="5" unique_id=1061110755 instance=ExtResource("4_isp1o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1875, 0.375)
+damage = 100.0
+hurts_enemies = false
+
+[node name="CPUParticles3D" parent="Body/root/torso/FlameEmitter" index="0" unique_id=1499686469]
+mesh = SubResource("QuadMesh_isp1o")
+
+[node name="CollisionShape3D" parent="Body/root/torso/FlameEmitter/HitBox" parent_id_path=PackedInt32Array(1061110755, 317630368) index="0" unique_id=1740549618]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 15)
+
+[node name="ChestFlame" type="MeshInstance3D" parent="Body/root/torso" index="6" unique_id=1070134074]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.1875, 0.49707627)
+mesh = SubResource("CapsuleMesh_eqa2f")
+
+[editable path="Body"]
+[editable path="Body/root/torso/FlameEmitter"]
