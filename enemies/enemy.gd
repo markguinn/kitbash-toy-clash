@@ -1,13 +1,17 @@
 class_name Enemy
 extends CharacterBody3D
 
-@export var speed := 5.0
-@export var loot_parts_dc := 0.1
+
+## When the enemy causes damage from its own hitbox (not a projectile)
+## How much of that damage does it also take?
 @export var take_damage_from_causing_it := 0.2
-@export var projectile_seconds := 1.0
+
+## Does the enemy always look in the direction its moving?
 @export var rotate_to_move_direction := true
+
 @export var min_animation_speed := 0.8
 @export var max_animation_speed := 1.2
+
 @export var input_source: InputSource
 
 var last_projectile := 0
@@ -15,17 +19,13 @@ var last_projectile := 0
 @onready var hit_box: HitBox = $HitBox
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var life: Life = $Life
-@onready var body: Node3D = $Body
+@onready var body: BodyPartContainer = $Body
 
 func _ready() -> void:
 	life.dead.connect(_on_dead)
 	hit_box.caused_damage.connect(_on_caused_damage)
 	if min_animation_speed != max_animation_speed:
-		var anim_player: AnimationPlayer = get_node_or_null("Body/AnimationPlayer")
-		if anim_player:
-			anim_player.speed_scale = randf_range(min_animation_speed, max_animation_speed)
-		else:
-			Log.warn(self, "no animation player found")
+		body.animation_player.speed_scale = randf_range(min_animation_speed, max_animation_speed)
 	if not input_source:
 		input_source = get_node_or_null("InputSource")
 	if not input_source:
@@ -38,11 +38,11 @@ func _physics_process(_delta: float) -> void:
 	var dir := Coords.vec2_to_vec3(input_source.get_move_dir())
 	if body and rotate_to_move_direction:
 		body.rotation.y = Coords.vec3_to_angle(dir)
-	velocity = dir * speed
+	velocity = dir * body.stats.move_speed
 	move_and_slide()
 
-	if Time.get_ticks_msec() > last_projectile + roundi(projectile_seconds * 1000.0):
-		last_projectile = Time.get_ticks_msec()
+	#if Time.get_ticks_msec() > last_projectile + roundi(projectile_seconds * 1000.0):
+		#last_projectile = Time.get_ticks_msec()
 
 
 # TODO: do something fun - animation, sounds, etc
