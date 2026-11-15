@@ -24,7 +24,7 @@ var last_projectile := 0
 func _ready() -> void:
 	life.dead.connect(_on_dead)
 	hit_box.caused_damage.connect(_on_caused_damage)
-	if min_animation_speed != max_animation_speed:
+	if min_animation_speed != max_animation_speed and body and body.animation_player:
 		body.animation_player.speed_scale = randf_range(min_animation_speed, max_animation_speed)
 	if not input_source:
 		input_source = get_node_or_null("InputSource")
