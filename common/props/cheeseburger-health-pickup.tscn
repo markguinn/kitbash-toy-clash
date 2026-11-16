@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bnmev8dkhj381"]
+
+[ext_resource type="PackedScene" uid="uid://be42q20ivm60d" path="res://common/props/cheeseburger.fbx" id="1_cl63f"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vpsdc"]
+height = 0.8
+
+[node name="cheeseburger" type="Node3D" unique_id=1177331724]
+
+[node name="cheeseburger" parent="." unique_id=374284501 instance=ExtResource("1_cl63f")]
+
+[node name="Area3D" type="Area3D" parent="cheeseburger" unique_id=1753969652]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cheeseburger/Area3D" unique_id=823829435]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27160645, 0)
+shape = SubResource("CylinderShape3D_vpsdc")
