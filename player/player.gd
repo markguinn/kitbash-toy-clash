@@ -49,6 +49,7 @@ func _ready() -> void:
 	input_source.attack.connect(_attack)
 	input_source.special_attack.connect(_special_attack)
 	input_source.dash.connect(_dash)
+	Game.enemy_died.connect(_on_enemy_died)
 
 
 func _set_cam(num: int) -> void:
@@ -173,3 +174,20 @@ func _on_dead(from_hit_box: HitBox) -> void:
 		Game.player_died.emit(from_hit_box.host, from_hit_box)
 	else:
 		Game.player_died.emit(null, null)
+
+
+func _on_enemy_died(enemy: Enemy, from_hit_box: HitBox) -> void:
+	# TODO: check that i killed it
+	# TODO: extract this and clean it up
+	var dlg: SwapPartsDialog = $SwapPartsDialog
+	var roll := randf()
+	Log.info(self, "enemy died", enemy, from_hit_box, roll, enemy.loot_dc)
+	if roll > enemy.loot_dc:
+		var enemy_body: BodyPartContainer = enemy.body
+		enemy.remove_child(enemy.body)
+		dlg.src_body = enemy_body
+		dlg.dest_body = body_root.duplicate()
+		dlg.dest_parts = body_root.parts
+		dlg.src_parts = enemy_body.parts
+		dlg.show()
+		get_tree().paused = true

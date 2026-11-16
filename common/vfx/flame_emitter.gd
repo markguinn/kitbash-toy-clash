@@ -45,7 +45,8 @@ func _update_particles() -> void:
 	if not particles:
 		return
 	particles.emitting = intensity > 0.0
-	particles.lifetime = max(intensity, 0.01)
+	if intensity > 0.0:
+		particles.lifetime = intensity
 
 
 func _update_hitbox() -> void:

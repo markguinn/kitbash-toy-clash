@@ -12,6 +12,8 @@ extends CharacterBody3D
 @export var min_animation_speed := 0.8
 @export var max_animation_speed := 1.2
 
+@export var loot_dc := 1.0
+
 @export var input_source: InputSource
 
 var last_projectile := 0
@@ -67,6 +69,8 @@ func _on_dash() -> void:
 # TODO: do something fun - animation, sounds, etc
 func _on_dead(from_hit_box: HitBox) -> void:
 	Game.enemy_died.emit(self, from_hit_box)
+	# TODO: figure out a better way to handle the timing here
+	await get_tree().create_timer(1.0).timeout
 	queue_free()
 
 

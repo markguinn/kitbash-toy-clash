@@ -147,6 +147,7 @@ mesh = SubResource("PlaneMesh_iynve")
 
 [node name="Player" parent="." unique_id=1653260376 instance=ExtResource("5_eaxg1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+fps = null
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
 texture = SubResource("ViewportTexture_q6py8")

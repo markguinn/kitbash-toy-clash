@@ -5,7 +5,8 @@ extends BodyPart
 
 func _ready() -> void:
 	super._ready()
-	hit_box.disable()
+	if not hit_box:
+		return
 	
 	var n = get_parent()
 	while n:

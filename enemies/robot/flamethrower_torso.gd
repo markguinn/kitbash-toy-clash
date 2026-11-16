@@ -7,6 +7,12 @@ extends BodyPart
 func _ready() -> void:
 	super._ready()
 	flame_emitter.intensity = 0.0
+	if container.host is Player:
+		flame_emitter.hurts_enemies = true
+		flame_emitter.hurts_players = false
+	else:
+		flame_emitter.hurts_enemies = false
+		flame_emitter.hurts_players = true
 	Log.debug(self, "flamethrower ready")
 
 

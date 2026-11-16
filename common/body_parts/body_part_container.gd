@@ -27,12 +27,8 @@ signal change_direction(dir: Vector3)
 @export var animation_player: AnimationPlayer
 @export var base_stats: StatBlock
 
-# TODO: think about this more - do these belong at the root?
 @export var slots: Array[BodyPart.Slot] = [
-	BodyPart.Slot.head,
 	BodyPart.Slot.torso,
-	BodyPart.Slot.arm_l,
-	BodyPart.Slot.arm_r,
 	BodyPart.Slot.legs,
 ]
 
@@ -106,15 +102,23 @@ func get_facing_dir() -> Vector3:
 	Log.warn(self, "get_facing_dir: no torso part found")
 	return Vector3.ZERO
 
+
+func get_available_slots() -> Array[BodyPart.Slot]:
+	var out: Array[BodyPart.Slot] = slots.duplicate()
+	for p in parts:
+		out.append_array(p.has_slots)
+	return out
+
+
 func _find_body_parts(node: Node) -> void:
 	for n in node.get_children():
 		if n is BodyPart:
 			parts.append(n)
 		_find_body_parts(n)
 
-# I think we'll want to change this to look at the slot?
-func _find_body_part(_name: String) -> BodyPart:
-	var idx := parts.find_custom(func (p): return p.name == _name)
+
+func _find_body_part(slot: BodyPart.Slot) -> BodyPart:
+	var idx := parts.find_custom(func (p: BodyPart): return p.can_occupy_slots.find(slot) >= 0)
 	if idx >= 0:
 		return parts[idx]
 	return null
@@ -151,5 +155,5 @@ func _on_parts_changed(old_part: BodyPart, new_part: BodyPart) -> void:
 			shape.height = stats.min_collider_height
 			Log.debug(self, host.name, "updating collider height", shape.height)
 	
-	torso_part = _find_body_part(&"torso")
+	torso_part = _find_body_part(BodyPart.Slot.torso)
 	Log.debug(self, host.name, "torso part", torso_part)

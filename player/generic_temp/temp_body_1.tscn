@@ -7,6 +7,14 @@
 [ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="5_7qy1q"]
 [ext_resource type="Script" uid="uid://bb7mqdux6xdrk" path="res://common/hit_box.gd" id="6_gjhtx"]
 
+[sub_resource type="Resource" id="Resource_gjhtx"]
+script = ExtResource("5_7qy1q")
+metadata/_custom_type_script = "uid://dwctbgtrj80mq"
+
+[sub_resource type="Resource" id="Resource_vs8el"]
+script = ExtResource("5_7qy1q")
+metadata/_custom_type_script = "uid://dwctbgtrj80mq"
+
 [sub_resource type="Resource" id="Resource_xnjbx"]
 script = ExtResource("5_7qy1q")
 attack_cooldown = 700
@@ -16,6 +24,10 @@ metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
 radius = 1.0
 height = 3.0
+
+[sub_resource type="Resource" id="Resource_k5sop"]
+script = ExtResource("5_7qy1q")
+metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [sub_resource type="Resource" id="Resource_wd0vf"]
 script = ExtResource("5_7qy1q")
@@ -31,15 +43,18 @@ script = ExtResource("2_33150")
 
 [node name="torso" parent="root" parent_id_path=PackedInt32Array(1164343148) index="0" unique_id=2100511907]
 script = ExtResource("3_rlt0s")
-slot = 2
+has_slots = Array[int]([0, 2, 3])
+can_occupy_slots = Array[int]([1])
+stats = SubResource("Resource_gjhtx")
 
 [node name="head" parent="root/torso" index="1" unique_id=1484843447]
 script = ExtResource("3_rlt0s")
-slot = 1
+can_occupy_slots = Array[int]([0])
+stats = SubResource("Resource_vs8el")
 
 [node name="left_arm" parent="root/torso" index="2" unique_id=803233479]
 script = ExtResource("4_nflsb")
-slot = 3
+can_occupy_slots = Array[int]([2])
 extra_tracks = Array[String](["root/torso"])
 stats = SubResource("Resource_xnjbx")
 
@@ -57,10 +72,11 @@ debug_color = Color(0.99215686, 0.039215688, 0.23137255, 1)
 
 [node name="right_arm" parent="root/torso" index="3" unique_id=1949786288]
 script = ExtResource("3_rlt0s")
-slot = 4
+can_occupy_slots = Array[int]([3])
 extra_tracks = Array[String](["root/torso"])
+stats = SubResource("Resource_k5sop")
 
 [node name="legs" parent="root" parent_id_path=PackedInt32Array(1164343148) index="1" unique_id=1109858301]
 script = ExtResource("3_rlt0s")
-slot = 5
+can_occupy_slots = Array[int]([4])
 stats = SubResource("Resource_wd0vf")

@@ -40,6 +40,7 @@ metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 script = ExtResource("4_fnrvp")
 move_speed = 30.0
 turn_speed = 1.0
+min_collider_height = 7.0
 metadata/_custom_type_script = "uid://dwctbgtrj80mq"
 
 [sub_resource type="Animation" id="Animation_p8y7s"]
@@ -993,6 +994,7 @@ _data = {
 }
 
 [node name="RobotEnemy" unique_id=1807322689 instance=ExtResource("1_1k7or")]
+loot_dc = 0.0
 
 [node name="CollisionShape3D" parent="." index="0" unique_id=723521642]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
@@ -1028,14 +1030,18 @@ base_stats = SubResource("Resource_6myvr")
 
 [node name="torso" parent="Body/root" parent_id_path=PackedInt32Array(1350397396, 917119247) index="0" unique_id=611024050]
 script = ExtResource("5_w28gp")
+has_slots = Array[int]([0, 2, 3])
+can_occupy_slots = Array[int]([1])
 
 [node name="head" parent="Body/root/torso" index="1" unique_id=472762270]
 script = ExtResource("5_w28gp")
+can_occupy_slots = Array[int]([0])
 stats = SubResource("Resource_44ybt")
 
 [node name="left_arm" parent="Body/root/torso" index="2" unique_id=1588210268]
 transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 1, 1.625, 0)
 script = ExtResource("5_w28gp")
+can_occupy_slots = Array[int]([2])
 stats = SubResource("Resource_16wg5")
 
 [node name="left_forearm" parent="Body/root/torso/left_arm" index="2" unique_id=776838839]
@@ -1044,6 +1050,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1875, -1.0625, 0)
 [node name="right_arm" parent="Body/root/torso" index="3" unique_id=1162612214]
 transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.7071067, 0, -0.7071067, 0.7071067, -1, 1.625, 0)
 script = ExtResource("5_w28gp")
+can_occupy_slots = Array[int]([3])
 stats = SubResource("Resource_obqe8")
 
 [node name="right_forearm" parent="Body/root/torso/right_arm" index="2" unique_id=1376328224]
@@ -1051,6 +1058,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1875, -1.0625, 0)
 
 [node name="legs" parent="Body/root" parent_id_path=PackedInt32Array(1350397396, 917119247) index="1" unique_id=975181211]
 script = ExtResource("5_w28gp")
+can_occupy_slots = Array[int]([4])
 stats = SubResource("Resource_fijov")
 
 [node name="wheel2" parent="Body/root/legs" index="3" unique_id=1074992309]

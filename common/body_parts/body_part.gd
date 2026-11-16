@@ -14,7 +14,6 @@ const AUTO_CONNECT_SIGNALS = [
 ]
 
 enum Slot {
-	any,
 	head,
 	torso,
 	arm_l,
@@ -22,29 +21,47 @@ enum Slot {
 	legs,
 }
 
-## this does nothing for now. we'll need to think about it more and evolve it
-@export var slot: Slot = Slot.any
+## which slots does this body part have, that could be swapped out?
+@export var has_slots: Array[Slot] = []
+
+## Which slots can this part potentially occupy?
+@export var can_occupy_slots: Array[Slot] = []
+
 ## additional animation tracks that should be copied
 ## (beyond the ones that touch the actual part and its children)
 @export var extra_tracks: Array[String] = []
-## other body parts that come along with this one
+
+## Other body parts that come along with this one
+## If these nodes are also body parts, and they're not already occupying
+## a child slot on this part, they'll replace other parts on the body if
+## possible (TODO, not implemented yet)
 @export var extra_nodes: Array[Node3D] = []
-## how this body part impact the overall player stats
+
+## How this body part impacts the overall player stats
+## See body_part.gd#merge for how this stats are aggregated
 @export var stats: StatBlock
 
-var container: BodyPartContainer
+@export_group("Optional overrides")
+@export var active_slot: Slot
+@export var active_parent_part: BodyPart # null means the container is the parent
+@export var container: BodyPartContainer
 
 
 func _ready() -> void:
-	container = _get_body_part_container()
+	if not container:
+		container = _get_body_part_container()
 	if not container:
 		Log.error(self, "No body part container found!")
+	if not active_slot:
+		active_slot = can_occupy_slots[0] if can_occupy_slots.size() > 0 else Slot.torso
+	if not active_parent_part:
+		active_parent_part = _get_parent_part()
 	if not stats:
 		stats = StatBlock.new()
 	for signal_name in AUTO_CONNECT_SIGNALS:
 		var method_name: String = "_on_" + signal_name
 		if has_method(method_name) and container:
-			Log.debug(self, "connecting", signal_name, "to", method_name)
+			Log.debug(self, "connecting", signal_name, "to", method_name, container.get_path().get_concatenated_names())
 			container.connect(signal_name, _handle_container_signal.bind(method_name))
 
 
@@ -60,6 +77,16 @@ func _get_body_part_container() -> BodyPartContainer:
 			return p
 		p = p.get_parent()
 	return null
+
+
+func _get_parent_part() -> BodyPart:
+	var p = get_parent()
+	while p and p is Node:
+		# TODO: it'd be nice to interect and check the slots but prob not necessary now, maybe ever
+		if p is BodyPart: #and p.has_slots:
+			return p
+		p = p.get_parent()
+	return p
 
 
 func _get_animation_player() -> AnimationPlayer:
@@ -82,28 +109,63 @@ func _get_animation_tree() -> AnimationTree:
 	return null
 
 
+func get_child_body_parts() -> Array[BodyPart]:
+	var queue: Array[Node] = []
+	var out: Array[BodyPart] = []
+	queue.append_array(get_children())
+	while not queue.is_empty():
+		var n = queue.pop_back()
+		if n is BodyPart:
+			out.append(n)
+		else:
+			queue.append_array(n.get_children())
+	return out
+
+
+# returns mesh objects that are part of this part, but not
+# child body parts
+func get_direct_meshes() -> Array[Node3D]:
+	var queue: Array[Node] = []
+	var out: Array[Node3D] = []
+	queue.append_array(get_children())
+	while not queue.is_empty():
+		var n = queue.pop_back()
+		if n is MeshInstance3D:
+			out.append(n)
+		elif n is not BodyPart:
+			queue.append_array(n.get_children())
+	return out
+
+
 func replace_with_body_part(src_part: BodyPart) -> void:
 	var host: Node3D = get_parent()
+	
 	var src_player: AnimationPlayer = src_part._get_animation_player()
 	var src_anim_root: Node = src_player.get_node(src_player.root_node)
 	var src_part_path: String = src_anim_root.get_path_to(src_part).get_concatenated_names()
+	
 	var dest_part: Node3D = self
 	var dest_player: AnimationPlayer = dest_part._get_animation_player()
 	var dest_anim_root: Node = dest_player.get_node(dest_player.root_node)
 	var dest_part_path: String = dest_anim_root.get_path_to(dest_part).get_concatenated_names()
+	
 	Log.debug(self, "Swapping", src_part, "for", dest_part, "player=", dest_player, "src path=", src_part_path, "dest path=", dest_part_path)
 
+	# grab some references to nodes in the animation tree so we can adjust the
+	# filtered tracks later on. we may find this constraining later on, but it's
+	# the simplest approach i could think of for now
 	var anim_tree: AnimationTree = _get_animation_tree()
 	var attack_oneshot: AnimationNodeOneShot
 	if anim_tree and anim_tree.tree_root is AnimationNodeBlendTree:
 		attack_oneshot = anim_tree.tree_root.get_node(&"attack")
 
-	# make a copy of the library because we're going to make destructive edits
+	# make a copy of the animation library on the destination host, 
+	# because we're going to make destructive edits
 	var dest_al: AnimationLibrary = dest_player.get_animation_library("").duplicate_deep()
 	dest_player.remove_animation_library("")
 	dest_player.add_animation_library("", dest_al)
-
-	# replace the mesh nodes
+	
+	# replace any extra mesh nodes the src body calls out first
 	for extra_node in src_part.extra_nodes:
 		var np: NodePath = src_part.get_path_to(extra_node)
 		var old_node: Node3D = self.get_node_or_null(np)
@@ -113,11 +175,18 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 		var cloned_node: Node3D = extra_node.duplicate()
 		host.add_child(cloned_node)
 
+	# replace the main mesh node
 	host.remove_child(self)
 	var cloned_part: Node3D = src_part.duplicate()
+	cloned_part.container = container
 	host.add_child(cloned_part)
+	cloned_part.active_parent_part = active_parent_part
+	cloned_part.active_slot = active_slot
+	# TODO: this probably won't hold up. We'll probably need some ways to override it
+	cloned_part.position = dest_part.position
 
-	# replace the animations
+	# replace the animations, first by removing conflicting animation tracks
+	# from the destination (i.e. tracks referencing the node(s) we're replacinig)
 	for anim_name in dest_player.get_animation_list():
 		if not dest_player.has_animation(anim_name) or not src_player.has_animation(anim_name):
 			continue
@@ -145,6 +214,8 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 				if attack_oneshot:
 					attack_oneshot.set_filter_path(np, false)
 
+		# add the relevant animation tracks from the new body part to the
+		# destination animation player
 		for i in range(src_anim.get_track_count()):
 			var np: NodePath = src_anim.track_get_path(i)
 			var nps: String = np.get_concatenated_names()

@@ -21,7 +21,7 @@ script = ExtResource("2_wy3wo")
 
 [node name="left_arm" parent="root/torso" parent_id_path=PackedInt32Array(186194084) index="2" unique_id=479957023 node_paths=PackedStringArray("extra_nodes")]
 script = ExtResource("2_it5jm")
-slot = 3
+can_occupy_slots = Array[int]([2])
 extra_tracks = Array[String](["root/torso"])
 extra_nodes = [NodePath("../right_arm")]
 stats = SubResource("Resource_j5ffu")
@@ -41,3 +41,4 @@ debug_color = Color(0.9309958, 0.23757973, 0.28869233, 1)
 
 [node name="right_arm" parent="root/torso" parent_id_path=PackedInt32Array(186194084) index="3" unique_id=816751645]
 script = ExtResource("2_mo3dw")
+can_occupy_slots = Array[int]([3])

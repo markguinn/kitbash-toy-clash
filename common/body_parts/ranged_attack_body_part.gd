@@ -14,18 +14,18 @@ var in_special: bool = false
 
 func _ready() -> void:
 	super._ready()
+	Log.debug(self, "ready", name, container)
 	if projectile_tpl:
 		SceneCacheWarmer.add(projectile_tpl)
-		#var p = projectile_tpl.instantiate()
-		#add_child(p)
-		#get_tree().create_timer(1.0).connect("timeout", p.queue_free)
 
 
 func _on_attack_start(_dir: Vector3) -> void:
+	Log.debug(self, "on attack start", fire_delay)
 	fire_after = fire_delay
 
 
 func _fire_projectile(dir: Vector3) -> void:
+	Log.debug(self, "firing projectile")
 	Log.measure_start(&"projectile")
 	var p: Projectile = projectile_tpl.instantiate()
 	p.tree_entered.connect( ## Shoot the projectile once it's valid
