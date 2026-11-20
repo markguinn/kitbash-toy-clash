@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cgfov6ve1j1tf"]
+
+[ext_resource type="PackedScene" uid="uid://da2ibgbhap6kr" path="res://common/body_parts/muscle-arm.fbx" id="1_t8brp"]
+[ext_resource type="Script" uid="uid://cduhh7u3r7tsb" path="res://common/body_parts/melee_attack_body_part.gd" id="2_0a6hp"]
+[ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="3_os753"]
+
+[sub_resource type="Resource" id="Resource_kdu0b"]
+script = ExtResource("3_os753")
+attack_cooldown = 250
+metadata/_custom_type_script = "uid://dwctbgtrj80mq"
+
+[node name="muscle-arm" unique_id=587992015 instance=ExtResource("1_t8brp")]
+script = ExtResource("2_0a6hp")
+can_occupy_slots = Array[int]([3, 2])
+stats = SubResource("Resource_kdu0b")
+
+[node name="peg" parent="." index="1" unique_id=6218670]
+visible = false
