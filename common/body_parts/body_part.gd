@@ -137,7 +137,7 @@ func get_direct_meshes() -> Array[Node3D]:
 	return out
 
 
-func replace_with_body_part(src_part: BodyPart) -> void:
+func replace_with_body_part(src_part: BodyPart) -> BodyPart:
 	var host: Node3D = get_parent()
 	
 	var src_player: AnimationPlayer = src_part._get_animation_player()
@@ -244,3 +244,5 @@ func replace_with_body_part(src_part: BodyPart) -> void:
 	dest_player.clear_caches()
 	container.parts_changed.emit(dest_part, cloned_part)
 	queue_free()
+	
+	return cloned_part
