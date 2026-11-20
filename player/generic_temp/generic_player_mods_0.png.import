@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://darxvw7hacool"
-path.s3tc="res://.godot/imported/generic_player_ax_0.png-171e13b8c79f848623eeb7ad0d798532.s3tc.ctex"
+uid="uid://5owow443dyj8"
+path.s3tc="res://.godot/imported/generic_player_mods_0.png-4ea85cda76b4c35c47c2e4b73d7b9abd.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://_source_assets/generic-player/generic_player_ax_0.png"
-dest_files=["res://.godot/imported/generic_player_ax_0.png-171e13b8c79f848623eeb7ad0d798532.s3tc.ctex"]
+source_file="res://player/generic_temp/generic_player_mods_0.png"
+dest_files=["res://.godot/imported/generic_player_mods_0.png-4ea85cda76b4c35c47c2e4b73d7b9abd.s3tc.ctex"]
 
 [params]
 

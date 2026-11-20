@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" uid="uid://cval3opchqdx4" path="res://enemies/robot/robot_spawner.tscn" id="20_sehbl"]
 [ext_resource type="PackedScene" uid="uid://6kthxvx2vud2" path="res://enemies/robot/basic_robot.tscn" id="22_q6py8"]
 [ext_resource type="PackedScene" uid="uid://bpyf0wel0ps62" path="res://enemies/robot/flamethrower_robot.tscn" id="23_qsqhj"]
+[ext_resource type="PackedScene" uid="uid://dabfkxwj8fiv7" path="res://_source_assets/key/wind_up_key.gltf" id="24_qsqhj"]
+[ext_resource type="PackedScene" uid="uid://bnmev8dkhj381" path="res://common/props/cheeseburger-health-pickup.tscn" id="25_vpugr"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
 
@@ -63,13 +65,19 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_q6py8"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_vpugr"]
 viewport_path = NodePath("HealthBar/the/health")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_g4ttp"]
+viewport_path = NodePath("SwapPartsDialog/SrcPartViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_sj7u6"]
+viewport_path = NodePath("SwapPartsDialog/DestPartViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_751em"]
 render_priority = 0
 shader = ExtResource("15_umte1")
-shader_parameter/size = Vector2(4, 3)
+shader_parameter/size = Vector2(1, 1)
 shader_parameter/quantization_algorithm = 0
 shader_parameter/palette_texture = ExtResource("9_ckf24")
 shader_parameter/palette_size = Vector2(9, 9)
@@ -147,10 +155,15 @@ mesh = SubResource("PlaneMesh_iynve")
 
 [node name="Player" parent="." unique_id=1653260376 instance=ExtResource("5_eaxg1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-fps = null
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_q6py8")
+texture = SubResource("ViewportTexture_vpugr")
+
+[node name="TextureRect" parent="Player/SwapPartsDialog/MarginContainer/VBoxContainer/HBoxContainer/SrcSide" parent_id_path=PackedInt32Array(1653260376, 999207115) index="1" unique_id=592765571]
+texture = SubResource("ViewportTexture_g4ttp")
+
+[node name="TextureRect" parent="Player/SwapPartsDialog/MarginContainer/VBoxContainer/HBoxContainer/DestSide" parent_id_path=PackedInt32Array(1653260376, 859429199) index="1" unique_id=1943275768]
+texture = SubResource("ViewportTexture_sj7u6")
 
 [node name="CamOrthoStraight" type="Camera3D" parent="Player" unique_id=865568906 groups=["camera_options"]]
 transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 20, 15)
@@ -290,6 +303,12 @@ enemy_types = Array[PackedScene]([ExtResource("23_qsqhj"), ExtResource("22_q6py8
 enemy_type_weight = Array[int]([1, 4])
 spawn_min_seconds = 4.0
 spawn_max_seconds = 5.0
+
+[node name="wind_up_key" parent="." unique_id=251679051 instance=ExtResource("24_qsqhj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.220113, 1.0489237, -30.644844)
+
+[node name="cheeseburger" parent="." unique_id=1177331724 instance=ExtResource("25_vpugr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -3)
 
 [connection signal="body_entered" from="Human/Area3D2" to="." method="_on_human_body_entered"]
 [connection signal="body_entered" from="SwordArm/Area3D2" to="." method="_on_sword_arm_body_entered"]
