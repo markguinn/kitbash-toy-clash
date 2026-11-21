@@ -48,12 +48,14 @@ shape = SubResource("WorldBoundaryShape3D_cvtr7")
 mesh = SubResource("PlaneMesh_b7qv8")
 
 [node name="RobotEnemy" parent="." unique_id=1807322689 instance=ExtResource("1_b7qv8")]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85165286, -4.7683716e-07, -5.373103)
 
 [node name="the" parent="RobotEnemy/HealthBar" parent_id_path=PackedInt32Array(1807322689, 38360166) index="0" unique_id=216841935]
 texture = SubResource("ViewportTexture_jivk5")
 
 [node name="RobotEnemy2" parent="." unique_id=1576154227 instance=ExtResource("2_2njfh")]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7222776, 0, -6.331769)
 
 [node name="the" parent="RobotEnemy2/HealthBar" parent_id_path=PackedInt32Array(1576154227, 38360166) index="0" unique_id=216841935]
@@ -80,6 +82,7 @@ transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 100, 
 directional_shadow_mode = 0
 
 [node name="Player" parent="." unique_id=1653260376 instance=ExtResource("6_8nomf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.8545713)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
 texture = SubResource("ViewportTexture_q7uhc")
