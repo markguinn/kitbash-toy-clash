@@ -51,6 +51,7 @@ spawners=""
 confirm_dlg=""
 scene_container=""
 camera_options=""
+camera_targets=""
 
 [gui]
 

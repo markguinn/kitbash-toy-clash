@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://cw2lmpuyqr3hv"]
+
+[ext_resource type="Script" uid="uid://cgastprxi36ph" path="res://common/camera_manager.gd" id="1_01681"]
+[ext_resource type="Shader" uid="uid://blxa8pw8fsqvk" path="res://common/vfx/pixelated/pixelated-shader-3d.gdshader" id="2_8ifw7"]
+[ext_resource type="Texture2D" uid="uid://bx0f0ir5b8mna" path="res://palette.png" id="3_11uis"]
+[ext_resource type="Script" uid="uid://dft3fawera0dd" path="res://common/vfx/pixelated/post_processing_mesh.gd" id="4_abyr3"]
+[ext_resource type="Texture2D" uid="uid://b28byf47axofp" path="res://common/alt-palettes/aap-64-8x.png" id="5_scaes"]
+[ext_resource type="Texture2D" uid="uid://dwlxi55n0kapm" path="res://common/alt-palettes/brazilian-afternoon-8x.png" id="6_2c8k4"]
+[ext_resource type="Texture2D" uid="uid://36skmsxtep75" path="res://common/alt-palettes/lost-century-8x.png" id="7_85wn3"]
+[ext_resource type="Texture2D" uid="uid://ro2dmvnwekqc" path="res://common/alt-palettes/duel-8x.png" id="8_pyaou"]
+[ext_resource type="Texture2D" uid="uid://dfhwbnoi1bdid" path="res://common/alt-palettes/fantasy-24-8x.png" id="9_667hj"]
+[ext_resource type="Texture2D" uid="uid://50htn5xvn3el" path="res://common/alt-palettes/darkseed-16-8x.png" id="10_h21ma"]
+[ext_resource type="Texture2D" uid="uid://cyx72ioxi226b" path="res://common/alt-palettes/mojave20-8x.png" id="11_521fm"]
+[ext_resource type="Texture2D" uid="uid://2p5wmbj6psti" path="res://common/alt-palettes/soft4-8x.png" id="12_akryl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_751em"]
+render_priority = 0
+shader = ExtResource("2_8ifw7")
+shader_parameter/size = Vector2(4, 3)
+shader_parameter/quantization_algorithm = 0
+shader_parameter/palette_texture = ExtResource("3_11uis")
+shader_parameter/palette_size = Vector2(9, 9)
+shader_parameter/creases = false
+shader_parameter/crease_slope_tol = 0.1
+shader_parameter/outline = false
+shader_parameter/use_closest_point_in_pixel = false
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/depth_threshold = 0.8
+shader_parameter/min_depth_for_outlines = 1940.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_yrna3"]
+material = SubResource("ShaderMaterial_751em")
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="StandardCamera" type="Camera3D" unique_id=1236166285 groups=["camera_options"]]
+transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 0, 0)
+v_offset = -2.0
+projection = 1
+size = 40.0
+near = 0.001
+script = ExtResource("1_01681")
+metadata/_edit_lock_ = true
+
+[node name="PostProcessingMesh" type="MeshInstance3D" parent="." unique_id=740987773]
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_yrna3")
+script = ExtResource("4_abyr3")
+palettes = Array[Texture2D]([ExtResource("3_11uis"), ExtResource("5_scaes"), ExtResource("6_2c8k4"), ExtResource("7_85wn3"), ExtResource("8_pyaou"), ExtResource("9_667hj"), ExtResource("10_h21ma"), ExtResource("11_521fm"), ExtResource("12_akryl")])

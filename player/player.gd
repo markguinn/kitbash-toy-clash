@@ -22,25 +22,16 @@ var override_blend_tween: Tween
 @export var fps := 0.0
 var advance_delta := 0.0
 
-# We won't leave this in the final game. I suspect we'll use
-# the ortho straight or ortho 45 view, but I'm not ready to
-# commit yet. Press tab to swap between them.
-var cams: Array[Camera3D]
-
 @onready var body_mesh: Node3D = $Body
 @onready var body_root: BodyPartContainer = $Body
 @onready var animation_player: AnimationPlayer = $Body/AnimationPlayer
 @onready var animation_tree: AnimationTree = $AnimationTree
-
+@onready var visibility_notifier: VisibleOnScreenNotifier3D = $VisibleOnScreenNotifier3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 
 
 func _ready() -> void:
 	Log.info(self, "Initializing Player")
-	for n in get_tree().get_nodes_in_group("camera_options"):
-		if n is Camera3D:
-			cams.append(n)
-	_set_cam(0)
 	animation_tree.active = true
 	animation_tree["parameters/moving/blend_amount"] = 0.0
 	animation_tree["parameters/overrides/blend_amount"] = 0.0
@@ -50,13 +41,6 @@ func _ready() -> void:
 	input_source.special_attack.connect(_special_attack)
 	input_source.dash.connect(_dash)
 	Game.enemy_died.connect(_on_enemy_died)
-
-
-func _set_cam(num: int) -> void:
-	cur_cam = num % cams.size()
-	for c in cams:
-		c.current = false
-	cams[cur_cam].current = true
 
 
 func _tween_walk_blend(val: float) -> void:
@@ -83,6 +67,12 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	var dir:= input_source.get_move_dir() if not is_dashing else Coords.vec3_to_vec2(cur_dir)
+	if visibility_notifier and !visibility_notifier.is_on_screen():
+		var cam := get_viewport().get_camera_3d()
+		if cam is CameraManager:
+			dir = Coords.vec3_to_vec2(global_position.direction_to(cam.center_point))
+		else:
+			dir = Vector2.ZERO
 
 	if dir.length() > 0.0 and body_root.can_move:
 		var walk_dir := Coords.vec2_to_vec3(dir)
@@ -117,11 +107,6 @@ func _physics_process(delta: float) -> void:
 		velocity.y = -10.0
 
 	move_and_slide()
-
-
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("switch_cam"):
-		_set_cam(cur_cam + 1)
 
 
 func _attack() -> void:

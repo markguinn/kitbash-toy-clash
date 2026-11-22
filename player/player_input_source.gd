@@ -43,5 +43,5 @@ func get_move_dir() -> Vector2:
 		var c2_dir := Input.get_vector("c2_left", "c2_right", "c2_up", "c2_down")
 		if c2_dir.length_squared() > dir.length_squared():
 			dir = c2_dir
-	var compensation = snappedf(cam.rotation.y, PI / 4.0)
+	var compensation = cam.rotation.y #snappedf(cam.rotation.y, PI / 4.0)
 	return dir.rotated(-compensation)
