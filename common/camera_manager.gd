@@ -3,7 +3,7 @@ extends Camera3D
 
 const DISTANCE_FROM_TARGET = 40.0
 
-@export var check_cadence_sec := 0.1
+@export var check_cadence_sec := 0.0
 @export var target_refresh_sec := 1.0
 @export var y_rotation := 0.0:
 	set(v):
@@ -55,19 +55,19 @@ func _process(delta: float) -> void:
 			target_zoom = max(min_distance, target_zoom - inverse_lerp(0, -edge_tolerance, overrun))
 		target_position = center_point + offset_vector * DISTANCE_FROM_TARGET
 		
-	var pos_diff := global_position.distance_to(target_position)
-	if pos_diff > 0.0:
-		var target_speed = remap(pos_diff, 0.0, 5.0, 0.0, move_speed)
-		cur_move_speed = move_toward(cur_move_speed, target_speed, delta * move_speed * 2.0)
-	else:
-		cur_move_speed = 0.0
-	var zoom_diff := absf(size - target_zoom)
-	if zoom_diff > 0.0:
-		cur_zoom_speed = move_toward(cur_zoom_speed, zoom_speed, delta * zoom_diff * 2.0)
-	else:
-		cur_zoom_speed = 0.0
-	global_position = global_position.move_toward(target_position, delta * cur_move_speed)
-	size = move_toward(size, target_zoom, delta * cur_zoom_speed)
+	#var pos_diff := global_position.distance_to(target_position)
+	#if pos_diff > 0.0:
+		#var target_speed = remap(pos_diff, 0.0, 5.0, 0.0, move_speed)
+		#cur_move_speed = move_toward(cur_move_speed, target_speed, delta * move_speed * 2.0)
+	#else:
+		#cur_move_speed = 0.0
+	#var zoom_diff := absf(size - target_zoom)
+	#if zoom_diff > 0.0:
+		#cur_zoom_speed = move_toward(cur_zoom_speed, zoom_speed, delta * zoom_diff * 2.0)
+	#else:
+		#cur_zoom_speed = 0.0
+	global_position = target_position #global_position.move_toward(target_position, delta * cur_move_speed)
+	size = target_zoom # move_toward(size, target_zoom, delta * cur_zoom_speed)
 
 
 func _update_offset_vector() -> void:
