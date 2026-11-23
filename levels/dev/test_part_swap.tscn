@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://1v3fh6jbs7qx"]
+
+[ext_resource type="PackedScene" uid="uid://6kthxvx2vud2" path="res://enemies/robot/basic_robot.tscn" id="1_cae0o"]
+[ext_resource type="Script" uid="uid://ci0rd237xx3v2" path="res://levels/dev/part_swap_area.gd" id="1_d53yu"]
+[ext_resource type="PackedScene" uid="uid://bpyf0wel0ps62" path="res://enemies/robot/flamethrower_robot.tscn" id="2_d53yu"]
+[ext_resource type="PackedScene" uid="uid://dqvrj27ervih7" path="res://player/generic_temp/temp_body_1.tscn" id="3_3ai4f"]
+[ext_resource type="PackedScene" uid="uid://v13awrp2jboj" path="res://player/generic_temp/temp_body_2.tscn" id="4_wm7q0"]
+[ext_resource type="PackedScene" uid="uid://qf3m6pmicxlt" path="res://player/generic_temp/temp_body_3.tscn" id="5_2l3r3"]
+[ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="6_6wryq"]
+[ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_input_source.gd" id="7_ou8iv"]
+[ext_resource type="PackedScene" uid="uid://cw2lmpuyqr3hv" path="res://common/standard_camera.tscn" id="8_7ban1"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_cvtr7"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2je5g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hchdm"]
+albedo_color = Color(0.23392558, 0.23392543, 0.2339254, 1)
+albedo_texture = SubResource("PlaceholderTexture2D_2je5g")
+uv1_scale = Vector3(10, 10, 10)
+texture_filter = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_b7qv8"]
+material = SubResource("StandardMaterial3D_hchdm")
+size = Vector2(100, 100)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_iynve"]
+radius = 2.5
+
+[node name="PartSwapTest" type="Node3D" unique_id=831366811]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1867229607]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=382766746]
+shape = SubResource("WorldBoundaryShape3D_cvtr7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=899438905]
+mesh = SubResource("PlaneMesh_b7qv8")
+
+[node name="SwapTrigger" type="Area3D" parent="." unique_id=221694066]
+process_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_d53yu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwapTrigger" unique_id=688421162]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("SphereShape3D_iynve")
+
+[node name="RobotEnemy1" parent="SwapTrigger" unique_id=1807322689 instance=ExtResource("1_cae0o")]
+process_mode = 4
+
+[node name="SwapTrigger2" type="Area3D" parent="." unique_id=449981761]
+process_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_d53yu")
+
+[node name="RobotEnemy2" parent="SwapTrigger2" unique_id=1576154227 instance=ExtResource("2_d53yu")]
+process_mode = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwapTrigger2" unique_id=1947122296]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("SphereShape3D_iynve")
+
+[node name="SwapTrigger3" type="Area3D" parent="." unique_id=1674917650]
+process_mode = 1
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_d53yu")
+
+[node name="TempBody1" parent="SwapTrigger3" unique_id=1797291781 instance=ExtResource("3_3ai4f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwapTrigger3" unique_id=1877710150]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("SphereShape3D_iynve")
+
+[node name="SwapTrigger4" type="Area3D" parent="." unique_id=839335827]
+process_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_d53yu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwapTrigger4" unique_id=528067275]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("SphereShape3D_iynve")
+
+[node name="TempBody2" parent="SwapTrigger4" unique_id=868036242 instance=ExtResource("4_wm7q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.563, 0)
+
+[node name="SwapTrigger5" type="Area3D" parent="." unique_id=1187908945]
+process_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_d53yu")
+
+[node name="TempBody3" parent="SwapTrigger5" unique_id=820212657 instance=ExtResource("5_2l3r3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.875, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwapTrigger5" unique_id=1544498912]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("SphereShape3D_iynve")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1530899743]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 100, 0)
+directional_shadow_mode = 0
+
+[node name="Player" parent="." unique_id=1653260376 instance=ExtResource("6_6wryq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="PlayerInputSource" type="Node" parent="Player" unique_id=1788749723]
+script = ExtResource("7_ou8iv")
+metadata/_custom_type_script = "uid://18fy30k87d84"
+
+[node name="StandardCamera" parent="." unique_id=1236166285 instance=ExtResource("8_7ban1")]
+transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 25, 27)
+v_offset = 0.0
+min_distance = 20.0

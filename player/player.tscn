@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://cy8ptutfeorc6" path="res://common/life.gd" id="4_yw30f"]
 [ext_resource type="FontFile" uid="uid://2g03ikvmbjhk" path="res://common/fonts/Handjet-Medium.ttf" id="5_g6k8r"]
 [ext_resource type="PackedScene" uid="uid://dqvrj27ervih7" path="res://player/generic_temp/temp_body_1.tscn" id="5_qjkh3"]
-[ext_resource type="Script" uid="uid://dyl6sd8roynfc" path="res://player/swap_parts_dialog.gd" id="6_g6k8r"]
+[ext_resource type="PackedScene" uid="uid://mmp0sbho2eqp" path="res://ui/swap_parts/swap_parts_dialog.tscn" id="6_g6k8r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iynve"]
 radius = 1.0
@@ -79,17 +79,9 @@ nodes/overrides/node = SubResource("AnimationNodeBlend3_hg6s5")
 nodes/overrides/position = Vector2(930, 10)
 node_connections = [&"output", 0, &"overrides", &"moving", 0, &"Animation", &"moving", 1, &"Animation 2", &"attack", 0, &"moving", &"attack", 1, &"Animation 3", &"overrides", 0, &"Animation 5", &"overrides", 1, &"attack", &"overrides", 2, &"Animation 4"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_g6k8r"]
-viewport_path = NodePath("SwapPartsDialog/SrcPartViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_rgyib"]
-viewport_path = NodePath("SwapPartsDialog/DestPartViewport")
-
-[sub_resource type="World3D" id="World3D_g6k8r"]
-
 [node name="Player" type="CharacterBody3D" unique_id=1653260376 groups=["player"]]
 collision_layer = 2
-collision_mask = 9
+collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_nvxhs")
 
@@ -172,89 +164,8 @@ parameters/attack/internal_active = false
 parameters/attack/request = 0
 parameters/overrides/blend_amount = -1.0
 
-[node name="SwapPartsDialog" type="CanvasLayer" parent="." unique_id=26372337]
-process_mode = 2
+[node name="SwapPartsDialog" parent="." unique_id=1465497708 instance=ExtResource("6_g6k8r")]
 visible = false
-script = ExtResource("6_g6k8r")
-
-[node name="MarginContainer" type="MarginContainer" parent="SwapPartsDialog" unique_id=1231829289]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SwapPartsDialog/MarginContainer" unique_id=1000158059]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SwapPartsDialog/MarginContainer/VBoxContainer" unique_id=1528535756]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 32
-
-[node name="SrcSide" type="VBoxContainer" parent="SwapPartsDialog/MarginContainer/VBoxContainer/HBoxContainer" unique_id=999207115]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ItemList" type="ItemList" parent="SwapPartsDialog/MarginContainer/VBoxContainer/HBoxContainer/SrcSide" unique_id=765723377]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-item_count = 2
-item_0/text = "test1"
-item_1/text = "test2"
-
-[node name="TextureRect" type="TextureRect" parent="SwapPartsDialog/MarginContainer/VBoxContainer/HBoxContainer/SrcSide" unique_id=592765571]
-layout_mode = 2
-size_flags_vertical = 3
-texture = SubResource("ViewportTexture_g6k8r")
-stretch_mode = 3
-
-[node name="DestSide" type="VBoxContainer" parent="SwapPartsDialog/MarginContainer/VBoxContainer/HBoxContainer" unique_id=859429199]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ItemList" type="ItemList" parent="SwapPartsDialog/MarginContainer/VBoxContainer/HBoxContainer/DestSide" unique_id=2014016464]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-item_count = 2
-item_0/text = "test1"
-item_1/text = "test2"
-
-[node name="TextureRect" type="TextureRect" parent="SwapPartsDialog/MarginContainer/VBoxContainer/HBoxContainer/DestSide" unique_id=1943275768]
-layout_mode = 2
-size_flags_vertical = 3
-texture = SubResource("ViewportTexture_rgyib")
-stretch_mode = 3
-
-[node name="Button" type="Button" parent="SwapPartsDialog/MarginContainer/VBoxContainer" unique_id=1193230260]
-layout_mode = 2
-text = "Swap"
-
-[node name="SrcPartViewport" type="SubViewport" parent="SwapPartsDialog" unique_id=1059043091]
-own_world_3d = true
-world_3d = SubResource("World3D_g6k8r")
-transparent_bg = true
-
-[node name="Camera3D" type="Camera3D" parent="SwapPartsDialog/SrcPartViewport" unique_id=829701639]
-transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 5, 10)
-projection = 1
-size = 10.0
-
-[node name="PartHolder" type="Node3D" parent="SwapPartsDialog/SrcPartViewport" unique_id=1955655470]
-
-[node name="DestPartViewport" type="SubViewport" parent="SwapPartsDialog" unique_id=954071132]
-own_world_3d = true
-world_3d = SubResource("World3D_g6k8r")
-transparent_bg = true
-
-[node name="Camera3D" type="Camera3D" parent="SwapPartsDialog/DestPartViewport" unique_id=1031826207]
-transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 5, 10)
-projection = 1
-size = 10.0
-
-[node name="PartHolder" type="Node3D" parent="SwapPartsDialog/DestPartViewport" unique_id=1104180241]
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." unique_id=1061761809]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

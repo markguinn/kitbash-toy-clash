@@ -62,14 +62,8 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_q6py8"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_sfh3s"]
 viewport_path = NodePath("HealthBar/the/health")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_qsqhj"]
-viewport_path = NodePath("SwapPartsDialog/SrcPartViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_vpugr"]
-viewport_path = NodePath("SwapPartsDialog/DestPartViewport")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iynve"]
 radius = 3.649
@@ -137,13 +131,7 @@ mesh = SubResource("PlaneMesh_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_q6py8")
-
-[node name="TextureRect" parent="Player/SwapPartsDialog/MarginContainer/VBoxContainer/HBoxContainer/SrcSide" parent_id_path=PackedInt32Array(1653260376, 999207115) index="1" unique_id=592765571]
-texture = SubResource("ViewportTexture_qsqhj")
-
-[node name="TextureRect" parent="Player/SwapPartsDialog/MarginContainer/VBoxContainer/HBoxContainer/DestSide" parent_id_path=PackedInt32Array(1653260376, 859429199) index="1" unique_id=1943275768]
-texture = SubResource("ViewportTexture_vpugr")
+texture = SubResource("ViewportTexture_sfh3s")
 
 [node name="PlayerInputSource" type="Node" parent="Player" unique_id=286436842]
 script = ExtResource("17_lrfq1")

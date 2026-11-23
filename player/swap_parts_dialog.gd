@@ -8,21 +8,25 @@ extends CanvasLayer
 
 @export var src_body: BodyPartContainer:
 	set(v):
-		src_body = v
 		for c in src_part_holder.get_children():
+			src_part_holder.remove_child(c)
 			c.queue_free()
-		src_part_holder.add_child(v)
-		v.position = Vector3.ZERO
-		v.rotation = Vector3.ZERO
+		if v:
+			src_part_holder.add_child(v)
+			v.position = Vector3.ZERO
+			v.rotation = Vector3.ZERO
+		src_body = v
 
 @export var dest_body: BodyPartContainer:
 	set(v):
-		dest_body = v
 		for c in dest_part_holder.get_children():
+			dest_part_holder.remove_child(c)
 			c.queue_free()
-		dest_part_holder.add_child(dest_body)
-		v.position = Vector3.ZERO
-		v.rotation = Vector3.ZERO
+		if v:
+			dest_part_holder.add_child(v)
+			v.position = Vector3.ZERO
+			v.rotation = Vector3.ZERO
+		dest_body = v
 
 @export var src_parts: Array[BodyPart]:
 	set(v):
@@ -43,13 +47,15 @@ extends CanvasLayer
 
 @onready var src_item_list: ItemList = $MarginContainer/VBoxContainer/HBoxContainer/SrcSide/ItemList
 @onready var dest_item_list: ItemList = $MarginContainer/VBoxContainer/HBoxContainer/DestSide/ItemList
-@onready var button: Button = $MarginContainer/VBoxContainer/Button
 @onready var src_part_viewport: SubViewport = $SrcPartViewport
 @onready var dest_part_viewport: SubViewport = $DestPartViewport
+@onready var swap_button: Button = $MarginContainer/VBoxContainer/ButtonContainer/SwapButton
+@onready var cancel_button: Button = $MarginContainer/VBoxContainer/ButtonContainer/CancelButton
 
 
 func _ready() -> void:
-	button.pressed.connect(_on_button_pressed)
+	swap_button.pressed.connect(_on_swap_button_pressed)
+	cancel_button.pressed.connect(_on_cancel_button_pressed)
 	src_item_list.item_selected.connect(_on_src_item_selected)
 	dest_item_list.item_selected.connect(_on_dest_item_selected)
 
@@ -58,15 +64,27 @@ func _on_src_item_selected(idx: int) -> void:
 	for i in range(src_parts.size()):
 		for m in src_parts[i].get_direct_meshes():
 			m.visible = (i == idx)
+	var first_dest := -1
+	for i in range(dest_parts.size()):
+		if src_parts[idx].can_occupy_slots.find(dest_parts[i].active_slot) < 0:
+			dest_item_list.set_item_disabled(i, true)
+		else:
+			dest_item_list.set_item_disabled(i, false)
+			if first_dest < 0:
+				first_dest = i
+	if first_dest >= 0:
+		dest_item_list.select(first_dest, true)
+		_on_dest_item_selected(first_dest)
 
 
 func _on_dest_item_selected(idx: int) -> void:
 	for part in dest_body.parts:
 		for m in part.get_direct_meshes():
 			m.visible = part.name == dest_parts[idx].name
+			
 
 
-func _on_button_pressed() -> void:
+func _on_swap_button_pressed() -> void:
 	var src: BodyPart
 	var dest: BodyPart
 	if src_item_list.get_selected_items().size() > 0:
@@ -75,6 +93,18 @@ func _on_button_pressed() -> void:
 		dest = dest_parts[dest_item_list.get_selected_items()[0]]
 	if src and dest:
 		dest.replace_with_body_part(src)
+	close_dialog()
+
+
+func _on_cancel_button_pressed() -> void:
+	close_dialog()
+
+
+func close_dialog():
+	src_body = null
+	dest_body = null
+	src_parts = []
+	dest_parts = []
 	hide()
 	get_tree().paused = false
 

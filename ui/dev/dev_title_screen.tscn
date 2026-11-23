@@ -80,6 +80,14 @@ script = ExtResource("2_ouiyl")
 target_scene = "uid://4l2oj0s0ovap"
 metadata/_custom_type_script = "uid://6arxcfsx130h"
 
+[node name="TestPartSwap" type="Button" parent="VBoxContainer" unique_id=1530172771]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Part Swap Test"
+script = ExtResource("2_ouiyl")
+target_scene = "uid://1v3fh6jbs7qx"
+metadata/_custom_type_script = "uid://6arxcfsx130h"
+
 [node name="Control2" type="Control" parent="VBoxContainer" unique_id=1088315750]
 layout_mode = 2
 size_flags_vertical = 3

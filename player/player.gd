@@ -164,15 +164,18 @@ func _on_dead(from_hit_box: HitBox) -> void:
 func _on_enemy_died(enemy: Enemy, from_hit_box: HitBox) -> void:
 	# TODO: check that i killed it
 	# TODO: extract this and clean it up
-	var dlg: SwapPartsDialog = $SwapPartsDialog
 	var roll := randf()
 	Log.info(self, "enemy died", enemy, from_hit_box, roll, enemy.loot_dc)
 	if roll > enemy.loot_dc:
-		var enemy_body: BodyPartContainer = enemy.body
-		enemy.remove_child(enemy.body)
-		dlg.src_body = enemy_body
-		dlg.dest_body = body_root.duplicate()
-		dlg.dest_parts = body_root.parts
-		dlg.src_parts = enemy_body.parts
-		dlg.show()
-		get_tree().paused = true
+		init_swap(enemy.body.duplicate())
+		#enemy.remove_child(enemy.body)
+
+
+func init_swap(enemy_body: BodyPartContainer):
+	var dlg: SwapPartsDialog = $SwapPartsDialog
+	dlg.src_body = enemy_body
+	dlg.dest_body = body_root.duplicate()
+	dlg.dest_parts = body_root.parts
+	dlg.src_parts = enemy_body.parts
+	dlg.show()
+	get_tree().paused = true

@@ -138,19 +138,36 @@ func get_direct_meshes() -> Array[Node3D]:
 
 
 func replace_with_body_part(src_part: BodyPart) -> BodyPart:
-	var host: Node3D = get_parent()
+	# make a copy of the animation library on the destination host, 
+	# because we're going to make destructive edits
+	var dest_player: AnimationPlayer = _get_animation_player()
+	var dest_al: AnimationLibrary = dest_player.get_animation_library("").duplicate_deep()
+	dest_player.remove_animation_library("")
+	dest_player.add_animation_library("", dest_al)
 	
-	var src_player: AnimationPlayer = src_part._get_animation_player()
-	var src_anim_root: Node = src_player.get_node(src_player.root_node)
-	var src_part_path: String = src_anim_root.get_path_to(src_part).get_concatenated_names()
+	var cloned_part := _do_replacement(src_part, self, dest_player)
 	
-	var dest_part: Node3D = self
-	var dest_player: AnimationPlayer = dest_part._get_animation_player()
-	var dest_anim_root: Node = dest_player.get_node(dest_player.root_node)
-	var dest_part_path: String = dest_anim_root.get_path_to(dest_part).get_concatenated_names()
-	
-	Log.debug(self, "Swapping", src_part, "for", dest_part, "player=", dest_player, "src path=", src_part_path, "dest path=", dest_part_path)
+	var restorations: Array[Array] = []
+	for cloned_kid in cloned_part.get_child_body_parts():
+		for original_kid in get_child_body_parts():
+			# TODO: this will need adjustment when we get multiple arms on one torso
+			if cloned_kid.active_slot == original_kid.active_slot:
+				restorations.append([original_kid, cloned_kid])
+	#for r in restorations:
+		#_do_replacement(r[0], r[1], dest_player)
 
+	dest_player.clear_caches()
+	container.parts_changed.emit(self, cloned_part)
+	queue_free()
+
+	return cloned_part
+
+
+func _do_replacement(
+	src_part: BodyPart,
+	dest_part: BodyPart, 
+	dest_player: AnimationPlayer
+) -> BodyPart:
 	# grab some references to nodes in the animation tree so we can adjust the
 	# filtered tracks later on. we may find this constraining later on, but it's
 	# the simplest approach i could think of for now
@@ -159,12 +176,17 @@ func replace_with_body_part(src_part: BodyPart) -> BodyPart:
 	if anim_tree and anim_tree.tree_root is AnimationNodeBlendTree:
 		attack_oneshot = anim_tree.tree_root.get_node(&"attack")
 
-	# make a copy of the animation library on the destination host, 
-	# because we're going to make destructive edits
-	var dest_al: AnimationLibrary = dest_player.get_animation_library("").duplicate_deep()
-	dest_player.remove_animation_library("")
-	dest_player.add_animation_library("", dest_al)
+	var host: Node3D = get_parent()
 	
+	var src_player: AnimationPlayer = src_part._get_animation_player()
+	var src_anim_root: Node = src_player.get_node(src_player.root_node)
+	var src_part_path: String = src_anim_root.get_path_to(src_part).get_concatenated_names()
+	
+	var dest_anim_root: Node = dest_player.get_node(dest_player.root_node)
+	var dest_part_path: String = dest_anim_root.get_path_to(dest_part).get_concatenated_names()
+	
+	Log.debug(self, "Swapping", src_part, "for", dest_part, "player=", dest_player, "src path=", src_part_path, "dest path=", dest_part_path)
+
 	# replace any extra mesh nodes the src body calls out first
 	for extra_node in src_part.extra_nodes:
 		var np: NodePath = src_part.get_path_to(extra_node)
@@ -241,8 +263,4 @@ func replace_with_body_part(src_part: BodyPart) -> BodyPart:
 				#if src_part_path != dest_part_path:
 				#	# what? probably convert to string and then replace src prefix with dest?
 
-	dest_player.clear_caches()
-	container.parts_changed.emit(dest_part, cloned_part)
-	queue_free()
-	
 	return cloned_part

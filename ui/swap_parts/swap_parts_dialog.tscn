@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://mmp0sbho2eqp"]
+
+[ext_resource type="Script" uid="uid://dyl6sd8roynfc" path="res://player/swap_parts_dialog.gd" id="1_nnj5r"]
+[ext_resource type="Theme" uid="uid://cvcbe2em0ehmf" path="res://ui/theme.tres" id="2_ix7iw"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_g6k8r"]
+viewport_path = NodePath("SrcPartViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rgyib"]
+viewport_path = NodePath("DestPartViewport")
+
+[sub_resource type="World3D" id="World3D_g6k8r"]
+
+[node name="SwapPartsDialog" type="CanvasLayer" unique_id=1465497708]
+process_mode = 2
+script = ExtResource("1_nnj5r")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=647208666]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=174645255]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=206563399]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SrcSide" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=2083840466]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer/HBoxContainer/SrcSide" unique_id=2004877864]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+item_count = 2
+item_0/text = "test1"
+item_1/text = "test2"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/SrcSide" unique_id=853934554]
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("ViewportTexture_g6k8r")
+stretch_mode = 3
+
+[node name="DestSide" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=691597174]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer/HBoxContainer/DestSide" unique_id=1315747931]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+item_count = 2
+item_0/text = "test1"
+item_1/text = "test2"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/DestSide" unique_id=394348434]
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("ViewportTexture_rgyib")
+stretch_mode = 3
+
+[node name="ButtonContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=418421673]
+layout_mode = 2
+theme = ExtResource("2_ix7iw")
+
+[node name="SwapButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonContainer" unique_id=79530128]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Swap"
+
+[node name="CancelButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonContainer" unique_id=673422381]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[node name="SrcPartViewport" type="SubViewport" parent="." unique_id=1843628569]
+own_world_3d = true
+world_3d = SubResource("World3D_g6k8r")
+transparent_bg = true
+
+[node name="Camera3D" type="Camera3D" parent="SrcPartViewport" unique_id=1635630668]
+transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 5, 10)
+projection = 1
+size = 10.0
+
+[node name="PartHolder" type="Node3D" parent="SrcPartViewport" unique_id=1696942317]
+
+[node name="DestPartViewport" type="SubViewport" parent="." unique_id=2107801161]
+own_world_3d = true
+world_3d = SubResource("World3D_g6k8r")
+transparent_bg = true
+
+[node name="Camera3D" type="Camera3D" parent="DestPartViewport" unique_id=49025633]
+transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 5, 10)
+projection = 1
+size = 10.0
+
+[node name="PartHolder" type="Node3D" parent="DestPartViewport" unique_id=159669677]
