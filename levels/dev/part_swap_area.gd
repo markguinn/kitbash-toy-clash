@@ -20,4 +20,4 @@ func _ready() -> void:
 
 func _on_body_enter(body) -> void:
 	if body is Player:
-		body.init_swap(target.duplicate())
+		body.init_swap.call_deferred(target)

@@ -167,15 +167,18 @@ func _on_enemy_died(enemy: Enemy, from_hit_box: HitBox) -> void:
 	var roll := randf()
 	Log.info(self, "enemy died", enemy, from_hit_box, roll, enemy.loot_dc)
 	if roll > enemy.loot_dc:
-		init_swap(enemy.body.duplicate())
+		init_swap(enemy.body)
 		#enemy.remove_child(enemy.body)
 
 
 func init_swap(enemy_body: BodyPartContainer):
 	var dlg: SwapPartsDialog = $SwapPartsDialog
-	dlg.src_body = enemy_body
-	dlg.dest_body = body_root.duplicate()
+	# NOTE: this will reload the mesh from disk
+	var src_body: BodyPartContainer = enemy_body.duplicate() as BodyPartContainer
+	src_body._find_body_parts(src_body)
+	dlg.src_body = src_body
 	dlg.dest_parts = body_root.parts
-	dlg.src_parts = enemy_body.parts
+	dlg.src_parts = src_body.parts
+	src_body.process_mode = Node.PROCESS_MODE_DISABLED
 	dlg.show()
 	get_tree().paused = true

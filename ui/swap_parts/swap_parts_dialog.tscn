@@ -85,7 +85,7 @@ world_3d = SubResource("World3D_g6k8r")
 transparent_bg = true
 
 [node name="Camera3D" type="Camera3D" parent="SrcPartViewport" unique_id=1635630668]
-transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 5, 10)
+transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 1, 10)
 projection = 1
 size = 10.0
 
@@ -97,7 +97,7 @@ world_3d = SubResource("World3D_g6k8r")
 transparent_bg = true
 
 [node name="Camera3D" type="Camera3D" parent="DestPartViewport" unique_id=49025633]
-transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 5, 10)
+transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 1, 10)
 projection = 1
 size = 10.0
 

@@ -39,7 +39,7 @@ enum Slot {
 
 ## How this body part impacts the overall player stats
 ## See body_part.gd#merge for how this stats are aggregated
-@export var stats: StatBlock
+@export var stats: StatBlock = StatBlock.new()
 
 @export_group("Optional overrides")
 @export var active_slot: Slot
@@ -56,17 +56,14 @@ func _ready() -> void:
 		active_slot = can_occupy_slots[0] if can_occupy_slots.size() > 0 else Slot.torso
 	if not active_parent_part:
 		active_parent_part = _get_parent_part()
-	if not stats:
-		stats = StatBlock.new()
 	for signal_name in AUTO_CONNECT_SIGNALS:
 		var method_name: String = "_on_" + signal_name
 		if has_method(method_name) and container:
-			Log.debug(self, "connecting", signal_name, "to", method_name, container.get_path().get_concatenated_names())
+			Log.debug(self, name, "connecting", signal_name, "to", method_name)
 			container.connect(signal_name, _handle_container_signal.bind(method_name))
 
 
 func _handle_container_signal(dir: Vector3, method_name: String):
-	Log.debug(self, "boom", method_name, name)
 	call_deferred(method_name, dir)
 
 
@@ -163,6 +160,8 @@ func replace_with_body_part(src_part: BodyPart) -> BodyPart:
 	return cloned_part
 
 
+# TODO: work with the anim libraries instead of the players and pass them in
+# this method probably shouldn't call any global stuff (e.g get_parent below!)
 func _do_replacement(
 	src_part: BodyPart,
 	dest_part: BodyPart, 
@@ -176,7 +175,7 @@ func _do_replacement(
 	if anim_tree and anim_tree.tree_root is AnimationNodeBlendTree:
 		attack_oneshot = anim_tree.tree_root.get_node(&"attack")
 
-	var host: Node3D = get_parent()
+	var host: Node3D = dest_part.get_parent()
 	
 	var src_player: AnimationPlayer = src_part._get_animation_player()
 	var src_anim_root: Node = src_player.get_node(src_player.root_node)

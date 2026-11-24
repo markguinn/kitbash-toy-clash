@@ -84,6 +84,7 @@ func _ready() -> void:
 		animation_player = get_node_or_null("AnimationPlayer")
 	if not base_stats:
 		base_stats = StatBlock.new()
+	parts = []
 	_find_body_parts(self)
 	_calc_stats()
 	parts_changed.connect(_on_parts_changed)
