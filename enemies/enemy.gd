@@ -69,6 +69,7 @@ func _on_dash() -> void:
 # TODO: do something fun - animation, sounds, etc
 func _on_dead(from_hit_box: HitBox) -> void:
 	Game.enemy_died.emit(self, from_hit_box)
+	VFX.slomo(VFX.SHORT, VFX.QUAKE)
 	await body.explode()
 	queue_free()
 
