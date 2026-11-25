@@ -134,8 +134,15 @@ func get_direct_meshes() -> Array[Node3D]:
 			queue.append_array(n.get_children())
 	return out
 
-
+const MEASURE_TAGS = {
+	Slot.head: "swap:head",
+	Slot.torso: "swap:torso",
+	Slot.arm_l: "swap:arm_l",
+	Slot.arm_r: "swap:arm_r",
+	Slot.legs: "swap:legs",
+}
 func replace_with_body_part(src_part: BodyPart) -> BodyPart:
+	Log.measure_start(MEASURE_TAGS[active_slot])
 	# grab some references to nodes in the animation tree so we can adjust the
 	# filtered tracks later on. we may find this constraining later on, but it's
 	# the simplest approach i could think of for now
@@ -189,6 +196,7 @@ func replace_with_body_part(src_part: BodyPart) -> BodyPart:
 	container.parts_changed.emit(self, cloned_part)
 	queue_free()
 
+	Log.measure_end(MEASURE_TAGS[active_slot], 200)
 	return cloned_part
 
 
