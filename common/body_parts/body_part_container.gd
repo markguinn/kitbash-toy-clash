@@ -118,7 +118,7 @@ func get_available_slots() -> Array[BodyPart.Slot]:
 
 func explode() -> void:
 	for part in parts:
-		var bouncing_part := bouncing_part_scene.instantiate()
+		var bouncing_part: BouncingPart = bouncing_part_scene.instantiate()
 		var dir := Coords.angle_to_vec3(randf() * PI * 2.0, EXPLODING_PART_HEIGHT)
 		bouncing_part.tree_entered.connect(
 			bouncing_part.apply_impulse.bind(dir * EXPLODING_PART_SPEED),
@@ -132,6 +132,7 @@ func explode() -> void:
 		part.rotation = Vector3.ZERO
 		Level.add_to_scene(bouncing_part, cur_gpos)
 		bouncing_part.global_rotation = cur_grot
+		bouncing_part.start_particles()
 
 	await get_tree().create_timer(1.0).timeout
 

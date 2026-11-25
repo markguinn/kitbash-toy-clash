@@ -25,3 +25,15 @@ func _on_area_entered(area: Area3D) -> void:
 			damage /= armor
 		Log.debug(self, host.name, "hurtbox was hit for", area.damage, "reduced to", damage)
 		life.add_damage(damage, area)
+
+
+func enable() -> void:
+	set_deferred("monitoring", true)
+
+
+func disable() -> void:
+	set_deferred("monitoring", false)
+
+
+func is_enabled() -> bool:
+	return monitoring

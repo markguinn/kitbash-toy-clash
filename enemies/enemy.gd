@@ -17,6 +17,7 @@ extends CharacterBody3D
 @export var input_source: InputSource
 
 var last_projectile := 0
+var is_dying := false
 
 @onready var hit_box: HitBox = $HitBox
 @onready var hurt_box: HurtBox = $HurtBox
@@ -68,6 +69,8 @@ func _on_dash() -> void:
 
 # TODO: do something fun - animation, sounds, etc
 func _on_dead(from_hit_box: HitBox) -> void:
+	hurt_box.disable()
+	hit_box.disable()
 	Game.enemy_died.emit(self, from_hit_box)
 	VFX.slomo(VFX.SHORT, VFX.QUAKE)
 	await body.explode()
