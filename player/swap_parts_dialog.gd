@@ -104,6 +104,7 @@ func _showcase_part(part: BodyPart, holder: Node) -> void:
 	part_copy.position = Vector3.ZERO
 	part_copy.rotation = Vector3.ZERO
 	part_copy.process_mode = Node.PROCESS_MODE_DISABLED
+	part_copy.is_for_display = true
 	for bp in part_copy.get_child_body_parts():
 		bp.hide()
 	holder.add_child(part_copy)

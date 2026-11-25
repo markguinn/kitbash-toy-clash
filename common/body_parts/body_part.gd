@@ -46,11 +46,12 @@ enum Slot {
 @export var active_parent_part: BodyPart # null means the container is the parent
 @export var container: BodyPartContainer
 
+var is_for_display := false
 
 func _ready() -> void:
 	if not container:
 		container = _get_body_part_container()
-	if not container:
+	if not container and not is_for_display:
 		Log.error(self, "No body part container found!")
 	if not active_slot:
 		active_slot = can_occupy_slots[0] if can_occupy_slots.size() > 0 else Slot.torso
@@ -58,7 +59,7 @@ func _ready() -> void:
 		active_parent_part = _get_parent_part()
 	for signal_name in AUTO_CONNECT_SIGNALS:
 		var method_name: String = "_on_" + signal_name
-		if has_method(method_name) and container:
+		if has_method(method_name) and container and not is_for_display:
 			Log.debug(self, name, "connecting", signal_name, "to", method_name)
 			container.connect(signal_name, _handle_container_signal.bind(method_name))
 
@@ -135,23 +136,54 @@ func get_direct_meshes() -> Array[Node3D]:
 
 
 func replace_with_body_part(src_part: BodyPart) -> BodyPart:
+	# grab some references to nodes in the animation tree so we can adjust the
+	# filtered tracks later on. we may find this constraining later on, but it's
+	# the simplest approach i could think of for now
+	var anim_tree: AnimationTree = _get_animation_tree()
+	var attack_oneshot: AnimationNodeOneShot
+	if anim_tree and anim_tree.tree_root is AnimationNodeBlendTree:
+		attack_oneshot = anim_tree.tree_root.get_node(&"attack")
+
 	# make a copy of the animation library on the destination host, 
 	# because we're going to make destructive edits
 	var dest_player: AnimationPlayer = _get_animation_player()
-	var dest_al: AnimationLibrary = dest_player.get_animation_library("").duplicate_deep()
-	dest_player.remove_animation_library("")
-	dest_player.add_animation_library("", dest_al)
+	var dest_anim_root: Node = dest_player.get_node(dest_player.root_node)
+	var dest_anim_lib: AnimationLibrary = dest_player.get_animation_library(&"").duplicate_deep()
+	dest_player.remove_animation_library(&"")
+	dest_player.add_animation_library(&"", dest_anim_lib)
 	
-	var cloned_part := _do_replacement(src_part, self, dest_player)
-	
-	var restorations: Array[Array] = []
-	for cloned_kid in cloned_part.get_child_body_parts():
-		for original_kid in get_child_body_parts():
-			# TODO: this will need adjustment when we get multiple arms on one torso
-			if cloned_kid.active_slot == original_kid.active_slot:
-				restorations.append([original_kid, cloned_kid])
-	#for r in restorations:
-		#_do_replacement(r[0], r[1], dest_player)
+	var src_player: AnimationPlayer = src_part._get_animation_player()
+	var src_anim_lib: AnimationLibrary = src_player.get_animation_library(&"")
+	var src_anim_root: Node = src_player.get_node(src_player.root_node)
+
+	var cloned_part := _do_replacement(
+		src_part,
+		src_anim_root,
+		src_anim_lib,
+		self,
+		dest_anim_root,
+		dest_anim_lib,
+		get_child_body_parts(),
+		attack_oneshot
+	)
+
+	#Log.debug(self, "---------------------------------------")
+	#for cloned_kid in cloned_part.get_child_body_parts():
+		#for original_kid in original_kids:
+			## TODO: this will need adjustment when we get multiple arms on one torso
+			#if cloned_kid.active_slot == original_kid.active_slot:
+				#Log.debug(self, cloned_kid.name, "=>", original_kid.name, "---------------------------------------")
+				#cloned_kid.print_tree_pretty()
+				#original_kid.print_tree_pretty()
+				##_do_replacement(
+					##original_kid,
+					##dest_anim_root,
+					##original_anim_lib,
+					##cloned_kid,
+					##dest_anim_root,
+					##dest_anim_lib,
+					##attack_oneshot
+				##)
 
 	dest_player.clear_caches()
 	container.parts_changed.emit(self, cloned_part)
@@ -164,27 +196,21 @@ func replace_with_body_part(src_part: BodyPart) -> BodyPart:
 # this method probably shouldn't call any global stuff (e.g get_parent below!)
 func _do_replacement(
 	src_part: BodyPart,
-	dest_part: BodyPart, 
-	dest_player: AnimationPlayer
+	src_anim_root: Node,
+	src_anim_library: AnimationLibrary,
+	dest_part: BodyPart,
+	dest_anim_root: Node,
+	dest_anim_library: AnimationLibrary,
+	parts_to_keep: Array[BodyPart],
+	attack_oneshot: AnimationNodeOneShot
 ) -> BodyPart:
-	# grab some references to nodes in the animation tree so we can adjust the
-	# filtered tracks later on. we may find this constraining later on, but it's
-	# the simplest approach i could think of for now
-	var anim_tree: AnimationTree = _get_animation_tree()
-	var attack_oneshot: AnimationNodeOneShot
-	if anim_tree and anim_tree.tree_root is AnimationNodeBlendTree:
-		attack_oneshot = anim_tree.tree_root.get_node(&"attack")
-
 	var host: Node3D = dest_part.get_parent()
-	
-	var src_player: AnimationPlayer = src_part._get_animation_player()
-	var src_anim_root: Node = src_player.get_node(src_player.root_node)
 	var src_part_path: String = src_anim_root.get_path_to(src_part).get_concatenated_names()
-	
-	var dest_anim_root: Node = dest_player.get_node(dest_player.root_node)
 	var dest_part_path: String = dest_anim_root.get_path_to(dest_part).get_concatenated_names()
-	
-	Log.debug(self, "Swapping", src_part, "for", dest_part, "player=", dest_player, "src path=", src_part_path, "dest path=", dest_part_path)
+	var part_paths_to_keep: Array[StringName] = []
+	part_paths_to_keep.assign(parts_to_keep.map(func(bp: BodyPart): return dest_anim_root.get_path_to(bp).get_concatenated_names()))
+
+	Log.debug(self, "Swapping", src_part, "for", dest_part, "src path=", src_part_path, "dest path=", dest_part_path)
 
 	# replace any extra mesh nodes the src body calls out first
 	for extra_node in src_part.extra_nodes:
@@ -206,17 +232,34 @@ func _do_replacement(
 	# TODO: this probably won't hold up. We'll probably need some ways to override it
 	cloned_part.position = dest_part.position
 
+	# restore the parts that we want to keep (e.g. arms on the torso)
+	for new_child_part: BodyPart in cloned_part.get_child_body_parts():
+		for old_child_part: BodyPart in parts_to_keep:
+			if new_child_part.active_slot == old_child_part.active_slot:
+				var new_child_parent := new_child_part.get_parent()
+				new_child_parent.remove_child(new_child_part)
+				old_child_part.reparent(new_child_parent, false)
+				old_child_part.position = new_child_part.position
+				old_child_part.active_parent_part = cloned_part
+				new_child_part.queue_free()
+				break
+
 	# replace the animations, first by removing conflicting animation tracks
 	# from the destination (i.e. tracks referencing the node(s) we're replacinig)
-	for anim_name in dest_player.get_animation_list():
-		if not dest_player.has_animation(anim_name) or not src_player.has_animation(anim_name):
+	for anim_name in dest_anim_library.get_animation_list():
+		if not dest_anim_library.has_animation(anim_name) or not src_anim_library.has_animation(anim_name):
 			continue
-		var dest_anim: Animation = dest_player.get_animation(anim_name)
-		var src_anim: Animation = src_player.get_animation(anim_name)
+		var dest_anim: Animation = dest_anim_library.get_animation(anim_name)
+		var src_anim: Animation = src_anim_library.get_animation(anim_name)
 
 		for i in range(dest_anim.get_track_count(), 0, -1):
 			var np: NodePath = dest_anim.track_get_path(i - 1)
 			var nps: String = np.get_concatenated_names()
+
+			if part_paths_to_keep.find_custom(func(ptk: String): return nps.begins_with(ptk)) >= 0:
+				Log.debug(self, "Animation", anim_name, "skipping track", i - 1, "for dest", nps)
+				continue
+
 			var remove := false
 			for t in dest_part.extra_tracks:
 				if nps == t:
@@ -229,6 +272,7 @@ func _do_replacement(
 			for extra_node in src_part.extra_nodes:
 				if nps.begins_with(src_anim_root.get_path_to(extra_node).get_concatenated_names()):
 					remove = true
+
 			if remove:
 				Log.debug(self, "Animation", anim_name, "removing track", i - 1, "for dest", nps)
 				dest_anim.remove_track(i - 1)
@@ -240,6 +284,11 @@ func _do_replacement(
 		for i in range(src_anim.get_track_count()):
 			var np: NodePath = src_anim.track_get_path(i)
 			var nps: String = np.get_concatenated_names()
+
+			if part_paths_to_keep.find_custom(func(ptk: String): return nps.begins_with(ptk)) >= 0:
+				Log.debug(self, "Animation", anim_name, "skipping track", i - 1, "for src", nps)
+				continue
+
 			var add := false
 			for t in src_part.extra_tracks:
 				if nps == t:
@@ -249,6 +298,7 @@ func _do_replacement(
 			for extra_node in src_part.extra_nodes:
 				if nps.begins_with(src_anim_root.get_path_to(extra_node).get_concatenated_names()):
 					add = true
+
 			if add:
 				Log.debug(self, "Animation", anim_name, "adding track", i, "for src", nps)
 				src_anim.copy_track(i, dest_anim)
