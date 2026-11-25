@@ -128,4 +128,5 @@ func _find_targets() -> Array[Node3D]:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("switch_cam"):
-		y_rotation = wrapf(y_rotation + 15.0, -45.0, 46.0)
+		y_rotation = snappedf(wrapf(y_rotation + 15.0, -60.0, 46.0), 15.0)
+		Log.info(self, "camera rotation", y_rotation)

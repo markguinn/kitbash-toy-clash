@@ -1,8 +1,8 @@
 class_name Coords
 
 
-static func vec2_to_vec3(dir: Vector2) -> Vector3:
-	return Vector3(dir.x, 0.0, dir.y)
+static func vec2_to_vec3(dir: Vector2, height: float = 0.0) -> Vector3:
+	return Vector3(dir.x, height, dir.y)
 
 
 static func vec3_to_vec2(dir: Vector3) -> Vector2:

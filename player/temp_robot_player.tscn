@@ -1183,10 +1183,10 @@ stats = SubResource("Resource_ij0ag")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1875, -1.0625, 0)
 
 [node name="right_top_finger" parent="Body/root/torso/right_arm/right_forearm/right_hand" parent_id_path=PackedInt32Array(2038730817, 1344125992) index="1" unique_id=1120907657]
-transform = Transform3D(1, 0, 0, 0, 0.8671886, -0.4979796, 0, 0.4979796, 0.8671886, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9550577, -0.29641932, 0, 0.29641932, 0.9550577, 0, 0, 0)
 
 [node name="right_bottom_finger" parent="Body/root/torso/right_arm/right_forearm/right_hand" parent_id_path=PackedInt32Array(2038730817, 1344125992) index="2" unique_id=1474214186]
-transform = Transform3D(1, 0, 0, 0, 0.8671885, 0.49797958, 0, -0.49797958, 0.8671885, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9550576, 0.29641932, 0, -0.29641932, 0.9550576, 0, 0, 0)
 
 [node name="legs" parent="Body/root" parent_id_path=PackedInt32Array(2038730817, 917119247) index="1" unique_id=975181211]
 script = ExtResource("7_jkbha")
@@ -1198,6 +1198,8 @@ transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, -1.5625,
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body" unique_id=1484686902]
 libraries/ = SubResource("AnimationLibrary_mamvx")
 autoplay = &"walk"
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." unique_id=1322481475]
 
 [connection signal="dead" from="Life" to="." method="_on_dead"]
 [connection signal="timeout" from="HealthDripTimer" to="." method="_on_health_drip"]

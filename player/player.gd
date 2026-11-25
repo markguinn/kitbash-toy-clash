@@ -67,11 +67,10 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	var dir:= input_source.get_move_dir() if not is_dashing else Coords.vec3_to_vec2(cur_dir)
-	if visibility_notifier and !visibility_notifier.is_on_screen():
-		var cam := get_viewport().get_camera_3d()
-		if cam is CameraManager:
-			dir = Coords.vec3_to_vec2(global_position.direction_to(cam.center_point))
-		else:
+
+	if visibility_notifier:
+		visibility_notifier.position = Coords.vec2_to_vec3(dir * 5.0, 2.0)
+		if !visibility_notifier.is_on_screen():
 			dir = Vector2.ZERO
 
 	if dir.length() > 0.0 and body_root.can_move:
