@@ -69,8 +69,7 @@ func _on_dash() -> void:
 # TODO: do something fun - animation, sounds, etc
 func _on_dead(from_hit_box: HitBox) -> void:
 	Game.enemy_died.emit(self, from_hit_box)
-	# TODO: figure out a better way to handle the timing here
-	await get_tree().create_timer(1.0).timeout
+	await body.explode()
 	queue_free()
 
 

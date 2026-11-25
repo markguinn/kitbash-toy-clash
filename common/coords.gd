@@ -25,5 +25,5 @@ static func angle_to_vec2(angle: float) -> Vector2:
 	return Vector2.RIGHT.rotated(fix_angle(angle))
 
 
-static func angle_to_vec3(angle: float) -> Vector3:
-	return vec2_to_vec3(angle_to_vec2(angle))
+static func angle_to_vec3(angle: float, height: float = 0.0) -> Vector3:
+	return vec2_to_vec3(angle_to_vec2(angle), height)

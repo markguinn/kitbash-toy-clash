@@ -1,6 +1,11 @@
 class_name BodyPartContainer
 extends Node3D
 
+const bouncing_part_scene = preload("res://common/body_parts/bouncing_part.tscn")
+
+const EXPLODING_PART_SPEED = 10.0
+const EXPLODING_PART_HEIGHT = 2.0
+
 signal parts_changed(old_part: BodyPart, new_part: BodyPart)
 
 @warning_ignore("unused_signal")
@@ -110,6 +115,25 @@ func get_available_slots() -> Array[BodyPart.Slot]:
 		out.append_array(p.has_slots)
 	return out
 
+
+func explode() -> void:
+	for part in parts:
+		var bouncing_part := bouncing_part_scene.instantiate()
+		var dir := Coords.angle_to_vec3(randf() * PI * 2.0, EXPLODING_PART_HEIGHT)
+		bouncing_part.tree_entered.connect(
+			bouncing_part.apply_impulse.bind(dir * EXPLODING_PART_SPEED),
+			CONNECT_ONE_SHOT
+		)
+
+		var cur_gpos := part.global_position
+		var cur_grot := part.global_rotation
+		part.reparent(bouncing_part, false)
+		part.position = Vector3.ZERO
+		part.rotation = Vector3.ZERO
+		Level.add_to_scene(bouncing_part, cur_gpos)
+		bouncing_part.global_rotation = cur_grot
+
+	await get_tree().create_timer(1.0).timeout
 
 func _find_body_parts(node: Node) -> void:
 	for n in node.get_children():

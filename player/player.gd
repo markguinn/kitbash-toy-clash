@@ -165,8 +165,8 @@ func _on_enemy_died(enemy: Enemy, from_hit_box: HitBox) -> void:
 	# TODO: extract this and clean it up
 	var roll := randf()
 	Log.info(self, "enemy died", enemy, from_hit_box, roll, enemy.loot_dc)
-	if roll > enemy.loot_dc:
-		init_swap(enemy.body)
+	#if roll > enemy.loot_dc:
+		#init_swap(enemy.body)
 		#enemy.remove_child(enemy.body)
 
 
