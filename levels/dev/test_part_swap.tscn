@@ -137,3 +137,4 @@ metadata/_custom_type_script = "uid://18fy30k87d84"
 [node name="StandardCamera" parent="." unique_id=1236166285 instance=ExtResource("8_7ban1")]
 transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 25, 27)
 v_offset = 0.0
+min_distance = 25.0

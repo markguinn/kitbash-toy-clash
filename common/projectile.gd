@@ -1,11 +1,21 @@
 class_name Projectile
 extends RigidBody3D
 
+## how long will the particle stay before being removed?
 @export var lifetime_ms := 1000
+## should the mesh body rotate to match it's velocity? or maintain its orientation?
+@export var rotate_with_motion := true
+## should it explode when impacting a wall or target (anything the rigidbody collides with, not the hit box) 
 @export var explode_on_impact := false
+## should it explode when time runs out?
 @export var explode_on_time := false
-@export var explosion_particles: CPUParticles3D
+## how much should the hit box scale up during the explosion?
 @export var explosion_size := 10.0
+
+@export_group("optional overrides")
+## will automatically discover $ExplosionParticles. this is for a manual override
+@export var explosion_particles: CPUParticles3D
+## will automatically discover $Body. this is for a manual override
 @export var body: Node3D
 
 @onready var hit_box: HitBox = $HitBox
@@ -27,11 +37,17 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if created_at > 0 and Time.get_ticks_msec() > created_at + lifetime_ms:
+	if created_at > 0 and Now.msec > created_at + lifetime_ms:
 		if explode_on_time:
 			explode.call_deferred()
 		else:
 			queue_free()
+	if body and rotate_with_motion:
+		# NOTE: this may not look right if the body mesh isn't centered at the
+		# origin and pointing towards the camera on the z axis
+		body.global_rotation.x = -asin(linear_velocity.normalized().y)
+		body.global_rotation.y = Coords.vec3_to_angle(linear_velocity.normalized())
+		Log.d_info(self, "rot", linear_velocity, body.rotation.y, body.rotation.z)
 
 
 func start_clock() -> void:

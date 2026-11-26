@@ -45,7 +45,6 @@ explode_on_impact = true
 explode_on_time = true
 
 [node name="Body" parent="." index="0" unique_id=1275965114 instance=ExtResource("2_eul00")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33465928, 0)
 
 [node name="CollisionShape3D" parent="." index="1" unique_id=1706406970]
 shape = SubResource("SphereShape3D_01681")

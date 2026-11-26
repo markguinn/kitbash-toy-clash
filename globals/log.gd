@@ -98,7 +98,7 @@ func debug(source: Variant, ...args) -> void:
 		_log(source, LogLevel.DEBUG, args)
 
 
-func debounced_log(source: Variant, level: int, ...args) -> void:
+func debounced_log(source: Variant, level: int, args) -> void:
 	if Game.is_dev_mode() and not Now.throttle(debounced_log_ms, "d%d:%s" % [level, _get_source_name(source)]):
 		_log(source, level, args)
 
