@@ -58,7 +58,7 @@ size_flags_vertical = 3
 [node name="Proto1" type="Button" parent="VBoxContainer" unique_id=716290262]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Prototype #1"
+text = "Prototype #1 - blobs"
 script = ExtResource("2_ouiyl")
 target_scene = "uid://ctjamigafagl3"
 is_primary = true
@@ -67,9 +67,18 @@ metadata/_custom_type_script = "uid://6arxcfsx130h"
 [node name="Proto2" type="Button" parent="VBoxContainer" unique_id=1726603703]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Prototype #2"
+text = "Prototype #2 - Robots"
 script = ExtResource("2_ouiyl")
 target_scene = "uid://dprhdayetcchx"
+metadata/_custom_type_script = "uid://6arxcfsx130h"
+
+[node name="Proto3" type="Button" parent="VBoxContainer" unique_id=1740031930]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Building Blocks Gridmap
+"
+script = ExtResource("2_ouiyl")
+target_scene = "uid://du6k1r740y7ug"
 metadata/_custom_type_script = "uid://6arxcfsx130h"
 
 [node name="TestTwoPlayer" type="Button" parent="VBoxContainer" unique_id=1963234811]

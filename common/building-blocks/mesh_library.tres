@@ -1,0 +1,10 @@
+[gd_resource type="MeshLibrary" format=3 uid="uid://be4wpdu1fkg7h"]
+
+[resource]
+item/0/name = ""
+item/0/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/mesh_cast_shadow = 1
+item/0/shapes = []
+item/0/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/navigation_layers = 1
+metadata/_editor_source_scene = "res://common/building-blocks/gridmap_library.tscn"

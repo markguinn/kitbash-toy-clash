@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://du6k1r740y7ug"]
+
+[ext_resource type="Script" uid="uid://xfplf03kdq1b" path="res://levels/dev/proto_2.gd" id="1_kfpyw"]
+[ext_resource type="PackedScene" uid="uid://cw2lmpuyqr3hv" path="res://common/standard_camera.tscn" id="2_tc58u"]
+[ext_resource type="MeshLibrary" uid="uid://65rebllnphay" path="res://common/building-blocks/mesh_library3.tres" id="6_58p52"]
+[ext_resource type="Texture2D" uid="uid://mg6lqudn1f05" path="res://common/vfx/pixelated/crt-effect.png" id="14_lbjwt"]
+[ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="15_t82rj"]
+[ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_input_source.gd" id="16_1akfh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
+
+[sub_resource type="Sky" id="Sky_hchdm"]
+sky_material = SubResource("ProceduralSkyMaterial_hchdm")
+
+[sub_resource type="Environment" id="Environment_iynve"]
+background_mode = 2
+sky = SubResource("Sky_hchdm")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.2
+glow_enabled = true
+glow_bloom = 0.31
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.08729244, 0.09909239, 0.11745364, 1)
+fog_density = 0.8566
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_iynve"]
+
+[sub_resource type="Gradient" id="Gradient_eaxg1"]
+offsets = PackedFloat32Array(0.42741936, 0.8655914)
+colors = PackedColorArray(0.26666668, 0.25882354, 0.19607843, 1, 0.39452854, 0.37669787, 0.31323832, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_asdw4"]
+frequency = 0.005
+fractal_lacunarity = 1.8
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ckf24"]
+noise = SubResource("FastNoiseLite_asdw4")
+color_ramp = SubResource("Gradient_eaxg1")
+seamless = true
+seamless_blend_skirt = 0.242
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hchdm"]
+albedo_texture = SubResource("NoiseTexture2D_ckf24")
+texture_filter = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_iynve"]
+material = SubResource("StandardMaterial3D_hchdm")
+size = Vector2(100, 100)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_pgw5k"]
+viewport_path = NodePath("HealthBar/the/health")
+
+[node name="PrototypeLevel" type="Node3D" unique_id=987540971]
+script = ExtResource("1_kfpyw")
+metadata/_custom_type_script = "uid://d0o1anlkqfg33"
+
+[node name="StandardCamera" parent="." unique_id=1236166285 instance=ExtResource("2_tc58u")]
+transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 25, 27)
+
+[node name="ConfirmContinue" type="ConfirmationDialog" parent="." unique_id=20908460 groups=["confirm_dlg"]]
+unique_name_in_owner = true
+process_mode = 3
+oversampling_override = 1.0
+title = "Continue?"
+initial_position = 2
+size = Vector2i(300, 168)
+ok_button_text = "Continue"
+dialog_text = "You can end your run here or use a magic crystal to continue. Your character may absorb some traits of your attacker if you do."
+dialog_autowrap = true
+cancel_button_text = "End Run"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=347613716]
+environment = SubResource("Environment_iynve")
+
+[node name="[crt effect]" type="CanvasLayer" parent="." unique_id=2027285743]
+layer = 2
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="[crt effect]" unique_id=1583350516]
+texture_filter = 5
+texture_repeat = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_position = Vector2(4, 4)
+texture = ExtResource("14_lbjwt")
+stretch_mode = 2
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1360731257]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=332006049]
+shape = SubResource("WorldBoundaryShape3D_iynve")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=692776542]
+mesh = SubResource("PlaneMesh_iynve")
+
+[node name="Player" parent="." unique_id=1653260376 instance=ExtResource("15_t82rj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
+texture = SubResource("ViewportTexture_pgw5k")
+
+[node name="PlayerInputSource" type="Node" parent="Player" unique_id=286436842]
+script = ExtResource("16_1akfh")
+metadata/_custom_type_script = "uid://18fy30k87d84"
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=1720288672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.179497, 12.828768, -4.7030315)
+omni_range = 42.736
+omni_attenuation = -0.5
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=1882780412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.955574, 1.6618099, 28.421995)
+light_color = Color(0.9121407, 0.37068966, 0, 1)
+omni_range = 39.092
+omni_attenuation = -0.84
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=1838394166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.88834, 6.9230957, -6.3280544)
+light_color = Color(0.94812816, 0.7636347, 2.3102762e-06, 1)
+omni_range = 20.0
+omni_attenuation = -0.12
+
+[node name="GridMap" type="GridMap" parent="." unique_id=795334978]
+mesh_library = ExtResource("6_58p52")
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(13, 65516, 0, 12, 65516, 0, 11, 65516, 0, 10, 65516, 0, 9, 65516, 0, 8, 65516, 0, 7, 65516, 0, 6, 65516, 0, 5, 65516, 0, 4, 65516, 0, 3, 65516, 0, 2, 65516, 0, 1, 65516, 0, 0, 65516, 0, 65535, 65516, 0, 65534, 65516, 0, 65533, 65516, 0, 65532, 65516, 0, 65531, 65516, 0, 65530, 65516, 0, 65529, 65516, 0, 65528, 65516, 0, 65528, 65517, 0, 65528, 65518, 0, 65527, 65519, 0, 65526, 65520, 0, 65526, 65521, 0, 65525, 65522, 0, 65525, 65523, 0, 65525, 65524, 0, 65525, 65525, 0, 65524, 65526, 0, 65524, 65527, 0, 65524, 65528, 0, 65524, 65529, 0, 65524, 65530, 0, 65523, 65531, 0, 65523, 65532, 0, 65523, 65533, 0, 65523, 65534, 0, 65522, 65534, 0, 65522, 65535, 0, 65522, 0, 0, 65522, 1, 0, 65522, 2, 0, 65522, 3, 0, 65521, 4, 0, 65522, 5, 0, 65522, 6, 0, 65522, 7, 0, 65522, 8, 0, 65522, 9, 0, 65522, 10, 0, 65522, 11, 0, 65523, 12, 0, 65523, 13, 0, 65523, 14, 0, 65524, 14, 0, 65525, 15, 0, 65525, 16, 0, 65526, 16, 0, 65526, 17, 0, 65527, 18, 0, 65528, 18, 0, 65528, 19, 0, 65529, 20, 0, 65530, 20, 0, 65531, 20, 0, 65532, 21, 0, 65532, 22, 0, 65533, 22, 0, 65534, 23, 0, 65535, 23, 0, 0, 24, 0, 1, 24, 0, 2, 24, 0, 3, 24, 0, 4, 24, 0, 5, 24, 0, 6, 24, 0, 7, 24, 0, 8, 24, 0, 9, 24, 0, 9, 23, 0, 10, 23, 0, 11, 23, 0, 12, 22, 0, 13, 22, 0, 13, 21, 0, 14, 20, 0, 14, 19, 0, 15, 19, 0, 15, 18, 0, 15, 17, 0, 16, 16, 0, 17, 15, 0, 18, 14, 0, 19, 13, 0, 19, 12, 0, 20, 11, 0, 20, 10, 0, 21, 10, 0, 21, 9, 0, 21, 8, 0, 21, 7, 0, 21, 6, 0, 21, 5, 0, 21, 4, 0, 20, 3, 0, 19, 2, 0, 19, 1, 0, 18, 0, 0, 18, 65535, 0, 17, 65534, 0, 17, 65533, 0, 16, 65533, 0, 16, 65532, 0, 15, 65531, 0, 15, 65530, 0, 14, 65529, 0, 13, 65528, 0, 13, 65527, 0, 12, 65526, 0, 12, 65525, 0, 12, 65524, 0, 12, 65523, 0, 12, 65522, 0, 13, 65522, 0, 13, 65521, 0, 14, 65520, 0, 14, 65519, 0, 14, 65518, 0, 15, 65518, 0, 15, 65517, 0, 16, 65517, 0, 16, 65516, 0, 15, 65516, 0, 14, 65516, 0, 131057, 4, 0, 131058, 65534, 0, 131058, 65535, 0, 131058, 0, 0, 131058, 1, 0, 131058, 2, 0, 131058, 3, 0, 131058, 5, 0, 131058, 6, 0, 131058, 7, 0, 131058, 8, 0, 131058, 9, 0, 131058, 10, 0, 131058, 11, 0, 131059, 65531, 0, 131059, 65532, 0, 131059, 65533, 0, 131059, 65534, 0, 131059, 12, 0, 131059, 13, 0, 131059, 14, 0, 131060, 65526, 0, 131060, 65527, 0, 131060, 65528, 0, 131060, 65529, 0, 131060, 65530, 0, 131060, 14, 0, 131061, 65522, 0, 131061, 65523, 0, 131061, 65524, 0, 131061, 65525, 0, 131061, 15, 0, 131061, 16, 0, 131062, 65520, 0, 131062, 65521, 0, 131062, 16, 0, 131062, 17, 0, 131063, 65519, 0, 131063, 18, 0, 131064, 65516, 0, 131064, 65517, 0, 131064, 65518, 0, 131064, 18, 0, 131064, 19, 0, 131065, 65516, 0, 131065, 20, 0, 131066, 65516, 0, 131066, 20, 0, 131067, 65516, 0, 131067, 20, 0, 131068, 65516, 0, 131068, 21, 0, 131068, 22, 0, 131069, 65516, 0, 131069, 22, 0, 131070, 65516, 0, 131070, 23, 0, 131071, 65516, 0, 131071, 23, 0, 65536, 65516, 0, 65536, 24, 0, 65537, 65516, 0, 65537, 24, 0, 65538, 65516, 0, 65538, 24, 0, 65539, 65516, 0, 65539, 24, 0, 65540, 65516, 0, 65540, 24, 0, 65541, 65516, 0, 65541, 24, 0, 65542, 65516, 0, 65542, 24, 0, 65543, 65516, 0, 65543, 24, 0, 65544, 65516, 0, 65544, 24, 0, 65545, 65516, 0, 65545, 23, 0, 65545, 24, 0, 65546, 65516, 0, 65546, 23, 0, 65547, 65516, 0, 65547, 23, 0, 65548, 65516, 0, 65548, 65522, 0, 65548, 65523, 0, 65548, 65524, 0, 65548, 65525, 0, 65548, 65526, 0, 65548, 22, 0, 65549, 65516, 0, 65549, 65521, 0, 65549, 65522, 0, 65549, 65527, 0, 65549, 65528, 0, 65549, 21, 0, 65549, 22, 0, 65550, 65516, 0, 65550, 65518, 0, 65550, 65519, 0, 65550, 65520, 0, 65550, 65529, 0, 65550, 19, 0, 65550, 20, 0, 65551, 65516, 0, 65551, 65517, 0, 65551, 65518, 0, 65551, 65530, 0, 65551, 65531, 0, 65551, 17, 0, 65551, 18, 0, 65551, 19, 0, 65552, 65516, 0, 65552, 65517, 0, 65552, 65532, 0, 65552, 65533, 0, 65552, 16, 0, 65553, 65533, 0, 65553, 65534, 0, 65553, 15, 0, 65554, 65535, 0, 65554, 0, 0, 65554, 14, 0, 65555, 1, 0, 65555, 2, 0, 65555, 12, 0, 65555, 13, 0, 65556, 3, 0, 65556, 10, 0, 65556, 11, 0, 65557, 4, 0, 65557, 5, 0, 65557, 6, 0, 65557, 7, 0, 65557, 8, 0, 65557, 9, 0, 65557, 10, 0, 3, 65532, 655361, 2, 65532, 2, 1, 65532, 2, 3, 65533, 655362, 2, 65533, 655362, 1, 65533, 1, 4, 65533, 655362, 4, 65531, 655361, 4, 65532, 655361, 3, 65531, 2, 2, 65531, 2, 1, 65531, 2)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[editable path="Player"]
+[editable path="Player/Body"]
