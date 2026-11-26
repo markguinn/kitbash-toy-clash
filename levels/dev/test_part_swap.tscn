@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dqvrj27ervih7" path="res://player/generic_temp/temp_body_1.tscn" id="3_3ai4f"]
 [ext_resource type="PackedScene" uid="uid://v13awrp2jboj" path="res://player/generic_temp/temp_body_2.tscn" id="4_wm7q0"]
 [ext_resource type="PackedScene" uid="uid://qf3m6pmicxlt" path="res://player/generic_temp/temp_body_3.tscn" id="5_2l3r3"]
+[ext_resource type="PackedScene" uid="uid://bs2y64dw5rmag" path="res://enemies/robot/robot_tank.tscn" id="5_wm7q0"]
 [ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="6_6wryq"]
 [ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_input_source.gd" id="7_ou8iv"]
 [ext_resource type="PackedScene" uid="uid://cw2lmpuyqr3hv" path="res://common/standard_camera.tscn" id="8_7ban1"]
@@ -67,6 +68,20 @@ process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 shape = SubResource("SphereShape3D_iynve")
 
+[node name="SwapTrigger6" type="Area3D" parent="." unique_id=1678172134]
+process_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_d53yu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwapTrigger6" unique_id=2142212466]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("SphereShape3D_iynve")
+
+[node name="RobotEnemy" parent="SwapTrigger6" unique_id=531610995 instance=ExtResource("5_wm7q0")]
+process_mode = 4
+
 [node name="SwapTrigger3" type="Area3D" parent="." unique_id=1674917650]
 process_mode = 1
 collision_layer = 0
@@ -122,4 +137,3 @@ metadata/_custom_type_script = "uid://18fy30k87d84"
 [node name="StandardCamera" parent="." unique_id=1236166285 instance=ExtResource("8_7ban1")]
 transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 25, 27)
 v_offset = 0.0
-min_distance = 20.0

@@ -29,6 +29,7 @@ signal retarget(target_gpos: Vector3)
 @export var host: Node3D
 @export var host_body: BodyPartContainer
 
+var target_node: Node3D
 var target_gpos: Vector3
 var target_dir: Vector3
 var cur_dir: Vector3
@@ -47,22 +48,23 @@ func _ready() -> void:
 
 
 func _retarget() -> void:
-	target_gpos = _find_nearest_player()
-	if target_gpos.is_finite():
+	target_node = _find_nearest_player()
+	if target_node:
+		target_gpos = target_node.global_position
 		target_dir = host.global_position.direction_to(target_gpos)
 	else:
 		target_dir = Vector3.ZERO
 	retarget.emit(target_gpos)
 
 
-func _find_nearest_player() -> Vector3:
-	var closest: Vector3 = Vector3.INF
+func _find_nearest_player() -> Node3D:
+	var closest: Node3D
 	var min_dist: float = 1_000_000.0
 	for n in get_tree().get_nodes_in_group("player"):
 		var dist := host.global_position.distance_squared_to(n.global_position)
 		if dist < min_dist:
 			min_dist = dist
-			closest = n.global_position
+			closest = n
 	return closest
 
 

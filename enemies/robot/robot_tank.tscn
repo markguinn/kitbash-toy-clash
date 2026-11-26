@@ -1,0 +1,213 @@
+[gd_scene format=3 uid="uid://bs2y64dw5rmag"]
+
+[ext_resource type="PackedScene" uid="uid://c5e1xidjh4txk" path="res://enemies/enemy.tscn" id="1_lelyb"]
+[ext_resource type="Script" uid="uid://db0pangcdjqgw" path="res://common/body_parts/body_part_container.gd" id="3_oih8a"]
+[ext_resource type="PackedScene" uid="uid://c22n4vomwu1cs" path="res://enemies/robot/art/robot2.gltf" id="3_tiqdl"]
+[ext_resource type="Script" uid="uid://dwctbgtrj80mq" path="res://common/stat_block.gd" id="4_vp254"]
+[ext_resource type="Script" uid="uid://0ksdxe4wfcij" path="res://common/body_parts/body_part.gd" id="5_doxng"]
+[ext_resource type="Script" uid="uid://c5gdsahklbswm" path="res://common/body_parts/ranged_attack_body_part.gd" id="5_lelyb"]
+[ext_resource type="Script" uid="uid://do6mjhni753bt" path="res://enemies/default_enemy_input_source.gd" id="6_ygetl"]
+[ext_resource type="PackedScene" uid="uid://de2ahj5sc5ipi" path="res://enemies/robot/tank_projectile.tscn" id="8_oih8a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p8y7s"]
+size = Vector3(4, 6, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_66cjj"]
+size = Vector3(5, 4, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w1bxk"]
+size = Vector3(3.4, 4, 4)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lelyb"]
+viewport_path = NodePath("HealthBar/the/health")
+
+[sub_resource type="Resource" id="Resource_66cjj"]
+script = ExtResource("4_vp254")
+move_speed = 5.0
+turn_speed = 2.0
+min_collider_height = 8.0
+metadata/_custom_type_script = "uid://dwctbgtrj80mq"
+
+[sub_resource type="Resource" id="Resource_lelyb"]
+script = ExtResource("4_vp254")
+attack_cooldown = 500
+metadata/_custom_type_script = "uid://dwctbgtrj80mq"
+
+[sub_resource type="Animation" id="Animation_lelyb"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("root/legs/wheel_f_l:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("root/legs/wheel_b_l:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("root/legs/wheel_b_r:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("root/legs/wheel_f_r:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_66cjj"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_oih8a"]
+resource_name = "walk"
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("root/legs/wheel_f_l:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.2831855, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("root/legs/wheel_b_l:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.2831855, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("root/legs/wheel_b_r:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.2831855, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("root/legs/wheel_f_r:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.2831855, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_66cjj"]
+_data = {
+&"RESET": SubResource("Animation_lelyb"),
+&"idle": SubResource("Animation_66cjj"),
+&"walk": SubResource("Animation_oih8a")
+}
+
+[node name="RobotTank" unique_id=1807322689 instance=ExtResource("1_lelyb")]
+loot_dc = 0.0
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=723521642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0.4)
+shape = SubResource("BoxShape3D_p8y7s")
+
+[node name="HurtBox" parent="." index="1" unique_id=813712142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+
+[node name="CollisionShape3D" parent="HurtBox" index="0" unique_id=911874032]
+shape = SubResource("BoxShape3D_66cjj")
+debug_color = Color(0, 0.64, 0.24533324, 1)
+
+[node name="CollisionShape3D" parent="HitBox" parent_id_path=PackedInt32Array(1735173916) index="0" unique_id=285443484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 1)
+shape = SubResource("BoxShape3D_w1bxk")
+
+[node name="Life" parent="." index="3" unique_id=1100470729]
+starting_hp = 10.0
+max_hp = 10.0
+
+[node name="HealthBar" parent="." index="4" unique_id=38360166]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 8.5, 0)
+
+[node name="the" parent="HealthBar" index="0" unique_id=216841935]
+texture = SubResource("ViewportTexture_lelyb")
+
+[node name="HealthLabel" parent="." index="5" unique_id=37585518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+
+[node name="InputSource" type="Node" parent="." index="6" unique_id=1636008466]
+script = ExtResource("6_ygetl")
+retarget_min_seconds = 2.0
+retarget_max_seconds = 3.0
+attack_min_seconds = 5.0
+attack_max_seconds = 10.0
+metadata/_custom_type_script = "uid://do6mjhni753bt"
+
+[node name="Body" parent="." index="7" unique_id=773430635 instance=ExtResource("3_tiqdl")]
+script = ExtResource("3_oih8a")
+
+[node name="legs" parent="Body/root" parent_id_path=PackedInt32Array(773430635, 1515825253) index="0" unique_id=1893001412]
+script = ExtResource("5_doxng")
+can_occupy_slots = Array[int]([4])
+stats = SubResource("Resource_66cjj")
+active_slot = 4
+
+[node name="head" parent="Body/root" parent_id_path=PackedInt32Array(773430635, 1515825253) index="1" unique_id=1025595035 node_paths=PackedStringArray("fire_position")]
+script = ExtResource("5_lelyb")
+projectile_speed = 20.0
+projectile_tpl = ExtResource("8_oih8a")
+fire_position = NodePath("barrel/Marker3D")
+fire_angle_deg = 45.0
+can_occupy_slots = Array[int]([0, 1])
+stats = SubResource("Resource_lelyb")
+
+[node name="Marker3D" type="Marker3D" parent="Body/root/head/barrel" parent_id_path=PackedInt32Array(773430635, 314359875) index="0" unique_id=1579489756]
+transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.7071068, 0, -0.7071068, 0.7071067, 0, 3.92991, 0.15615511)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body" index="1" unique_id=779853400]
+libraries/ = SubResource("AnimationLibrary_66cjj")
+
+[editable path="Body"]

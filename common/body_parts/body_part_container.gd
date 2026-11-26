@@ -39,7 +39,7 @@ signal change_direction(dir: Vector3)
 
 var stats: StatBlock
 var parts: Array[BodyPart] = []
-var torso_part: BodyPart
+var leading_part: BodyPart
 var can_move := true
 var last_attack_at: int
 var last_special_at: int
@@ -91,6 +91,7 @@ func _ready() -> void:
 		base_stats = StatBlock.new()
 	parts = []
 	_find_body_parts(self)
+	_update_leading_part()
 	_calc_stats()
 	parts_changed.connect(_on_parts_changed)
 	attack_start.connect(_on_attack_start)
@@ -103,9 +104,9 @@ func _ready() -> void:
 ## Naively we just look at the torso for now. This way
 ## it responds to animations like spinning.
 func get_facing_dir() -> Vector3:
-	if torso_part:
-		return Coords.angle_to_vec3(torso_part.global_rotation.y)
-	Log.warn(self, "get_facing_dir: no torso part found")
+	if leading_part:
+		return Coords.angle_to_vec3(leading_part.global_rotation.y)
+	Log.warn(self, "get_facing_dir: no leading part found")
 	return Vector3.ZERO
 
 
@@ -143,6 +144,15 @@ func _find_body_parts(node: Node) -> void:
 		_find_body_parts(n)
 
 
+func _update_leading_part() -> void:
+	leading_part = _find_body_part(BodyPart.Slot.torso)
+	if not leading_part:
+		leading_part = _find_body_part(BodyPart.Slot.legs)
+	if not leading_part:
+		leading_part = _find_body_part(BodyPart.Slot.head)
+	Log.debug(self, host.name, "torso part", leading_part)
+	
+
 func _find_body_part(slot: BodyPart.Slot) -> BodyPart:
 	var idx := parts.find_custom(func (p: BodyPart): return p.can_occupy_slots.find(slot) >= 0)
 	if idx >= 0:
@@ -171,6 +181,7 @@ func _on_parts_changed(old_part: BodyPart, new_part: BodyPart) -> void:
 	Log.debug(self, host.name, "Parts changed. old", old_part.name, "new", new_part.name)
 	parts = []
 	_find_body_parts(self)
+	_update_leading_part()
 	_calc_stats()
 	Log.debug(self, host.name, "Body parts", parts.map(func(n): return n.name))
 
@@ -181,5 +192,3 @@ func _on_parts_changed(old_part: BodyPart, new_part: BodyPart) -> void:
 			shape.height = stats.min_collider_height
 			Log.debug(self, host.name, "updating collider height", shape.height)
 	
-	torso_part = _find_body_part(BodyPart.Slot.torso)
-	Log.debug(self, host.name, "torso part", torso_part)

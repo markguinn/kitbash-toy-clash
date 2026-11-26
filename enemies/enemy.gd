@@ -48,7 +48,7 @@ func _physics_process(_delta: float) -> void:
 	if body and rotate_to_move_direction:
 		body.rotation.y = Coords.vec3_to_angle(dir)
 	velocity = dir * body.stats.move_speed
-	last_dir = dir
+	last_dir = dir.normalized()
 	move_and_slide()
 
 

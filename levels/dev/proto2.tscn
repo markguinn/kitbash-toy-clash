@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_input_source.gd" id="17_lrfq1"]
 [ext_resource type="PackedScene" uid="uid://cval3opchqdx4" path="res://enemies/robot/robot_spawner.tscn" id="20_sehbl"]
 [ext_resource type="PackedScene" uid="uid://6kthxvx2vud2" path="res://enemies/robot/basic_robot.tscn" id="22_q6py8"]
+[ext_resource type="PackedScene" uid="uid://bs2y64dw5rmag" path="res://enemies/robot/robot_tank.tscn" id="23_q6py8"]
 [ext_resource type="PackedScene" uid="uid://bpyf0wel0ps62" path="res://enemies/robot/flamethrower_robot.tscn" id="23_qsqhj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hchdm"]
@@ -62,7 +63,7 @@ texture_filter = 2
 material = SubResource("StandardMaterial3D_hchdm")
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_sfh3s"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_q6py8"]
 viewport_path = NodePath("HealthBar/the/health")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iynve"]
@@ -131,7 +132,7 @@ mesh = SubResource("PlaneMesh_iynve")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="the" parent="Player/HealthBar" parent_id_path=PackedInt32Array(1653260376, 2009962165) index="0" unique_id=596231710]
-texture = SubResource("ViewportTexture_sfh3s")
+texture = SubResource("ViewportTexture_q6py8")
 
 [node name="PlayerInputSource" type="Node" parent="Player" unique_id=286436842]
 script = ExtResource("17_lrfq1")
@@ -234,8 +235,8 @@ omni_attenuation = -0.12
 
 [node name="RobotSpawner" parent="." unique_id=1330096657 instance=ExtResource("20_sehbl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.173798, 0, 18.796743)
-enemy_types = Array[PackedScene]([ExtResource("23_qsqhj"), ExtResource("22_q6py8")])
-enemy_type_weight = Array[int]([1, 4])
+enemy_types = Array[PackedScene]([ExtResource("23_qsqhj"), ExtResource("22_q6py8"), ExtResource("23_q6py8")])
+enemy_type_weight = Array[int]([1, 4, 2])
 spawn_min_seconds = 4.0
 spawn_max_seconds = 5.0
 

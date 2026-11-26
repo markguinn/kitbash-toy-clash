@@ -39,8 +39,8 @@ func _set_spawn_timer() -> void:
 
 
 func _pick_enemy() -> PackedScene:
-	var idx: int = randi_range(0, enemy_types.size() - 1)
-	return enemy_types[idx]
+	var idx: int = randi_range(0, enemy_picker.size() - 1)
+	return enemy_types[enemy_picker[idx]]
 
 
 func _on_spawn_timer() -> void:
