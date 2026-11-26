@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://vb763jq50r51"]
+
+[ext_resource type="Texture2D" uid="uid://c3q6bip4vh1hd" path="res://common/building-blocks/block-rail_0.png" id="1_ktr27"]
+
+[resource]
+resource_name = "block-trim"
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_ktr27")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
