@@ -116,6 +116,8 @@ func _on_enemy_died(enemy, _hit_box) -> void:
 
 var last_enemy
 func _on_player_died(enemy, _hit_box) -> void:
+	if not enemy:
+		return
 	var dlg: AcceptDialog = get_tree().get_first_node_in_group("confirm_dlg")
 	dlg.show()
 	last_enemy = enemy

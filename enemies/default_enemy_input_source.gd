@@ -60,6 +60,8 @@ func _retarget() -> void:
 func _find_nearest_player() -> Node3D:
 	var closest: Node3D
 	var min_dist: float = 1_000_000.0
+	if not get_tree():
+		return null
 	for n in get_tree().get_nodes_in_group("player"):
 		var dist := host.global_position.distance_squared_to(n.global_position)
 		if dist < min_dist:
