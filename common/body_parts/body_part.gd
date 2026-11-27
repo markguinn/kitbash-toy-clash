@@ -255,10 +255,14 @@ func _do_replacement(
 	# replace the animations, first by removing conflicting animation tracks
 	# from the destination (i.e. tracks referencing the node(s) we're replacinig)
 	for anim_name in dest_anim_library.get_animation_list():
-		if not dest_anim_library.has_animation(anim_name) or not src_anim_library.has_animation(anim_name):
+		if (
+			not dest_anim_library.has_animation(anim_name)
+			# I think we still want to remove the animation tracks from the active animation library,
+			# even if those animations don't exist for the new part. This may not prove to be true though.
+			#or not src_anim_library.has_animation(anim_name):
+		):
 			continue
 		var dest_anim: Animation = dest_anim_library.get_animation(anim_name)
-		var src_anim: Animation = src_anim_library.get_animation(anim_name)
 
 		for i in range(dest_anim.get_track_count(), 0, -1):
 			var np: NodePath = dest_anim.track_get_path(i - 1)
@@ -288,36 +292,38 @@ func _do_replacement(
 					attack_oneshot.set_filter_path(np, false)
 
 		# add the relevant animation tracks from the new body part to the
-		# destination animation player
-		for i in range(src_anim.get_track_count()):
-			var np: NodePath = src_anim.track_get_path(i)
-			var nps: String = np.get_concatenated_names()
+		# destination animation player, if one exists
+		if src_anim_library.has_animation(anim_name):
+			var src_anim: Animation = src_anim_library.get_animation(anim_name)
+			for i in range(src_anim.get_track_count()):
+				var np: NodePath = src_anim.track_get_path(i)
+				var nps: String = np.get_concatenated_names()
 
-			if part_paths_to_keep.find_custom(func(ptk: String): return nps.begins_with(ptk)) >= 0:
-				Log.debug(self, "Animation", anim_name, "skipping track", i - 1, "for src", nps)
-				continue
+				if part_paths_to_keep.find_custom(func(ptk: String): return nps.begins_with(ptk)) >= 0:
+					Log.debug(self, "Animation", anim_name, "skipping track", i - 1, "for src", nps)
+					continue
 
-			var add := false
-			for t in src_part.extra_tracks:
-				if nps == t:
+				var add := false
+				for t in src_part.extra_tracks:
+					if nps == t:
+						add = true
+				if nps.begins_with(src_part_path):
 					add = true
-			if nps.begins_with(src_part_path):
-				add = true
-			for extra_node in src_part.extra_nodes:
-				if nps.begins_with(src_anim_root.get_path_to(extra_node).get_concatenated_names()):
-					add = true
+				for extra_node in src_part.extra_nodes:
+					if nps.begins_with(src_anim_root.get_path_to(extra_node).get_concatenated_names()):
+						add = true
 
-			if add:
-				Log.debug(self, "Animation", anim_name, "adding track", i, "for src", nps)
-				src_anim.copy_track(i, dest_anim)
-				if attack_oneshot and src_part.stats.attack_cooldown > 0:
-					attack_oneshot.set_filter_path(np, true)
-					Log.debug(self, "Animation", anim_name, "filtering attack track", i, "for src", nps)
+				if add:
+					Log.debug(self, "Animation", anim_name, "adding track", i, "for src", nps)
+					src_anim.copy_track(i, dest_anim)
+					if attack_oneshot and src_part.stats.attack_cooldown > 0:
+						attack_oneshot.set_filter_path(np, true)
+						Log.debug(self, "Animation", anim_name, "filtering attack track", i, "for src", nps)
 
-				#var new_idx := dest_anim.get_track_count() - 1
-				#dest_anim.track_set_path(new_idx, dest_part_path)
-				# TODO: if we hit this case where the parts aren't 1 for 1, we'll need this
-				#if src_part_path != dest_part_path:
-				#	# what? probably convert to string and then replace src prefix with dest?
+					#var new_idx := dest_anim.get_track_count() - 1
+					#dest_anim.track_set_path(new_idx, dest_part_path)
+					# TODO: if we hit this case where the parts aren't 1 for 1, we'll need this
+					#if src_part_path != dest_part_path:
+					#	# what? probably convert to string and then replace src prefix with dest?
 
 	return cloned_part

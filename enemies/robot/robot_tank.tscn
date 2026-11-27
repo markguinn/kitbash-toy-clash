@@ -288,5 +288,6 @@ transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.7071068, 0, -0.7071068, 0.70710
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body" index="1" unique_id=779853400]
 libraries/ = SubResource("AnimationLibrary_66cjj")
+autoplay = &"walk"
 
 [editable path="Body"]
