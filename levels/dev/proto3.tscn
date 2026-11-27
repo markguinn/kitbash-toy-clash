@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://xfplf03kdq1b" path="res://levels/dev/proto_2.gd" id="1_kfpyw"]
 [ext_resource type="PackedScene" uid="uid://cw2lmpuyqr3hv" path="res://common/standard_camera.tscn" id="2_tc58u"]
-[ext_resource type="MeshLibrary" uid="uid://65rebllnphay" path="res://common/building-blocks/mesh_library3.tres" id="6_58p52"]
+[ext_resource type="MeshLibrary" uid="uid://65rebllnphay" path="res://common/building-blocks/gridmap_meshes.tres" id="6_58p52"]
 [ext_resource type="Texture2D" uid="uid://mg6lqudn1f05" path="res://common/vfx/pixelated/crt-effect.png" id="14_lbjwt"]
 [ext_resource type="PackedScene" uid="uid://bobgrurpfdnwv" path="res://player/player.tscn" id="15_t82rj"]
 [ext_resource type="Script" uid="uid://18fy30k87d84" path="res://player/player_input_source.gd" id="16_1akfh"]

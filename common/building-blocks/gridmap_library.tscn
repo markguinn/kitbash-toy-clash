@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://diuhufaryobty"]
 
-[ext_resource type="Material" uid="uid://cml0f3l8h3dl" path="res://common/building-blocks/block-platform.tres" id="1_57k2b"]
-[ext_resource type="Material" uid="uid://vb763jq50r51" path="res://common/building-blocks/block-trim.tres" id="2_340kg"]
+[ext_resource type="Material" uid="uid://cml0f3l8h3dl" path="res://common/building-blocks/mat-white-box.tres" id="1_57k2b"]
+[ext_resource type="Material" uid="uid://vb763jq50r51" path="res://common/building-blocks/mat-white-trim.tres" id="2_340kg"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_noung"]
 _surfaces = [{

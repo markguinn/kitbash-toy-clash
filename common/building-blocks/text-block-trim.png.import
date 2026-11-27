@@ -2,20 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fe8pa2ijompn"
-path.s3tc="res://.godot/imported/block-platform_0.png-0f95324fec470258d25e78c1660d693b.s3tc.ctex"
+uid="uid://is034428oovd"
+path.s3tc="res://.godot/imported/text-block-trim.png-742cf902f10b37cf674facef6f4e04bb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "cc903dfa16f3a738d1a6d83f66674c85"
-}
 
 [deps]
 
-source_file="res://common/building-blocks/block-platform_0.png"
-dest_files=["res://.godot/imported/block-platform_0.png-0f95324fec470258d25e78c1660d693b.s3tc.ctex"]
+source_file="res://common/building-blocks/text-block-trim.png"
+dest_files=["res://.godot/imported/text-block-trim.png-742cf902f10b37cf674facef6f4e04bb.s3tc.ctex"]
 
 [params]
 

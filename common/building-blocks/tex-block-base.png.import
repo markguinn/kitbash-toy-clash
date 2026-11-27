@@ -2,20 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3q6bip4vh1hd"
-path.s3tc="res://.godot/imported/block-rail_0.png-e33bf6bac291f1bcc5a71e9a97a1ad42.s3tc.ctex"
+uid="uid://gwgs6rcep38a"
+path.s3tc="res://.godot/imported/tex-block-base.png-96aaf568a961d2d1e8d7bf7f37fbc036.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "629765eea5fa46bb9aac1813f2d9c31d"
-}
 
 [deps]
 
-source_file="res://common/building-blocks/block-rail_0.png"
-dest_files=["res://.godot/imported/block-rail_0.png-e33bf6bac291f1bcc5a71e9a97a1ad42.s3tc.ctex"]
+source_file="res://common/building-blocks/tex-block-base.png"
+dest_files=["res://.godot/imported/tex-block-base.png-96aaf568a961d2d1e8d7bf7f37fbc036.s3tc.ctex"]
 
 [params]
 

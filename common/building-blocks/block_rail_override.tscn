@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://b46atb0mm0vbl"]
 
-[ext_resource type="Material" uid="uid://vb763jq50r51" path="res://common/building-blocks/block-trim.tres" id="1_omvuh"]
+[ext_resource type="Material" uid="uid://vb763jq50r51" path="res://common/building-blocks/mat-white-trim.tres" id="1_omvuh"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_28kfh"]
 _surfaces = [{
